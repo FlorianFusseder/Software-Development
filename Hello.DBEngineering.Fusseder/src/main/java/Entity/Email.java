@@ -5,7 +5,6 @@
  */
 package Entity;
 
-import java.util.Objects;
 import javax.persistence.Embeddable;
 
 /**
@@ -15,7 +14,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Email
 {
-    private String Adresse;
+    private String EmailAdresse;
 
     public Email()
     {
@@ -23,23 +22,23 @@ public class Email
 
     public Email(String Adresse)
     {
-        this.Adresse = Adresse;
+        this.EmailAdresse = Adresse;
     }
 
-    public String getAdresse()
+    public String getEmailAdresse()
     {
-        return Adresse;
+        return EmailAdresse;
     }
 
-    public void setAdresse(String Adresse)
+    public void setEmailAdresse(String EmailAdresse)
     {
-        this.Adresse = Adresse;
+        this.EmailAdresse = EmailAdresse;
     }
 
     @Override
     public String toString()
     {
-        return "Email{" + "Adresse=" + Adresse + '}';
+        return "Email{" + "Adresse=" + EmailAdresse + '}';
     }
   
 }

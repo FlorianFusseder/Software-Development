@@ -5,16 +5,18 @@
  */
 package Entity;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Florian
  */
 @Entity
-public abstract class Person
+public abstract class Person implements Serializable
 {
     @Id
     @GeneratedValue
@@ -22,7 +24,9 @@ public abstract class Person
     
     private String VorName;
     private String NachName;
+    @OneToOne
     private Adresse Adresse;
+    @OneToOne
     private Email EmailAdresse;
 
     public Person()
@@ -89,16 +93,10 @@ public abstract class Person
     }
 
     @Override
-    public String toString()
-    {
-        return "Student{" + "Id=" + Id + ", VorName=" + VorName + ", NachName=" + NachName + ", Adresse=" + Adresse + ", EmailAdresse=" + EmailAdresse + '}';
-    }
-
-    @Override
     public int hashCode()
     {
         int hash = 7;
-        hash = 37 * hash + (int) (this.Id ^ (this.Id >>> 32));
+        hash = 31 * hash + (int) (this.Id ^ (this.Id >>> 32));
         return hash;
     }
 
@@ -117,18 +115,14 @@ public abstract class Person
         {
             return false;
         }
-        final Student other = (Student) obj;
-        if (this.Id != other.getId())
+        final Person other = (Person) obj;
+        if (this.Id != other.Id)
         {
             return false;
         }
         return true;
     }
-    
-    
-    
-    
-    
+
     
 }
 
