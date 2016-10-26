@@ -323,4 +323,8 @@ hs_err_pid*
 
 /Hello.DB.Fusseder/target
 /Hello.World.Fusseder/target
+<<<<<<< HEAD
 /Hello.DBEngineering.Fusseder/target
+=======
+/Hello.DBEngineering.Fusseder/target/
+>>>>>>> Fixing

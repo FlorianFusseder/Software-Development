@@ -5,6 +5,8 @@
  */
 package Entity;
 
+import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,30 +16,30 @@ import javax.persistence.Id;
  * @author Florian
  */
 @Entity
-public class Student extends Person
+public class Student extends Person implements Serializable
 {
-    private Professor Erstpruefer;
+    private Professor ErstPruefer;
     private Professor ZweitPruefer;
 
     public Student()
     {
     }
 
-    public Student(Professor Erstpruefer, Professor ZweitPruefer, long Id, String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
+    public Student(long Id, String VorName, String NachName, Adresse Adresse, Email EmailAdresse, Professor Erstpruefer, Professor ZweitPruefer)
     {
         super(Id, VorName, NachName, Adresse, EmailAdresse);
-        this.Erstpruefer = Erstpruefer;
+        this.ErstPruefer = Erstpruefer;
         this.ZweitPruefer = ZweitPruefer;
     }
 
-    public Professor getErstpruefer()
+    public Professor getErstPruefer()
     {
-        return Erstpruefer;
+        return ErstPruefer;
     }
 
-    public void setErstpruefer(Professor Erstpruefer)
+    public void setErstPruefer(Professor ErstPruefer)
     {
-        this.Erstpruefer = Erstpruefer;
+        this.ErstPruefer = ErstPruefer;
     }
 
     public Professor getZweitPruefer()
@@ -53,7 +55,19 @@ public class Student extends Person
     @Override
     public String toString()
     {
-        return super.toString() + " Student{" + "Erstpruefer=" + Erstpruefer + ", ZweitPruefer=" + ZweitPruefer + '}';
+        return super.toString() + " Student{" + "Erstpruefer=" + ErstPruefer + ", ZweitPruefer=" + ZweitPruefer + '}';
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
     }
     
     

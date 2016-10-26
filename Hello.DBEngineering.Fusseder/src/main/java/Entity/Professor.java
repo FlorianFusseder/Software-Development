@@ -5,25 +5,32 @@
  */
 package Entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Florian
  */
-public class Professor extends Person
+@Entity
+public class Professor extends Person implements Serializable
 {
-    @ElementCollection
+   //@ElementCollection
+    @OneToMany(mappedBy = "ErstPruefer")
     private ArrayList<Student> BachelorPruefer;
-    @ElementCollection
+    //@ElementCollection
+    @OneToMany(mappedBy = "ZweitPruefer")
     private ArrayList<Student> BachelorZweitPruefer;
 
     public Professor()
     {
     }
 
-    public Professor(ArrayList<Student> BachelorPruefer, ArrayList<Student> BachelorZweitPruefer, long Id, String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
+    public Professor(long Id, String VorName, String NachName, Adresse Adresse, Email EmailAdresse, ArrayList<Student> BachelorPruefer, ArrayList<Student> BachelorZweitPruefer)
     {
         super(Id, VorName, NachName, Adresse, EmailAdresse);
         this.BachelorPruefer = BachelorPruefer;
@@ -54,6 +61,18 @@ public class Professor extends Person
     public String toString()
     {
         return super.toString() + "Professor{" + "BachelorPruefer=" + BachelorPruefer + ", BachelorZweitPruefer=" + BachelorZweitPruefer + '}';
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
     }
     
     
