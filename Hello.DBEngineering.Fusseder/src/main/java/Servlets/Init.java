@@ -5,10 +5,17 @@
  */
 package Servlets;
 
+import Entity.Adresse;
+import Entity.Email;
+import Entity.Professor;
+import Entity.Student;
 import Service.DBService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,12 +26,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Florian
  */
-@WebServlet(name = "addStudent", urlPatterns =
+@WebServlet(name = "Init", urlPatterns =
 {
-    "/addStudent"
+    "/Init"
 })
-public class addStudent extends HttpServlet
+public class Init extends HttpServlet
 {
+    
+    @Inject
+    DBService db;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,9 +45,6 @@ public class addStudent extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Inject
-    private DBService s;
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
@@ -48,10 +55,29 @@ public class addStudent extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addStudent</title>");            
+            out.println("<title>Servlet Init</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addStudent at " + request.getContextPath() + "</h1>");
+            Adresse a1 = db.addAdresse("MusterStrasse", 1, "MusterStadt");
+            Adresse a2 = db.addAdresse("MusterStrasse", 2, "MusterStadt");
+            Email e1 = db.addEmail("musteremail1@muster.de");
+            Email e2 = db.addEmail("musteremail2@muster.de");
+            
+            Professor p = new Professor("Max", "MusterProf", a1, e1, null, null);
+            Student s = new Student("Max", "MusterStudent", a2, e2, null, null);
+            
+            s.setErstPruefer(p);
+            s.setZweitPruefer(p);
+            
+            p.setBachelorPruefer(new ArrayList<Student>(Arrays.asList(s)));
+            p.setBachelorZweitPruefer(new ArrayList<Student>(Arrays.asList(s)));
+            
+            db.addProfessor(p);
+            db.addStudent(s);
+            
+            
+            
+            out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,12 +16,11 @@ import javax.persistence.Id;
  * @author Florian
  */
 @Entity
-public class Adresse
+public class Adresse implements Serializable
 {
     @Id
     @GeneratedValue
     private long Id;
-    private String StrassenName;
     private String Strasse;
     private int Postleitzahl;
     private String Stadt;
@@ -29,10 +29,9 @@ public class Adresse
     {
     }
 
-    public Adresse(long Id, String StrassenName, String Strasse, int Postleitzahl, String Stadt)
+    public Adresse(long Id, String Strasse, int Postleitzahl, String Stadt)
     {
         this.Id = Id;
-        this.StrassenName = StrassenName;
         this.Strasse = Strasse;
         this.Postleitzahl = Postleitzahl;
         this.Stadt = Stadt;
@@ -46,16 +45,6 @@ public class Adresse
     public void setId(long Id)
     {
         this.Id = Id;
-    }
-
-    public String getStrassenName()
-    {
-        return StrassenName;
-    }
-
-    public void setStrassenName(String StrassenName)
-    {
-        this.StrassenName = StrassenName;
     }
 
     public String getStrasse()
@@ -91,7 +80,7 @@ public class Adresse
     @Override
     public String toString()
     {
-        return "Adresse{" + "Id=" + Id + ", StrassenName=" + StrassenName + ", Strasse=" + Strasse + ", Postleitzahl=" + Postleitzahl + ", Stadt=" + Stadt + '}';
+        return "Adresse{" + "Id=" + Id + ", Strasse=" + Strasse + ", Postleitzahl=" + Postleitzahl + ", Stadt=" + Stadt + '}';
     }
 
     @Override
