@@ -1,0 +1,11 @@
+Servlets\addStudent.class
+Entity\Adresse.class
+Entity\Person_.class
+Entity\Student.class
+Entity\Student_.class
+Service\DBService.class
+Entity\Person.class
+Entity\Professor.class
+Entity\Adresse_.class
+Entity\Email.class
+Entity\Email_.class
