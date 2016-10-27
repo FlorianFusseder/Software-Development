@@ -60,23 +60,11 @@ public class Init extends HttpServlet
             out.println("<body>");
             Adresse a1 = db.addAdresse("MusterStrasse", 1, "MusterStadt");
             Adresse a2 = db.addAdresse("MusterStrasse", 2, "MusterStadt");
-            Email e1 = db.addEmail("musteremail1@muster.de");
-            Email e2 = db.addEmail("musteremail2@muster.de");
             
-            Professor p = new Professor("Max", "MusterProf", a1, e1, null, null);
-            Student s = new Student("Max", "MusterStudent", a2, e2, null, null);
-            
-            s.setErstPruefer(p);
-            s.setZweitPruefer(p);
-            
-            p.setBachelorPruefer(new ArrayList<Student>(Arrays.asList(s)));
-            p.setBachelorZweitPruefer(new ArrayList<Student>(Arrays.asList(s)));
-            
-            db.addProfessor(p);
-            db.addStudent(s);
-            
-            
-            
+            Professor p = new Professor("Max", "MusterProf", a1, new Email("Mustermann@prof.de"), null, null);            
+            db.addProfessor(p);            
+            Student s = new Student("Max", "MusterStudent", a2, new Email("Mustermann@student.de"), p, null);
+            db.addStudent(s);            
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");

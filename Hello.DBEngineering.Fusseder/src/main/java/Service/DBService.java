@@ -93,15 +93,4 @@ public class DBService
         em.persist(p);
         return p;
     }
-
-    @Transactional
-    public Email addEmail(String EmailAdresse)
-    {
-        Email e = new Email();
-        e.setEmailAdresse(EmailAdresse);
-
-        em.persist(e);
-        return e;
-    }
-
 }
