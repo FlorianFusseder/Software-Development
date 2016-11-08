@@ -8,6 +8,7 @@ package Entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -21,12 +22,9 @@ import javax.persistence.OneToOne;
  * @author Florian
  */
 @Entity
-public class Professor implements Serializable
+public class Professor extends SingleIdEntity
 {
-    @Id
-    @GeneratedValue
-    private long Id;
-    
+
     private String VorName;
     private String NachName;
     @OneToOne
@@ -44,6 +42,16 @@ public class Professor implements Serializable
     {
     }
 
+    public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
+    {
+        this.VorName = VorName;
+        this.NachName = NachName;
+        this.Adresse = Adresse;
+        this.EmailAdresse = EmailAdresse;
+        this.BachelorPruefer = new ArrayList<>();
+        this.BachelorZweitPruefer = new ArrayList<>();
+    }
+
     public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, ArrayList<Student> BachelorPruefer, ArrayList<Student> BachelorZweitPruefer)
     {
         this.VorName = VorName;
@@ -52,29 +60,6 @@ public class Professor implements Serializable
         this.EmailAdresse = EmailAdresse;
         this.BachelorPruefer = BachelorPruefer;
         this.BachelorZweitPruefer = BachelorZweitPruefer;
-    }
-    
-    
-
-    public Professor(long Id, String VorName, String NachName, Adresse Adresse, Email EmailAdresse, ArrayList<Student> BachelorPruefer, ArrayList<Student> BachelorZweitPruefer)
-    {
-        this.Id = Id;
-        this.VorName = VorName;
-        this.NachName = NachName;
-        this.Adresse = Adresse;
-        this.EmailAdresse = EmailAdresse;
-        this.BachelorPruefer = BachelorPruefer;
-        this.BachelorZweitPruefer = BachelorZweitPruefer;
-    }
-
-    public long getId()
-    {
-        return Id;
-    }
-
-    public void setId(long Id)
-    {
-        this.Id = Id;
     }
 
     public String getVorName()
@@ -122,6 +107,11 @@ public class Professor implements Serializable
         return BachelorPruefer;
     }
 
+    public void addBachelorPruefer(Student s)
+    {
+        this.BachelorPruefer.add(s);
+    }
+
     public void setBachelorPruefer(ArrayList<Student> BachelorPruefer)
     {
         this.BachelorPruefer = BachelorPruefer;
@@ -132,46 +122,20 @@ public class Professor implements Serializable
         return BachelorZweitPruefer;
     }
 
+    public void addBachelorZweitPruefer(Student s)
+    {
+        this.BachelorPruefer.add(s);
+    }
+
     public void setBachelorZweitPruefer(ArrayList<Student> BachelorZweitPruefer)
     {
         this.BachelorZweitPruefer = BachelorZweitPruefer;
     }
 
     @Override
-    public int hashCode()
-    {
-        int hash = 7;
-        hash = 89 * hash + (int) (this.Id ^ (this.Id >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Professor other = (Professor) obj;
-        if (this.Id != other.Id)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public String toString()
     {
-        return "Professor{" + "Id=" + Id + ", VorName=" + VorName + ", NachName=" + NachName + ", Adresse=" + Adresse + ", EmailAdresse=" + EmailAdresse + ", BachelorPruefer=" + BachelorPruefer + ", BachelorZweitPruefer=" + BachelorZweitPruefer + '}';
-    }    
-    
+        return super.toString() + " Professor{" + "VorName=" + VorName + ", NachName=" + NachName + ", Adresse=" + Adresse + ", EmailAdresse=" + EmailAdresse + ", BachelorPruefer=" + BachelorPruefer + ", BachelorZweitPruefer=" + BachelorZweitPruefer + '}';
+    }
+
 }

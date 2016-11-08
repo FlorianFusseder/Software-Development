@@ -12,10 +12,7 @@ import Entity.Student;
 import Service.DBService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,10 +58,14 @@ public class Init extends HttpServlet
             Adresse a1 = db.addAdresse("MusterStrasse", 1, "MusterStadt");
             Adresse a2 = db.addAdresse("MusterStrasse", 2, "MusterStadt");
             
-            Professor p = new Professor("Max", "MusterProf", a1, new Email("Mustermann@prof.de"), null, null);            
-            db.addProfessor(p);            
-            Student s = new Student("Max", "MusterStudent", a2, new Email("Mustermann@student.de"), p, null);
-            db.addStudent(s);            
+            Professor p = new Professor("Max", "MusterProf", a1, new Email("Mustermann@prof.de"));    
+            p = db.addProfessor(p);
+            Student s = new Student("Max", "MusterStudent", a2, new Email("Mustermann@student.de"), null, null);
+            s = db.addStudent(s);
+            
+            db.addBachelor(p, s);
+            db.addBetreuer(p, s);
+            
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");

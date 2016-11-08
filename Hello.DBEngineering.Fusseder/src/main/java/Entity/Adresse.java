@@ -5,22 +5,16 @@
  */
 package Entity;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 
 /**
  *
  * @author Florian
  */
 @Entity
-public class Adresse implements Serializable
+public class Adresse extends SingleIdEntity
 {
-    @Id
-    @GeneratedValue
-    private long Id;
+
     private String Strasse;
     private int Postleitzahl;
     private String Stadt;
@@ -29,22 +23,11 @@ public class Adresse implements Serializable
     {
     }
 
-    public Adresse(long Id, String Strasse, int Postleitzahl, String Stadt)
+    public Adresse(String Strasse, int Postleitzahl, String Stadt)
     {
-        this.Id = Id;
         this.Strasse = Strasse;
         this.Postleitzahl = Postleitzahl;
         this.Stadt = Stadt;
-    }
-
-    public long getId()
-    {
-        return Id;
-    }
-
-    public void setId(long Id)
-    {
-        this.Id = Id;
     }
 
     public String getStrasse()
@@ -80,42 +63,6 @@ public class Adresse implements Serializable
     @Override
     public String toString()
     {
-        return "Adresse{" + "Id=" + Id + ", Strasse=" + Strasse + ", Postleitzahl=" + Postleitzahl + ", Stadt=" + Stadt + '}';
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int hash = 7;
-        hash = 23 * hash + (int) (this.Id ^ (this.Id >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Adresse other = (Adresse) obj;
-        if (this.Id != other.Id)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    
-    
-    
-    
+        return super.toString() + " Adresse{" + " Strasse=" + Strasse + ", Postleitzahl=" + Postleitzahl + ", Stadt=" + Stadt + '}';
+    }    
 }

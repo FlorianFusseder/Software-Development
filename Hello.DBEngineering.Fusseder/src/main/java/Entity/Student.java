@@ -6,10 +6,12 @@
 package Entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Null;
 
@@ -18,25 +20,32 @@ import javax.validation.constraints.Null;
  * @author Florian
  */
 @Entity
-public class Student implements Serializable
+public class Student extends SingleIdEntity
 {
-    @Id
-    @GeneratedValue
-    private long Id;
     private String VorName;
     private String NachName;
     @OneToOne
     private Adresse Adresse;
     @OneToOne
     private Email EmailAdresse;
-    @OneToOne
+    @ManyToOne
     private Professor ErstPruefer;
-    @OneToOne
+    @ManyToOne
     private Professor ZweitPruefer;
 
     public Student()
     {
     }
+    
+        public Student(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
+    {
+        this.VorName = VorName;
+        this.NachName = NachName;
+        this.Adresse = Adresse;
+        this.EmailAdresse = EmailAdresse;
+        this.ErstPruefer = null;
+        this.ZweitPruefer = null;
+    } 
 
     public Student(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, Professor ErstPruefer, Professor ZweitPruefer)
     {
@@ -46,28 +55,7 @@ public class Student implements Serializable
         this.EmailAdresse = EmailAdresse;
         this.ErstPruefer = ErstPruefer;
         this.ZweitPruefer = ZweitPruefer;
-    }
-
-    public Student(long Id, String VorName, String NachName, Adresse Adresse, Email EmailAdresse, Professor ErstPruefer, Professor ZweitPruefer)
-    {
-        this.Id = Id;
-        this.VorName = VorName;
-        this.NachName = NachName;
-        this.Adresse = Adresse;
-        this.EmailAdresse = EmailAdresse;
-        this.ErstPruefer = ErstPruefer;
-        this.ZweitPruefer = ZweitPruefer;
     }    
-
-    public long getId()
-    {
-        return Id;
-    }
-
-    public void setId(long Id)
-    {
-        this.Id = Id;
-    }
 
     public String getVorName()
     {
@@ -121,7 +109,7 @@ public class Student implements Serializable
 
     public Professor getZweitPruefer()
     {
-        return ZweitPruefer;
+        return this.ZweitPruefer;
     }
 
     public void setZweitPruefer(Professor ZweitPruefer)
@@ -130,39 +118,10 @@ public class Student implements Serializable
     }
 
     @Override
-    public int hashCode()
-    {
-        int hash = 7;
-        hash = 17 * hash + (int) (this.Id ^ (this.Id >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Student other = (Student) obj;
-        if (this.Id != other.Id)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public String toString()
     {
-        return "Student{" + "Id=" + Id + ", VorName=" + VorName + ", NachName=" + NachName + ", Adresse=" + Adresse + ", EmailAdresse=" + EmailAdresse + ", ErstPruefer=" + ErstPruefer + ", ZweitPruefer=" + ZweitPruefer + '}';
+        return super.toString() + " Student{" + "VorName=" + VorName + ", NachName=" + NachName + ", Adresse=" + Adresse + ", EmailAdresse=" + EmailAdresse + ", ErstPruefer=" + ErstPruefer + ", ZweitPruefer=" + ZweitPruefer + '}';
     }
+
+    
 }

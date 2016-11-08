@@ -19,11 +19,19 @@ public class DBService
 
     @PersistenceContext(unitName = "FussederPU")
     private EntityManager em;
-    
+
     @Transactional
-    public Student addStudent(Student s){
+    public Student addStudent(Student s)
+    {
         em.persist(s);
         return s;
+    }
+    
+    @Transactional
+    public Professor addProfessor(Professor p)
+    {
+        em.persist(p);
+        return p;
     }
 
     @Transactional
@@ -65,17 +73,30 @@ public class DBService
         em.persist(a);
         return a;
     }
-    
-    @Transactional
-    public Professor addProfessor(Professor p){
-        em.persist(p);
-        return p;
-    }
 
     @Transactional
     public Professor addProfessor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
     {
         return addProfessor(VorName, NachName, Adresse, EmailAdresse, new ArrayList<Student>(), new ArrayList<Student>());
+    }
+
+    @Transactional
+    public Professor addBachelor(Professor p, Student s)
+    {
+        
+        p.addBachelorPruefer(s);
+        p = em.merge(p);
+        em.persist(p);
+        return p;
+    }
+    
+    @Transactional
+    public Student addBetreuer(Professor p, Student s)
+    {
+        s.setErstPruefer(p);
+        s = em.merge(s);
+        em.persist(s);
+        return s;
     }
 
     @Transactional
