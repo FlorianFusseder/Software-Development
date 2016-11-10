@@ -8,6 +8,7 @@ package Entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,10 +35,10 @@ public class Professor extends SingleIdEntity
     private Email EmailAdresse;
     @ElementCollection
     @OneToMany(mappedBy = "ErstPruefer")
-    private ArrayList<Student> BachelorPruefer;
+    private List<Student> BachelorPruefer;
     @ElementCollection
     @OneToMany(mappedBy = "ZweitPruefer")
-    private ArrayList<Student> BachelorZweitPruefer;
+    private List<Student> BachelorZweitPruefer;
 
     public Professor()
     {
@@ -105,9 +106,9 @@ public class Professor extends SingleIdEntity
         this.EmailAdresse = EmailAdresse;
     }
 
-    public ArrayList<Student> getBachelorPruefer()
+    public List<Student> getBachelorPruefer()
     {
-        return (ArrayList<Student>) Collections.unmodifiableList(BachelorPruefer);
+        return Collections.unmodifiableList(BachelorPruefer);
     }
 
     public void addBachelorPruefer(Student s)
@@ -120,7 +121,7 @@ public class Professor extends SingleIdEntity
         this.BachelorPruefer = BachelorPruefer;
     }
 
-    public ArrayList<Student> getBachelorZweitPruefer()
+    public List<Student> getBachelorZweitPruefer()
     {
         return BachelorZweitPruefer;
     }

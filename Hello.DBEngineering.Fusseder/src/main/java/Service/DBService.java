@@ -8,6 +8,7 @@ package Service;
 import Entity.Adresse;
 import Entity.Email;
 import Entity.Professor;
+import Entity.Pruefungen;
 import Entity.Student;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
@@ -109,5 +110,11 @@ public class DBService
 
         em.persist(p);
         return p;
+    }
+
+    public Pruefungen addPruefung(Pruefungen pr)
+    {
+        em.persist(pr);
+        return pr;
     }
 }
