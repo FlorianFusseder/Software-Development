@@ -7,6 +7,7 @@ package Entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,20 +41,22 @@ public class Professor extends SingleIdEntity
 
     public Professor()
     {
-    }
-
-    public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
-    {
-        this.VorName = VorName;
-        this.NachName = NachName;
-        this.Adresse = Adresse;
-        this.EmailAdresse = EmailAdresse;
         this.BachelorPruefer = new ArrayList<>();
         this.BachelorZweitPruefer = new ArrayList<>();
     }
 
+    public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
+    {
+        this();
+        this.VorName = VorName;
+        this.NachName = NachName;
+        this.Adresse = Adresse;
+        this.EmailAdresse = EmailAdresse;
+    }
+
     public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, ArrayList<Student> BachelorPruefer, ArrayList<Student> BachelorZweitPruefer)
     {
+        this();
         this.VorName = VorName;
         this.NachName = NachName;
         this.Adresse = Adresse;
@@ -104,7 +107,7 @@ public class Professor extends SingleIdEntity
 
     public ArrayList<Student> getBachelorPruefer()
     {
-        return BachelorPruefer;
+        return (ArrayList<Student>) Collections.unmodifiableList(BachelorPruefer);
     }
 
     public void addBachelorPruefer(Student s)

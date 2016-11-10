@@ -64,7 +64,6 @@ public class Init extends HttpServlet
             s = db.addStudent(s);
             
             db.addBachelor(p, s);
-            db.addBetreuer(p, s);
             
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");
