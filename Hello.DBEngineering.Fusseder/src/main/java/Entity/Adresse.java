@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import Entity.SingleIdEntity;
 import javax.persistence.Entity;
 
 /**

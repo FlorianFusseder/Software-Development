@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import Entity.SingleIdEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;

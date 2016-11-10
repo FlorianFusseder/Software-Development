@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import Entity.SingleIdEntity;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
