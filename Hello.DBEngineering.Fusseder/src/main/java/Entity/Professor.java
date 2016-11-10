@@ -8,6 +8,7 @@ package Entity;
 import Entity.SingleIdEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -25,21 +26,18 @@ import javax.persistence.OneToOne;
  * @author Florian
  */
 @Entity
-public class Professor extends SingleIdEntity
+public class Professor extends SingleIdEntity<Long>
 {
 
     private String VorName;
     private String NachName;
     @OneToOne
     private Adresse Adresse;
-    @OneToOne
     private Email EmailAdresse;
-    @ElementCollection
     @OneToMany(mappedBy = "ErstPruefer")
-    private List<Student> BachelorPruefer;
-    @ElementCollection
+    private Collection<Student> BachelorPruefer;
     @OneToMany(mappedBy = "ZweitPruefer")
-    private List<Student> BachelorZweitPruefer;
+    private Collection<Student> BachelorZweitPruefer;
 
     public Professor()
     {
@@ -56,7 +54,7 @@ public class Professor extends SingleIdEntity
         this.EmailAdresse = EmailAdresse;
     }
 
-    public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, ArrayList<Student> BachelorPruefer, ArrayList<Student> BachelorZweitPruefer)
+    public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, Collection<Student> BachelorPruefer, Collection<Student> BachelorZweitPruefer)
     {
         this();
         this.VorName = VorName;
@@ -107,9 +105,9 @@ public class Professor extends SingleIdEntity
         this.EmailAdresse = EmailAdresse;
     }
 
-    public List<Student> getBachelorPruefer()
+    public Collection<Student> getBachelorPruefer()
     {
-        return Collections.unmodifiableList(BachelorPruefer);
+        return Collections.unmodifiableCollection(BachelorPruefer);
     }
 
     public void addBachelorPruefer(Student s)
@@ -122,7 +120,7 @@ public class Professor extends SingleIdEntity
         this.BachelorPruefer = BachelorPruefer;
     }
 
-    public List<Student> getBachelorZweitPruefer()
+    public Collection<Student> getBachelorZweitPruefer()
     {
         return BachelorZweitPruefer;
     }

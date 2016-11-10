@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "bills")
-class Bill extends SingleIdEntity
+class Bill extends SingleIdEntity<Long>
 {
     
     private BigDecimal total;

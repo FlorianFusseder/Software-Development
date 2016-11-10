@@ -13,7 +13,7 @@ import javax.persistence.Entity;
  * @author Florian
  */
 @Entity
-public class Adresse extends SingleIdEntity
+public class Adresse extends SingleIdEntity<Long>
 {
 
     private String Strasse;

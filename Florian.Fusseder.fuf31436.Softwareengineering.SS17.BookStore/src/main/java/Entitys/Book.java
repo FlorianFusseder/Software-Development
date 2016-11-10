@@ -19,7 +19,7 @@ import javax.persistence.ManyToMany;
  * @author Florian
  */
 @Entity
-abstract class Book extends SingleIdEntity
+abstract class Book extends SingleIdEntity<Long>
 {
     private String name;
     

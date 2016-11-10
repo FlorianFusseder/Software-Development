@@ -8,7 +8,6 @@ package Service;
 import Entity.Adresse;
 import Entity.Email;
 import Entity.Professor;
-import Entity.Pruefungen;
 import Entity.Student;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
@@ -82,17 +81,14 @@ public class DBService
     }
 
     @Transactional
-    public Professor addBachelor(Professor p, Student s)
+    public void addBachelor(Professor p, Student s)
     {
         p = em.merge(p);
         s = em.merge(s);
-        s.setErstPruefer(p);
         p.addBachelorPruefer(s);
+        s.setErstPruefer(p);
         
-        
-        
-        //em.persist(p);
-        return p;
+        return;
     }
     
 
@@ -110,11 +106,5 @@ public class DBService
 
         em.persist(p);
         return p;
-    }
-
-    public Pruefungen addPruefung(Pruefungen pr)
-    {
-        em.persist(pr);
-        return pr;
     }
 }

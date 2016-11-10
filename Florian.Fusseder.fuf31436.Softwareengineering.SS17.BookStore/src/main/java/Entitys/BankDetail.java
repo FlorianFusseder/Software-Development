@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BankDetails")
-class BankDetail extends SingleIdEntity
+class BankDetail extends SingleIdEntity<Long>
 {
     @Pattern(regexp = "[A-Z0-9]")
     @Size(min = 8, max = 11)

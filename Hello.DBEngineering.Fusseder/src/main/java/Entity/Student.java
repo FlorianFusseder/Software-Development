@@ -5,17 +5,11 @@
  */
 package Entity;
 
-<<<<<<< HEAD
-import Entity.SingleIdEntity;
-import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-=======
 
+import Entity.SingleIdEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
->>>>>>> 52fb54bda86e53d2d4e2fa2dd89598f9c2640be9
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -27,27 +21,22 @@ import javax.persistence.OneToOne;
  * @author Florian
  */
 @Entity
-public class Student extends SingleIdEntity
+public class Student extends SingleIdEntity<Long>
 {
     private String VorName;
     private String NachName;
     @OneToOne
     private Adresse Adresse;
-    @OneToOne
     private Email EmailAdresse;
     @ManyToOne
     private Professor ErstPruefer;
     @ManyToOne
     private Professor ZweitPruefer;
-    @ManyToMany
-    @ElementCollection
-    private List<Pruefungen> Pruefungen;
 
     public Student()
     {
         this.ErstPruefer = null;
         this.ZweitPruefer = null;
-        this.Pruefungen = new ArrayList<>();
     }
     
         public Student(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
@@ -59,7 +48,7 @@ public class Student extends SingleIdEntity
         this.EmailAdresse = EmailAdresse;
     } 
 
-    public Student(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, Professor ErstPruefer, Professor ZweitPruefer, ArrayList<Pruefungen> pruefungen)
+    public Student(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, Professor ErstPruefer, Professor ZweitPruefer)
     {
         this();
         this.VorName = VorName;
@@ -68,7 +57,6 @@ public class Student extends SingleIdEntity
         this.EmailAdresse = EmailAdresse;
         this.ErstPruefer = ErstPruefer;
         this.ZweitPruefer = ZweitPruefer;
-        this.Pruefungen = pruefungen;
     }    
 
     public String getVorName()
@@ -131,15 +119,6 @@ public class Student extends SingleIdEntity
         this.ZweitPruefer = ZweitPruefer;
     }
 
-    public List<Pruefungen> getPruefungen()
-    {
-        return Pruefungen;
-    }
-
-    public void setPruefungen(List<Pruefungen> Pruefungen)
-    {
-        this.Pruefungen = Pruefungen;
-    }
     
     @Override
     public String toString()

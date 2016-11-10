@@ -8,7 +8,6 @@ package Servlets;
 import Entity.Adresse;
 import Entity.Email;
 import Entity.Professor;
-import Entity.Pruefungen;
 import Entity.Student;
 import Service.DBService;
 import java.io.IOException;
@@ -62,13 +61,8 @@ public class Init extends HttpServlet
             Professor p = new Professor("Max", "MusterProf", a1, new Email("Mustermann@prof.de"));    
             p = db.addProfessor(p);
             Student s = new Student("Max", "MusterStudent", a2, new Email("Mustermann@student.de"));
-            Student s2 = new Student("Maxi", "MusterStudent", a2, new Email("Mustermann@student.de"));
+            
             s = db.addStudent(s);
-            s2 = db.addStudent(s2);
-            
-            Pruefungen pr = new Pruefungen("Mahte");
-            pr = db.addPruefung(pr);
-            
             db.addBachelor(p, s);
             
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");

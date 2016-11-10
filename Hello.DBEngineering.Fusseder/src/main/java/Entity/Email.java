@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 /**
@@ -12,7 +13,7 @@ import javax.persistence.Embeddable;
  * @author Florian
  */
 @Embeddable
-public class Email
+public class Email implements Serializable
 {
     private String EmailAdresse;
 
