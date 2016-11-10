@@ -5,16 +5,22 @@
  */
 package Entity;
 
+<<<<<<< HEAD
 import Entity.SingleIdEntity;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+=======
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.ElementCollection;
+>>>>>>> 52fb54bda86e53d2d4e2fa2dd89598f9c2640be9
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Null;
+
 
 /**
  *
@@ -33,29 +39,36 @@ public class Student extends SingleIdEntity
     private Professor ErstPruefer;
     @ManyToOne
     private Professor ZweitPruefer;
+    @ManyToMany
+    @ElementCollection
+    private List<Pruefungen> Pruefungen;
 
     public Student()
     {
+        this.ErstPruefer = null;
+        this.ZweitPruefer = null;
+        this.Pruefungen = new ArrayList<>();
     }
     
         public Student(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
     {
+        this();
         this.VorName = VorName;
         this.NachName = NachName;
         this.Adresse = Adresse;
         this.EmailAdresse = EmailAdresse;
-        this.ErstPruefer = null;
-        this.ZweitPruefer = null;
     } 
 
-    public Student(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, Professor ErstPruefer, Professor ZweitPruefer)
+    public Student(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, Professor ErstPruefer, Professor ZweitPruefer, ArrayList<Pruefungen> pruefungen)
     {
+        this();
         this.VorName = VorName;
         this.NachName = NachName;
         this.Adresse = Adresse;
         this.EmailAdresse = EmailAdresse;
         this.ErstPruefer = ErstPruefer;
         this.ZweitPruefer = ZweitPruefer;
+        this.Pruefungen = pruefungen;
     }    
 
     public String getVorName()
@@ -118,6 +131,16 @@ public class Student extends SingleIdEntity
         this.ZweitPruefer = ZweitPruefer;
     }
 
+    public List<Pruefungen> getPruefungen()
+    {
+        return Pruefungen;
+    }
+
+    public void setPruefungen(List<Pruefungen> Pruefungen)
+    {
+        this.Pruefungen = Pruefungen;
+    }
+    
     @Override
     public String toString()
     {

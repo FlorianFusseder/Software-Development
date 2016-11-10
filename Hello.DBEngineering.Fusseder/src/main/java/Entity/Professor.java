@@ -8,6 +8,8 @@ package Entity;
 import Entity.SingleIdEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,27 +36,29 @@ public class Professor extends SingleIdEntity
     private Email EmailAdresse;
     @ElementCollection
     @OneToMany(mappedBy = "ErstPruefer")
-    private ArrayList<Student> BachelorPruefer;
+    private List<Student> BachelorPruefer;
     @ElementCollection
     @OneToMany(mappedBy = "ZweitPruefer")
-    private ArrayList<Student> BachelorZweitPruefer;
+    private List<Student> BachelorZweitPruefer;
 
     public Professor()
     {
-    }
-
-    public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
-    {
-        this.VorName = VorName;
-        this.NachName = NachName;
-        this.Adresse = Adresse;
-        this.EmailAdresse = EmailAdresse;
         this.BachelorPruefer = new ArrayList<>();
         this.BachelorZweitPruefer = new ArrayList<>();
     }
 
+    public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse)
+    {
+        this();
+        this.VorName = VorName;
+        this.NachName = NachName;
+        this.Adresse = Adresse;
+        this.EmailAdresse = EmailAdresse;
+    }
+
     public Professor(String VorName, String NachName, Adresse Adresse, Email EmailAdresse, ArrayList<Student> BachelorPruefer, ArrayList<Student> BachelorZweitPruefer)
     {
+        this();
         this.VorName = VorName;
         this.NachName = NachName;
         this.Adresse = Adresse;
@@ -103,9 +107,9 @@ public class Professor extends SingleIdEntity
         this.EmailAdresse = EmailAdresse;
     }
 
-    public ArrayList<Student> getBachelorPruefer()
+    public List<Student> getBachelorPruefer()
     {
-        return BachelorPruefer;
+        return Collections.unmodifiableList(BachelorPruefer);
     }
 
     public void addBachelorPruefer(Student s)
@@ -118,7 +122,7 @@ public class Professor extends SingleIdEntity
         this.BachelorPruefer = BachelorPruefer;
     }
 
-    public ArrayList<Student> getBachelorZweitPruefer()
+    public List<Student> getBachelorZweitPruefer()
     {
         return BachelorZweitPruefer;
     }
