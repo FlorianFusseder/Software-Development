@@ -7,12 +7,16 @@ package Entitys;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,10 +29,10 @@ abstract class Book extends SingleIdEntity<Long>
     
     private String isbn;
     
+    @Temporal(TemporalType.TIMESTAMP)
     private Date release;
     
-    @ManyToMany(mappedBy = "books")
-    @ElementCollection
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
     private List<Author> author;
     
     private BigDecimal price;
@@ -53,6 +57,15 @@ abstract class Book extends SingleIdEntity<Long>
         this.release = release;
         this.author = author;
         this.price = price;
+    }
+    
+    
+    @PreUpdate
+    @PrePersist
+    private void checkLegit(){
+        //todo ask if regex in annotaion or here and add right regex
+        if(false)
+            throw new IllegalArgumentException("Adress value had a wrong Format:\n" + this.toString());
     }
 
     public String getName()
@@ -87,7 +100,7 @@ abstract class Book extends SingleIdEntity<Long>
 
     public List<Author> getAuthor()
     {
-        return author;
+        return Collections.unmodifiableList(author);
     }
 
     public void setAuthor(List<Author> author)

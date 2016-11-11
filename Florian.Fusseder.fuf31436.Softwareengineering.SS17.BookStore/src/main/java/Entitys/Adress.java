@@ -6,11 +6,10 @@
 package Entitys;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -37,6 +36,13 @@ class Adress implements Serializable
         this.street = street;
         this.city = city;
         this.postNumber = postNumber;
+    }
+    
+    @PreUpdate
+    @PrePersist
+    private void checkLegit(){
+        if(street.isEmpty() || city.isEmpty() || String.valueOf(postNumber).length() != 5)
+            throw new IllegalArgumentException("Adress value had a wrong Format:\n" + this.toString());
     }
 
     public String getStreet()

@@ -6,27 +6,26 @@
 package Entitys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * 
  * @author Florian
  */
 @Entity
+@Table(name = "customer")
 public class Customer extends Person
 {
     @OneToOne
     private BankDetail bankDetail;
     
-    @ElementCollection
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Bill> bills;
 
     public Customer()
@@ -60,7 +59,7 @@ public class Customer extends Person
 
     public List<Bill> getBills()
     {
-        return bills;
+        return Collections.unmodifiableList(bills);
     }
 
     public void setBills(List<Bill> bills)

@@ -6,24 +6,25 @@
 package Entitys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Florian
  */
 @Entity
+@Table(name = "author")
 public class Author extends Person
 {
 
     private String sold;
     
-    @ManyToMany
-    @ElementCollection
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Book> books;
 
     public Author()
@@ -57,7 +58,7 @@ public class Author extends Person
 
     public List<Book> getBooks()
     {
-        return books;
+        return Collections.unmodifiableList(books);
     }
 
     public void setBooks(List<Book> books)

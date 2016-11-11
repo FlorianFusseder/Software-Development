@@ -6,9 +6,10 @@
 package Entitys;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -22,6 +23,7 @@ import javax.persistence.Table;
 public class PaperBook extends Book
 {
     @ElementCollection
+    @CollectionTable(name = "copies")
     private List<Book> copies;
     
     private String location;
@@ -46,7 +48,7 @@ public class PaperBook extends Book
 
     public List<Book> getCopies()
     {
-        return copies;
+        return Collections.unmodifiableList(copies);
     }
 
     public void setCopies(List<Book> copies)

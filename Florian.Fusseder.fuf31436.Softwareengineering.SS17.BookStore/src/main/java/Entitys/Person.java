@@ -7,13 +7,16 @@ package Entitys;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
  *
  * @author Florian
  */
 @Entity
-public abstract class Person extends SingleIdEntity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Person extends SingleIdEntity<Long>
 {
     
     @Column(name = "name")
