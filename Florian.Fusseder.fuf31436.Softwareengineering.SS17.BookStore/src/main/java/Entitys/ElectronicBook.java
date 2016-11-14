@@ -10,18 +10,31 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 /**
- *
+ * Creates a E-AbstractBook
+ * 
  * @author Florian
  */
 @Entity
-public class ElectronicBook extends Book
+public class ElectronicBook extends AbstractBook
 {
     private String license;
 
+    /**
+     * Create a empty E-AbstractBook
+     */
     public ElectronicBook()
     {
     }
 
+    /**
+     * Creates an E-AbstractBook with given fields
+     * 
+     * @param license
+     * @param name
+     * @param isbn
+     * @param release
+     * @param price 
+     */
     public ElectronicBook(String license, String name, String isbn, Date release, BigDecimal price)
     {
         super(name, isbn, release, price);

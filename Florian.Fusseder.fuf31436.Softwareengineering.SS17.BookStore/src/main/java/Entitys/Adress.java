@@ -12,11 +12,12 @@ import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
 /**
- *
+ * Represents an Adress
+ * 
  * @author Florian
  */
 @Embeddable
-class Adress implements Serializable
+public class Adress implements Serializable
 {
     @NotNull
     private String street;
@@ -27,10 +28,19 @@ class Adress implements Serializable
     @NotNull
     private int postNumber;
 
+    /**
+     * Creates an Adress with empty fields
+     */
     public Adress()
     {
     }
-
+    
+    /**
+     * Creates an Adress with given fields
+     * @param street Name of the street
+     * @param city Name of the city
+     * @param postNumber postnumber has do be 5 digits long to be legit
+     */
     public Adress(String street, String city, int postNumber)
     {
         this.street = street;
@@ -40,6 +50,9 @@ class Adress implements Serializable
     
     @PreUpdate
     @PrePersist
+    /**
+     * Checks for legit data in the street, city and postnumber fields. Is PreUpdate and PrePresist Annotated
+     */
     private void checkLegit(){
         if(street.isEmpty() || city.isEmpty() || String.valueOf(postNumber).length() != 5)
             throw new IllegalArgumentException("Adress value had a wrong Format:\n" + this.toString());

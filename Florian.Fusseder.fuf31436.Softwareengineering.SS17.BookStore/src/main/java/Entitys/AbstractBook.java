@@ -19,11 +19,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * Abstract AbstractBook Class
  * @author Florian
  */
 @Entity
-abstract class Book extends SingleIdEntity<Long>
+abstract public class AbstractBook extends SingleIdEntity<Long>
 {
     private String name;
     
@@ -36,13 +36,13 @@ abstract class Book extends SingleIdEntity<Long>
     private List<Author> author;
     
     private BigDecimal price;
-
-    protected Book()
+    
+    protected AbstractBook()
     {
         this.author = new ArrayList<>();
     }
 
-    protected Book(String name, String isbn, Date release, BigDecimal price)
+    protected AbstractBook(String name, String isbn, Date release, BigDecimal price)
     {   this();
         this.name = name;
         this.isbn = isbn;
@@ -50,7 +50,7 @@ abstract class Book extends SingleIdEntity<Long>
         this.price = price;
     }
 
-    protected Book(String name, String isbn, Date release, List<Author> author, BigDecimal price)
+    protected AbstractBook(String name, String isbn, Date release, List<Author> author, BigDecimal price)
     {
         this.name = name;
         this.isbn = isbn;

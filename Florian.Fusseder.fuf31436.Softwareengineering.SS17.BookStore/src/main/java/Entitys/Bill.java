@@ -6,6 +6,8 @@
 package Entitys;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -18,44 +20,67 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
+ * Represents a Bill for a AbstractBook
  *
  * @author Florian
  */
 @Entity
 @Table(name = "bills")
-class Bill extends SingleIdEntity<Long>
+public class Bill extends SingleIdEntity<Long>
 {
-    
+
     private BigDecimal total;
- 
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date buyingDate;
-    
-    private Customer customer;
-    
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Book> books;
 
+    private Customer customer;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<AbstractBook> books;
+
+    /**
+     * Creates a Bill with empty fields
+     */
     public Bill()
     {
-        this.total = BigDecimal.valueOf(0);
-        this.books = new ArrayList<>();
     }
 
-    public Bill(BigDecimal total, Date buyingDate, Customer customer)
+    /**
+     * Creates a Bill with the given customer and a ArrayList of books.
+     * Timestamp and total price will be automatically filled in
+     *
+     * @param customer Customer that owns the Bill
+     * @param books List of bought books
+     */
+    public Bill(Customer customer, ArrayList<AbstractBook> books)
     {
-        this();
-        this.total = total;
-        this.buyingDate = buyingDate;
+        this.buyingDate = new Date();
         this.customer = customer;
+        this.books = books;
+        this.total = new BigDecimal(BigInteger.ZERO);
+        if (this.books != null)
+        {
+            for (AbstractBook book : books)
+            {
+                BigDecimal dd = book.getPrice();
+                this.total = this.total.add(dd);
+                
+                for (Author author : book.getAuthor())
+                {
+                    author.increaseSold(1);
+                }
+            }
+        }
+        
     }
 
-    public List<Book> getBooks()
+    public List<AbstractBook> getBooks()
     {
         return Collections.unmodifiableList(books);
     }
 
-    public void setBooks(List<Book> books)
+    public void setBooks(List<AbstractBook> books)
     {
         this.books = books;
     }

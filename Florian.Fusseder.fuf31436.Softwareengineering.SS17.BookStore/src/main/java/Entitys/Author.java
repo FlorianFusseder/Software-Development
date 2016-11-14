@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
+ * Represents an Author
  *
  * @author Florian
  */
@@ -22,48 +23,83 @@ import javax.persistence.Table;
 public class Author extends Person
 {
 
-    private String sold;
-    
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Book> books;
+    private long sold;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<AbstractBook> books;
+
+    /**
+     * Creates an Author with empty fields but initializeses a empty books List
+     */
     public Author()
     {
         this.books = new ArrayList<>();
     }
 
-    public Author(String sold, String name, Adress adress)
+    /**
+     * Creates an Author with given Fieldes and a empty books List
+     *
+     * @param firstName Firstname
+     * @param lastName Lastname
+     * @param adress Adress Object
+     * @param sold Number of sold books from this Author
+     */
+    public Author(String firstName, String lastName, Adress adress, long sold)
     {
-        super(name, adress);
+        super(firstName, lastName, adress);
         this.sold = sold;
         this.books = new ArrayList<>();
     }
-    
-    public Author(String sold, List<Book> books, String name, Adress adress)
+
+    /**
+     * Creates an Author with given Fieldes
+     *
+     * @param firstName
+     * @param lastName
+     * @param adress
+     * @param sold amount of sold books
+     * @param books
+     */
+    public Author(String firstName, String lastName, Adress adress, long sold, List<AbstractBook> books)
     {
-        super(name, adress);
+        super(firstName, lastName, adress);
         this.sold = sold;
         this.books = books;
     }
 
-    public String getSold()
+    public long getSold()
     {
         return sold;
     }
 
-    public void setSold(String sold)
+    public void setSold(long sold)
     {
         this.sold = sold;
     }
 
-    public List<Book> getBooks()
+    /**
+     * Increase the sold books of the author by given number
+     *
+     * @param sold Amount of sold books
+     */
+    public void increaseSold(long sold)
+    {
+        this.sold += sold;
+    }
+
+    public List<AbstractBook> getBooks()
     {
         return Collections.unmodifiableList(books);
     }
 
-    public void setBooks(List<Book> books)
+    public void setBooks(List<AbstractBook> books)
     {
         this.books = books;
+    }
+
+    public void addBook(AbstractBook book)
+    {
+        this.books.add(book);
     }
 
     @Override

@@ -5,12 +5,12 @@
  */
 package Entitys;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 /**
+ * Abstract Person Class
  *
  * @author Florian
  */
@@ -18,31 +18,41 @@ import javax.persistence.InheritanceType;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person extends SingleIdEntity<Long>
 {
-    
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "adress")
+
+    private String firstName;
+    private String lastName;
     private Adress adress;
 
     protected Person()
     {
     }
 
-    protected Person(String name, Adress adress)
+    protected Person(String firstName, String lastName, Adress adress)
     {
-        this.name = name;
+        this();
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.adress = adress;
     }
 
-    public String getName()
+    public String getFirstName()
     {
-        return name;
+        return firstName;
     }
 
-    public void setName(String name)
+    public void setFirstName(String firstName)
     {
-        this.name = name;
+        this.firstName = firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
     }
 
     public Adress getAdress()
@@ -58,6 +68,8 @@ public abstract class Person extends SingleIdEntity<Long>
     @Override
     public String toString()
     {
-        return "Person{" + "name=" + name + ", adress=" + adress + '}';
+        return "Person{" + "firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress + '}';
     }
+    
+    
 }

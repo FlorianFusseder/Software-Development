@@ -5,9 +5,22 @@
  */
 package Servlets;
 
+import Entitys.AbstractBook;
+import Entitys.Author;
+import Entitys.Customer;
+import Entitys.Adress;
+import Entitys.BankDetail;
+import Entitys.Bill;
+import Entitys.PBookData;
+import Entitys.PaperBook;
 import Services.PersonService;
+import java.awt.print.Book;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 })
 public class Init extends HttpServlet
 {
-    
+
     @Inject
     private PersonService personService;
 
@@ -48,9 +61,35 @@ public class Init extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Init</title>");            
+            out.println("<title>Servlet Init</title>");
             out.println("</head>");
             out.println("<body>");
+
+            Adress addr = new Adress("MusterStrasse", "Musterstadt", 84140);
+            BankDetail b = new BankDetail("55551", "55551");
+            
+            Author a = new Author("MaxAuthor", "MusterAuthor", addr, 0);
+            Customer c = new Customer("Max", "MusterCustomer", addr);
+            
+            personService.persistAuthor(a);
+            personService.persistCustomer(c);
+            personService.persistCustomer(c, b);
+            
+            List<PBookData> pbd = new ArrayList<>();
+            pbd.add(new PBookData("oben rechts", "zum verkauf"));
+            pbd.add(new PBookData("unten links", "unterwegs"));
+            
+            PaperBook pb = new PaperBook("Musterbuch", "ff-ff--fff", new Date(), BigDecimal.ONE, pbd);
+            
+            personService.persistBook(pb);
+            personService.persistNewBook(a, pb);
+            PaperBook bb = personService.find(pb);
+            
+            personService.persistBill(c, bb);
+            
+            out.println("<h1>Book: " + bb.getName() + " " + bb.getIsbn() + " " + bb.getCopies().get(0).toString() + "</h1>");
+            out.println("<h1>Book: " + bb.getName() + " " + bb.getIsbn() + " " + bb.getCopies().get(1).toString() + "</h1>");
+
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
