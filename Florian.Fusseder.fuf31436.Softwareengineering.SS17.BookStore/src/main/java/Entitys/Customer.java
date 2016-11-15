@@ -58,7 +58,6 @@ public class Customer extends Person
      * @param firstName
      * @param lastName
      * @param adress
-     * @param phone
      * @param bankDetail
      */
     public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail)
@@ -74,7 +73,6 @@ public class Customer extends Person
      * @param firstName
      * @param lastName
      * @param adress
-     * @param phone
      * @param bankDetail
      * @param bills
      */

@@ -5,7 +5,6 @@
  */
 package Services;
 
-import Entitys.Customer;
 import java.awt.print.Book;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

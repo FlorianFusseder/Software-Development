@@ -7,8 +7,6 @@ package Entitys;
 
 import java.io.Serializable;
 import javax.persistence.Embeddable;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -46,16 +44,6 @@ public class Adress implements Serializable
         this.street = street;
         this.city = city;
         this.postNumber = postNumber;
-    }
-    
-    @PreUpdate
-    @PrePersist
-    /**
-     * Checks for legit data in the street, city and postnumber fields. Is PreUpdate and PrePresist Annotated
-     */
-    private void checkLegit(){
-        if(street.isEmpty() || city.isEmpty() || String.valueOf(postNumber).length() != 5)
-            throw new IllegalArgumentException("Adress value had a wrong Format:\n" + this.toString());
     }
 
     public String getStreet()

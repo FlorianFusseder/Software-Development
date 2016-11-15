@@ -7,7 +7,6 @@ package Entitys;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -53,7 +52,7 @@ public class Bill extends SingleIdEntity<Long>
      * @param customer Customer that owns the Bill
      * @param books List of bought books
      */
-    public Bill(Customer customer, ArrayList<AbstractBook> books)
+    public Bill(Customer customer, List<AbstractBook> books)
     {
         this.buyingDate = new Date();
         this.customer = customer;
@@ -65,14 +64,8 @@ public class Bill extends SingleIdEntity<Long>
             {
                 BigDecimal dd = book.getPrice();
                 this.total = this.total.add(dd);
-                
-                for (Author author : book.getAuthor())
-                {
-                    author.increaseSold(1);
-                }
             }
-        }
-        
+}
     }
 
     public List<AbstractBook> getBooks()

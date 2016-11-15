@@ -29,7 +29,6 @@ public abstract class Person extends SingleIdEntity<Long>
 
     protected Person(String firstName, String lastName, Adress adress)
     {
-        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;

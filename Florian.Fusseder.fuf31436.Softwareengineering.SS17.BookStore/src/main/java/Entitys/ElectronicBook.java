@@ -35,7 +35,7 @@ public class ElectronicBook extends AbstractBook
      * @param release
      * @param price 
      */
-    public ElectronicBook(String license, String name, String isbn, Date release, BigDecimal price)
+    public ElectronicBook(String name, String isbn, Date release, BigDecimal price, String license)
     {
         super(name, isbn, release, price);
         this.license = license;

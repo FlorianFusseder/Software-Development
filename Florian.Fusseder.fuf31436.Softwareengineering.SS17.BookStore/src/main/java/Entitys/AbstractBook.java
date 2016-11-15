@@ -13,37 +13,38 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  * Abstract AbstractBook Class
+ *
  * @author Florian
  */
 @Entity
 abstract public class AbstractBook extends SingleIdEntity<Long>
 {
+
     private String name;
-    
+
     private String isbn;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date release;
-    
+
     @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
     private List<Author> author;
-    
+
     private BigDecimal price;
-    
+
     protected AbstractBook()
     {
         this.author = new ArrayList<>();
     }
 
     protected AbstractBook(String name, String isbn, Date release, BigDecimal price)
-    {   this();
+    {
+        this();
         this.name = name;
         this.isbn = isbn;
         this.release = release;
@@ -57,15 +58,6 @@ abstract public class AbstractBook extends SingleIdEntity<Long>
         this.release = release;
         this.author = author;
         this.price = price;
-    }
-    
-    
-    @PreUpdate
-    @PrePersist
-    private void checkLegit(){
-        //todo ask if regex in annotaion or here and add right regex
-        if(false)
-            throw new IllegalArgumentException("Adress value had a wrong Format:\n" + this.toString());
     }
 
     public String getName()
@@ -106,6 +98,11 @@ abstract public class AbstractBook extends SingleIdEntity<Long>
     public void setAuthor(List<Author> author)
     {
         this.author = author;
+    }
+
+    public void addAuthor(Author author)
+    {
+        this.author.add(author);
     }
 
     public BigDecimal getPrice()

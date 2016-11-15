@@ -23,8 +23,6 @@ import javax.persistence.Table;
 public class Author extends Person
 {
 
-    private long sold;
-
     @ManyToMany(cascade = CascadeType.ALL)
     private List<AbstractBook> books;
 
@@ -47,7 +45,6 @@ public class Author extends Person
     public Author(String firstName, String lastName, Adress adress, long sold)
     {
         super(firstName, lastName, adress);
-        this.sold = sold;
         this.books = new ArrayList<>();
     }
 
@@ -63,28 +60,7 @@ public class Author extends Person
     public Author(String firstName, String lastName, Adress adress, long sold, List<AbstractBook> books)
     {
         super(firstName, lastName, adress);
-        this.sold = sold;
         this.books = books;
-    }
-
-    public long getSold()
-    {
-        return sold;
-    }
-
-    public void setSold(long sold)
-    {
-        this.sold = sold;
-    }
-
-    /**
-     * Increase the sold books of the author by given number
-     *
-     * @param sold Amount of sold books
-     */
-    public void increaseSold(long sold)
-    {
-        this.sold += sold;
     }
 
     public List<AbstractBook> getBooks()
@@ -105,6 +81,6 @@ public class Author extends Person
     @Override
     public String toString()
     {
-        return super.toString() + " Author{" + "sold=" + sold + ", books=" + books + '}';
+        return "Author{" + "books=" + books + '}';
     }
 }

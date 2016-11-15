@@ -13,7 +13,6 @@ import Entitys.Customer;
 import Entitys.ElectronicBook;
 import Entitys.PBookData;
 import Entitys.PaperBook;
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -61,7 +60,94 @@ public class PersonService
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public PaperBook persistBook(PaperBook pb)
+    public void persistBill(Customer c, AbstractBook abstractBook)
+    {
+
+        if (abstractBook.getClass() == PaperBook.class)
+        {
+            this.persistBill(c, (PaperBook) abstractBook);
+        } else
+        {
+            this.persistBill(c, (ElectronicBook) abstractBook);
+        }
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    private void persistBill(Customer c, ElectronicBook eb)
+    {
+        c = manager.merge(c);
+        eb = manager.merge(eb);
+
+        ArrayList<AbstractBook> l = new ArrayList<>();
+        l.add(eb);
+
+        Bill b = new Bill(c, l);
+
+        c.addBill(b);
+
+        manager.persist(b);
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    private void persistBill(Customer c, PaperBook eb)
+    {
+        c = manager.merge(c);
+        eb = manager.merge(eb);
+
+        ArrayList<AbstractBook> l = new ArrayList<>();
+        l.add(eb);
+
+        Bill b = new Bill(c, l);
+
+        c.addBill(b);
+        manager.persist(b);
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void persistBill(Customer c, List<AbstractBook> l)
+    {
+        c = manager.merge(c);
+        ArrayList<AbstractBook> mlist = new ArrayList<>();
+        
+        for (AbstractBook abstractBook : l)
+        {
+            mlist.add(manager.merge(abstractBook));
+        }
+        
+        Bill b = new Bill(c, mlist);
+        c.addBill(b);
+        manager.persist(b);
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void persistNewBook(Author a, AbstractBook b)
+    {
+        if (b.getClass() == PaperBook.class)
+        {
+            this.persistBook((PaperBook) b);
+        } else
+        {
+            this.persistBook((ElectronicBook) b);
+        }
+
+        b = manager.merge(b);
+        a = manager.merge(a);
+
+        a.addBook(b);
+        b.addAuthor(a);
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void persistNewBook(Author a, List<AbstractBook> books)
+    {
+        for (AbstractBook b : books)
+        {
+            this.persistNewBook(a, b);
+        }
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    private PaperBook persistBook(PaperBook pb)
     {
         for (PBookData temp : pb.getCopies())
         {
@@ -72,43 +158,11 @@ public class PersonService
         return pb;
     }
 
-    public PaperBook find(PaperBook p)
-    {
-        return manager.find(PaperBook.class, p.getId());
-    }
-
     @Transactional(Transactional.TxType.REQUIRED)
-    public void persistBill(Customer c, PaperBook lb)
+    private ElectronicBook persistBook(ElectronicBook eb)
     {
-        c = manager.merge(c);
-        lb = manager.merge(lb);
-        Author a = null;
-        
-        for (Author author : lb.getAuthor())
-        {
-            a = manager.merge(author);
-            a.increaseSold(1);
-        }
-
-        ArrayList<AbstractBook> l = new ArrayList<>();
-        l.add(lb);
-
-        
-        Bill b = new Bill(c, l);
-
-        c.addBill(b);
-
-        manager.persist(b);
-    }
-
-    @Transactional(Transactional.TxType.REQUIRED)
-    public void persistNewBook(Author a, PaperBook pb)
-    {
-        a = manager.merge(a);
-        pb = manager.merge(pb);
-        
-        a.addBook(pb);
-        return;
+        manager.persist(eb);
+        return eb;
     }
 
 }

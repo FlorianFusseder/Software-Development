@@ -6,7 +6,6 @@
 package Services;
 
 import Entitys.BankDetail;
-import Entitys.Customer;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;

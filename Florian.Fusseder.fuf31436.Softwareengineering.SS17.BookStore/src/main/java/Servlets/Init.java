@@ -10,11 +10,10 @@ import Entitys.Author;
 import Entitys.Customer;
 import Entitys.Adress;
 import Entitys.BankDetail;
-import Entitys.Bill;
+import Entitys.ElectronicBook;
 import Entitys.PBookData;
 import Entitys.PaperBook;
 import Services.PersonService;
-import java.awt.print.Book;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -73,22 +72,26 @@ public class Init extends HttpServlet
             
             personService.persistAuthor(a);
             personService.persistCustomer(c);
-            personService.persistCustomer(c, b);
+            c = personService.persistCustomer(c, b);
             
             List<PBookData> pbd = new ArrayList<>();
             pbd.add(new PBookData("oben rechts", "zum verkauf"));
             pbd.add(new PBookData("unten links", "unterwegs"));
             
             PaperBook pb = new PaperBook("Musterbuch", "ff-ff--fff", new Date(), BigDecimal.ONE, pbd);
+            ElectronicBook eb = new ElectronicBook("MusterEBook", "ee-eee-333", new Date(), new BigDecimal(150), "lichensetwo2");
             
-            personService.persistBook(pb);
             personService.persistNewBook(a, pb);
-            PaperBook bb = personService.find(pb);
+            personService.persistNewBook(a, eb);
             
-            personService.persistBill(c, bb);
+            List<AbstractBook> l = new ArrayList<>();
+            l.add(pb);
+            l.add(eb);
+            //l.add(pb); todo works not with double
             
-            out.println("<h1>Book: " + bb.getName() + " " + bb.getIsbn() + " " + bb.getCopies().get(0).toString() + "</h1>");
-            out.println("<h1>Book: " + bb.getName() + " " + bb.getIsbn() + " " + bb.getCopies().get(1).toString() + "</h1>");
+            personService.persistBill(c, l);
+            //personService.persistBill(c, eb);
+            //personService.persistBill(c, pb);
 
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");
