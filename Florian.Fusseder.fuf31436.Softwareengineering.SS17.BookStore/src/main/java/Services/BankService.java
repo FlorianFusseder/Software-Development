@@ -14,13 +14,14 @@ import javax.transaction.Transactional;
  *
  * @author Florian
  */
+@Transactional(Transactional.TxType.REQUIRED)
 public class BankService
 {
     
     @PersistenceContext(unitName = "BookStorePU")
     private EntityManager manager;  
     
-    @Transactional(Transactional.TxType.REQUIRED)
+    
     public BankDetail persistCustomer(BankDetail d)
     {
         manager.persist(d);

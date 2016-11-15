@@ -5,9 +5,9 @@
  */
 package Entitys;
 
+import Technicals.GeneratedIdEntity;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "bills")
-public class Bill extends SingleIdEntity<Long>
+public class Bill extends GeneratedIdEntity
 {
 
     private BigDecimal total;

@@ -23,27 +23,28 @@ import javax.transaction.Transactional;
  *
  * @author Florian
  */
+@Transactional(Transactional.TxType.REQUIRED)
 public class PersonService
 {
 
     @PersistenceContext(unitName = "BookStorePU")
     private EntityManager manager;
 
-    @Transactional(Transactional.TxType.REQUIRED)
+    
     public Customer persistCustomer(Customer c)
     {
         manager.persist(c);
         return c;
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
+   
     public BankDetail persistBankDetails(BankDetail d)
     {
         manager.persist(d);
         return d;
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
+    
     public Customer persistCustomer(Customer c, BankDetail d)
     {
         manager.persist(d);
@@ -52,14 +53,13 @@ public class PersonService
         return c;
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
+    
     public Author persistAuthor(Author a)
     {
         manager.persist(a);
         return a;
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     public void persistBill(Customer c, AbstractBook abstractBook)
     {
 
@@ -72,7 +72,6 @@ public class PersonService
         }
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     private void persistBill(Customer c, ElectronicBook eb)
     {
         c = manager.merge(c);
@@ -88,7 +87,6 @@ public class PersonService
         manager.persist(b);
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     private void persistBill(Customer c, PaperBook eb)
     {
         c = manager.merge(c);
@@ -103,7 +101,6 @@ public class PersonService
         manager.persist(b);
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     public void persistBill(Customer c, List<AbstractBook> l)
     {
         c = manager.merge(c);
@@ -119,7 +116,6 @@ public class PersonService
         manager.persist(b);
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     public void persistNewBook(Author a, AbstractBook b)
     {
         if (b.getClass() == PaperBook.class)
@@ -137,7 +133,6 @@ public class PersonService
         b.addAuthor(a);
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     public void persistNewBook(Author a, List<AbstractBook> books)
     {
         for (AbstractBook b : books)
@@ -146,7 +141,6 @@ public class PersonService
         }
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     private PaperBook persistBook(PaperBook pb)
     {
         for (PBookData temp : pb.getCopies())
@@ -158,7 +152,6 @@ public class PersonService
         return pb;
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     private ElectronicBook persistBook(ElectronicBook eb)
     {
         manager.persist(eb);

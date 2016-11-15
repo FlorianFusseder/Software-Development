@@ -5,6 +5,8 @@
  */
 package Entitys;
 
+import Technicals.GeneratedIdEntity;
+import Technicals.SingleIdEntity;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
@@ -15,7 +17,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 //@Table(name = "BankDetails")
-public class BankDetail extends SingleIdEntity<Long>
+public class BankDetail extends GeneratedIdEntity
 {
 
     @NotNull

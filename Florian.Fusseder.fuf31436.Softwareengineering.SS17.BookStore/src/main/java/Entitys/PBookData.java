@@ -5,6 +5,8 @@
  */
 package Entitys;
 
+import Technicals.GeneratedIdEntity;
+import Technicals.SingleIdEntity;
 import javax.persistence.Entity;
 
 /**
@@ -13,7 +15,7 @@ import javax.persistence.Entity;
  * @author Florian
  */
 @Entity
-public class PBookData extends SingleIdEntity<Long>
+public class PBookData extends GeneratedIdEntity
 {
     private String location;
     private String status;

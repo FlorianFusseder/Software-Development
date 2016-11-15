@@ -5,6 +5,8 @@
  */
 package Entitys;
 
+import Technicals.GeneratedIdEntity;
+import Technicals.SingleIdEntity;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,7 +18,7 @@ import javax.persistence.InheritanceType;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Person extends SingleIdEntity<Long>
+public abstract class Person extends GeneratedIdEntity
 {
 
     private String firstName;

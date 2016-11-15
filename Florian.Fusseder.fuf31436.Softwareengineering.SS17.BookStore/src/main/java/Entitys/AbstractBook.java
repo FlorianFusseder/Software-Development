@@ -5,6 +5,7 @@
  */
 package Entitys;
 
+import Technicals.RandomIdEntity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +23,7 @@ import javax.persistence.TemporalType;
  * @author Florian
  */
 @Entity
-abstract public class AbstractBook extends SingleIdEntity<Long>
+abstract public class AbstractBook extends RandomIdEntity
 {
 
     private String name;
