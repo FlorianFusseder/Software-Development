@@ -18,14 +18,6 @@ import javax.transaction.Transactional;
 public class BankService
 {
     
-    @PersistenceContext(unitName = "BookStorePU")
-    private EntityManager manager;  
-    
-    
-    public BankDetail persistCustomer(BankDetail d)
-    {
-        manager.persist(d);
-        return d;
-    }
+
     
 }

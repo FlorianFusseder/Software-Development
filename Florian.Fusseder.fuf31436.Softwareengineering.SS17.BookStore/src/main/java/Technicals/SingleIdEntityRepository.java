@@ -19,17 +19,27 @@ import javax.persistence.criteria.Root;
  * @param <K>
  * @param <E>
  */
-abstract public class SingleIdEntityRepository<K , E extends SingleIdEntity>
+ public class SingleIdEntityRepository<K , E extends SingleIdEntity>
 {
 
     @PersistenceContext(unitName = "BookStorePU")
-    private EntityManager manager;    
+    public EntityManager manager;    
     
     private final Class<E> type;
 
     public SingleIdEntityRepository(Class<E> type)
     {
         this.type = type;
+    }
+
+    public EntityManager getManager()
+    {
+        return manager;
+    }
+
+    public void setManager(EntityManager manager)
+    {
+        this.manager = manager;
     }
 
     public void persist(E entity)

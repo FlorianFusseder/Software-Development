@@ -5,26 +5,21 @@
  */
 package Services;
 
-import java.awt.print.Book;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import Entitys.AbstractBook;
+import Technicals.SingleIdEntityRepository;
 import javax.transaction.Transactional;
 
 /**
  *
  * @author Florian
  */
-public class BookService
+@Transactional(Transactional.TxType.REQUIRED)
+public class BookService extends  SingleIdEntityRepository<String, AbstractBook>
 {
 
-    @PersistenceContext(unitName = "BookStorePU")
-    private EntityManager manager;
-
-    @Transactional(Transactional.TxType.REQUIRED)
-    public Book persistCustomer(Book b)
+    public BookService(Class<AbstractBook> type)
     {
-        manager.persist(b);
-        return b;
+        super(type);
     }
 
 }

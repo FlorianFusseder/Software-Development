@@ -13,6 +13,7 @@ import Entitys.BankDetail;
 import Entitys.ElectronicBook;
 import Entitys.PBookData;
 import Entitys.PaperBook;
+import Services.BookService;
 import Services.PersonService;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,6 +41,10 @@ public class Init extends HttpServlet
 
     @Inject
     private PersonService personService;
+    
+
+    //@Inject               todo funktinoert so nicht...
+    //private BookService bookService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -87,11 +92,12 @@ public class Init extends HttpServlet
             List<AbstractBook> l = new ArrayList<>();
             l.add(pb);
             l.add(eb);
-            //l.add(pb); todo works not with double
+            //l.add(pb); todo works not with two times the same book
             
-            personService.persistBill(c, l);
-            //personService.persistBill(c, eb);
-            //personService.persistBill(c, pb);
+            //personService.persistBill(c, l);
+            personService.persistBill(c, eb);
+            personService.persistBill(c, pb);
+            personService.persistBill(c, pb);
 
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");
