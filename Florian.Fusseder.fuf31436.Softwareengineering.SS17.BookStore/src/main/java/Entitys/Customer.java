@@ -23,8 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "customer")
-public class Customer extends Person
-{
+public class Customer extends Person {
 
     @OneToOne
     private BankDetail bankDetail;
@@ -35,8 +34,7 @@ public class Customer extends Person
     /**
      * Creates a customer with empty fields and initializes a empty List<Bill>
      */
-    public Customer()
-    {
+    public Customer() {
         bills = new ArrayList<>();
     }
 
@@ -47,8 +45,7 @@ public class Customer extends Person
      * @param lastName
      * @param adress
      */
-    public Customer(String firstName, String lastName, Adress adress)
-    {
+    public Customer(String firstName, String lastName, Adress adress) {
         super(firstName, lastName, adress);
     }
 
@@ -60,8 +57,7 @@ public class Customer extends Person
      * @param adress
      * @param bankDetail
      */
-    public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail)
-    {
+    public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail) {
         super(firstName, lastName, adress);
         this.bankDetail = bankDetail;
         this.bills = new ArrayList<>();
@@ -76,48 +72,40 @@ public class Customer extends Person
      * @param bankDetail
      * @param bills
      */
-    public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail, List<Bill> bills)
-    {
+    public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail, List<Bill> bills) {
         super(firstName, lastName, adress);
         this.bankDetail = bankDetail;
         this.bills = bills;
     }
 
-    public BankDetail getBankDetail()
-    {
+    public BankDetail getBankDetail() {
         return bankDetail;
     }
 
-    public void setBankDetail(BankDetail bankDetail)
-    {
+    public void setBankDetail(BankDetail bankDetail) {
         this.bankDetail = bankDetail;
     }
 
-    public List<Bill> getBills()
-    {
+    public List<Bill> getBills() {
         return Collections.unmodifiableList(bills);
     }
 
-    public void setBills(List<Bill> bills)
-    {
+    public void setBills(List<Bill> bills) {
         this.bills = bills;
     }
 
-    public BigDecimal getTotalPayment()
-    {
+    public BigDecimal getTotalPayment() {
         BigDecimal dec = new BigDecimal(BigInteger.ZERO);
         bills.stream().forEach(b -> dec.add(b.getTotal()));
         return dec;
     }
 
-    public void addBill(Bill b)
-    {
+    public void addBill(Bill b) {
         this.bills.add(b);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return super.toString() + " Customer{" + "bankDetail=" + bankDetail + ", bills=" + bills + '}';
     }
 }

@@ -5,7 +5,7 @@
  */
 package Entitys;
 
-import Technicals.GeneratedIdEntity;
+import Technicals.Id.GeneratedIdEntity;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collections;
@@ -25,8 +25,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "bills")
-public class Bill extends GeneratedIdEntity
-{
+public class Bill extends GeneratedIdEntity {
 
     private BigDecimal total;
 
@@ -41,8 +40,7 @@ public class Bill extends GeneratedIdEntity
     /**
      * Creates a Bill with empty fields
      */
-    public Bill()
-    {
+    public Bill() {
     }
 
     /**
@@ -52,65 +50,53 @@ public class Bill extends GeneratedIdEntity
      * @param customer Customer that owns the Bill
      * @param books List of bought books
      */
-    public Bill(Customer customer, List<AbstractBook> books)
-    {
+    public Bill(Customer customer, List<AbstractBook> books) {
         this.buyingDate = new Date();
         this.customer = customer;
         this.books = books;
         this.total = new BigDecimal(BigInteger.ZERO);
-        if (this.books != null)
-        {
-            for (AbstractBook book : books)
-            {
+        if (this.books != null) {
+            for (AbstractBook book : books) {
                 BigDecimal dd = book.getPrice();
                 this.total = this.total.add(dd);
             }
-}
+        }
     }
 
-    public List<AbstractBook> getBooks()
-    {
+    public List<AbstractBook> getBooks() {
         return Collections.unmodifiableList(books);
     }
 
-    public void setBooks(List<AbstractBook> books)
-    {
+    public void setBooks(List<AbstractBook> books) {
         this.books = books;
     }
 
-    public BigDecimal getTotal()
-    {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total)
-    {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
-    public Date getBuyingDate()
-    {
+    public Date getBuyingDate() {
         return buyingDate;
     }
 
-    public void setBuyingDate(Date buyingDate)
-    {
+    public void setBuyingDate(Date buyingDate) {
         this.buyingDate = buyingDate;
     }
 
-    public Customer getCustomer()
-    {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer)
-    {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return super.toString() + " Bill{" + "books=" + books + ", total=" + total + ", buyingDate=" + buyingDate + ", customer=" + customer + '}';
     }
 }

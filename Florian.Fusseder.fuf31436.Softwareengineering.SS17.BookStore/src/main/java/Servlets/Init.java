@@ -11,10 +11,14 @@ import Entitys.Customer;
 import Entitys.Adress;
 import Entitys.BankDetail;
 import Entitys.ElectronicBook;
-import Entitys.PBookData;
 import Entitys.PaperBook;
+import Entitys.Person;
+import Entitys.ShoppingCart;
+import Services.BankService;
+import Services.BillService;
 import Services.BookService;
 import Services.PersonService;
+import Services.ShopingService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -32,20 +36,29 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Florian
  */
-@WebServlet(name = "Init", urlPatterns =
-{
-    "/Init"
-})
-public class Init extends HttpServlet
-{
+@WebServlet(name = "Init", urlPatterns
+        = {
+            "/Init"
+        })
+public class Init extends HttpServlet {
 
     @Inject
     private PersonService personService;
-    
+
+    @Inject
+    private BookService bookService;
+
+    @Inject
+    private BankService bankService;
+
+    @Inject
+    private ShopingService shoppingService;
+
+    @Inject
+    private BillService billService;
 
     //@Inject               todo funktinoert so nicht...
     //private BookService bookService;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -56,11 +69,9 @@ public class Init extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter())
-        {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -69,40 +80,42 @@ public class Init extends HttpServlet
             out.println("</head>");
             out.println("<body>");
 
+            //todo construtoren wie in den anderen todos angemerkt ändern und versuchen ein Buch mit autor zu erstellen und nur das buch ohne dne autor zu kommiten
+            //weil der autor ja schon davor bei einem ersten buch kommitet wurde
             Adress addr = new Adress("MusterStrasse", "Musterstadt", 84140);
             BankDetail b = new BankDetail("55551", "55551");
-            
             Author a = new Author("MaxAuthor", "MusterAuthor", addr, 0);
             Customer c = new Customer("Max", "MusterCustomer", addr);
-            
-            personService.persistAuthor(a);
-            personService.persistCustomer(c);
-            c = personService.persistCustomer(c, b);
-            
-            List<PBookData> pbd = new ArrayList<>();
-            pbd.add(new PBookData("oben rechts", "zum verkauf"));
-            pbd.add(new PBookData("unten links", "unterwegs"));
-            
-            PaperBook pb = new PaperBook("Musterbuch", "ff-ff--fff", new Date(), BigDecimal.ONE, pbd);
-            ElectronicBook eb = new ElectronicBook("MusterEBook", "ee-eee-333", new Date(), new BigDecimal(150), "lichensetwo2");
-            
-            personService.persistNewBook(a, pb);
-            personService.persistNewBook(a, eb);
-            
-            List<AbstractBook> l = new ArrayList<>();
-            l.add(pb);
-            l.add(eb);
-            //l.add(pb); todo works not with two times the same book
-            
-            //personService.persistBill(c, l);
-            personService.persistBill(c, eb);
-            personService.persistBill(c, pb);
-            personService.persistBill(c, pb);
+
+            AbstractBook pb = new PaperBook("Musterbuch", "ff-ff--fff", new Date(), BigDecimal.ONE, 14);
+            AbstractBook eb = new ElectronicBook("MusterEBook", "ee-eee-333", new Date(), new BigDecimal(150), "lichensetwo2");
+
+            List<AbstractBook> blist = new ArrayList<>();
+            blist.add(eb);
+            blist.add(pb);
+            ShoppingCart shoppingCart = new ShoppingCart(blist, c);
+
+            personService.persist(c);
+            personService.persist(a);
+            a = bookService.persistNewBook(eb, a);
+            a = bookService.persistNewBook(pb, a);
+
+            //AbstractBook aa = bookService.find(eb);
+            List<AbstractBook> bb = bookService.findAll();
+
+            out(a.toString(), out);
+
+            bb.forEach(bbb -> out(bbb.toString(), out));
 
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
+
+    }
+
+    public void out(String text, PrintWriter out) {
+        out.println("<h1> " + text + "</h1>");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -116,8 +129,7 @@ public class Init extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -131,8 +143,7 @@ public class Init extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -142,8 +153,7 @@ public class Init extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

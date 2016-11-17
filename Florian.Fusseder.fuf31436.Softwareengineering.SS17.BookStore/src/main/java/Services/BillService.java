@@ -5,19 +5,19 @@
  */
 package Services;
 
-import Technicals.Repo.BankRepo;
+import Technicals.Repo.BillRepo;
 import javax.inject.Inject;
 
 /**
  *
  * @author Florian
  */
-public class BankService {
+public class BillService {
 
     @Inject
-    private BankRepo manager;
+    private BillRepo billRepo;
 
-    public BankService() {
+    public BillService() {
     }
 
 }

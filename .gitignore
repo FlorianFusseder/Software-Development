@@ -321,6 +321,6 @@ __pycache__/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-/Florian.Fusseder.fuf31436.Softwareengineering.SS17.BookStore/target
-/Hello.DBEngineering.Fusseder/target
+/Florian.Fusseder.fuf31436.Softwareengineering.SS17.BookStore/target/
+/Hello.DBEngineering.Fusseder/target/
 

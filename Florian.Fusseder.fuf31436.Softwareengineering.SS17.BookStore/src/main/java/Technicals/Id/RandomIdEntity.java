@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Technicals;
+package Technicals.Id;
 
+import Technicals.Id.SingleIdEntity;
 import java.util.UUID;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -14,20 +15,22 @@ import javax.persistence.MappedSuperclass;
  * @author Florian
  */
 @MappedSuperclass
-public class RandomIdEntity extends SingleIdEntity<String>
-{
+public class RandomIdEntity extends SingleIdEntity<String> {
 
     @Id
     private String Id;
 
-    public RandomIdEntity()
-    {
+    public RandomIdEntity() {
         this.Id = UUID.randomUUID().toString();
     }
 
     @Override
-    public String getID()
-    {
+    public String getID() {
         return this.Id;
+    }
+
+    @Override
+    public String toString() {
+        return "RandomIdEntity{" + "Id=" + Id + '}';
     }
 }

@@ -20,17 +20,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "author")
-public class Author extends Person
-{
+public class Author extends Person {
 
+    //todo: machste mal mit übergebenen autor in den construcktoren wa
     @ManyToMany(cascade = CascadeType.ALL)
     private List<AbstractBook> books;
 
     /**
      * Creates an Author with empty fields but initializeses a empty books List
      */
-    public Author()
-    {
+    public Author() {
         this.books = new ArrayList<>();
     }
 
@@ -42,8 +41,7 @@ public class Author extends Person
      * @param adress Adress Object
      * @param sold Number of sold books from this Author
      */
-    public Author(String firstName, String lastName, Adress adress, long sold)
-    {
+    public Author(String firstName, String lastName, Adress adress, long sold) {
         super(firstName, lastName, adress);
         this.books = new ArrayList<>();
     }
@@ -57,30 +55,25 @@ public class Author extends Person
      * @param sold amount of sold books
      * @param books
      */
-    public Author(String firstName, String lastName, Adress adress, long sold, List<AbstractBook> books)
-    {
+    public Author(String firstName, String lastName, Adress adress, long sold, List<AbstractBook> books) {
         super(firstName, lastName, adress);
         this.books = books;
     }
 
-    public List<AbstractBook> getBooks()
-    {
+    public List<AbstractBook> getBooks() {
         return Collections.unmodifiableList(books);
     }
 
-    public void setBooks(List<AbstractBook> books)
-    {
+    public void setBooks(List<AbstractBook> books) {
         this.books = books;
     }
 
-    public void addBook(AbstractBook book)
-    {
+    public void addBook(AbstractBook book) {
         this.books.add(book);
     }
 
     @Override
-    public String toString()
-    {
-        return "Author{" + "books=" + books + '}';
+    public String toString() {
+        return "Author{" + "booksSize=" + books.size() + '}';
     }
 }

@@ -5,7 +5,7 @@
  */
 package Entitys;
 
-import Technicals.RandomIdEntity;
+import Technicals.Id.RandomIdEntity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,9 +23,9 @@ import javax.persistence.TemporalType;
  * @author Florian
  */
 @Entity
-abstract public class AbstractBook extends RandomIdEntity
-{
+abstract public class AbstractBook extends RandomIdEntity {
 
+    //todo: machste mal mit übergebenen autor in den constructor hinzu pls
     private String name;
 
     private String isbn;
@@ -38,13 +38,11 @@ abstract public class AbstractBook extends RandomIdEntity
 
     private BigDecimal price;
 
-    protected AbstractBook()
-    {
+    protected AbstractBook() {
         this.author = new ArrayList<>();
     }
 
-    protected AbstractBook(String name, String isbn, Date release, BigDecimal price)
-    {
+    protected AbstractBook(String name, String isbn, Date release, BigDecimal price) {
         this();
         this.name = name;
         this.isbn = isbn;
@@ -52,73 +50,52 @@ abstract public class AbstractBook extends RandomIdEntity
         this.price = price;
     }
 
-    protected AbstractBook(String name, String isbn, Date release, List<Author> author, BigDecimal price)
-    {
-        this.name = name;
-        this.isbn = isbn;
-        this.release = release;
-        this.author = author;
-        this.price = price;
-    }
-
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getIsbn()
-    {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn)
-    {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
-    public Date getRelease()
-    {
+    public Date getRelease() {
         return release;
     }
 
-    public void setRelease(Date release)
-    {
+    public void setRelease(Date release) {
         this.release = release;
     }
 
-    public List<Author> getAuthor()
-    {
+    public List<Author> getAuthor() {
         return Collections.unmodifiableList(author);
     }
 
-    public void setAuthor(List<Author> author)
-    {
+    public void setAuthor(List<Author> author) {
         this.author = author;
     }
 
-    public void addAuthor(Author author)
-    {
+    public void addAuthor(Author author) {
         this.author.add(author);
     }
 
-    public BigDecimal getPrice()
-    {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price)
-    {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
     @Override
-    public String toString()
-    {
-        return super.toString() + " Book{" + "name=" + name + ", isbn=" + isbn + ", release=" + release + ", author=" + author + ", price=" + price + '}';
+    public String toString() {
+        return super.toString() + " Book{" + "name=" + name + ", isbn=" + isbn + ", release=" + release + ", authorSize=" + author.size() + ", price=" + price + '}';
     }
 }

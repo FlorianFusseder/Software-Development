@@ -5,8 +5,8 @@
  */
 package Entitys;
 
-import Technicals.GeneratedIdEntity;
-import Technicals.SingleIdEntity;
+import Technicals.Id.GeneratedIdEntity;
+import Technicals.Id.SingleIdEntity;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
@@ -17,8 +17,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 //@Table(name = "BankDetails")
-public class BankDetail extends GeneratedIdEntity
-{
+public class BankDetail extends GeneratedIdEntity {
 
     @NotNull
     private String bic;
@@ -29,8 +28,7 @@ public class BankDetail extends GeneratedIdEntity
     /**
      * Creates Bankdetails with empty fields
      */
-    public BankDetail()
-    {
+    public BankDetail() {
     }
 
     /**
@@ -39,35 +37,29 @@ public class BankDetail extends GeneratedIdEntity
      * @param bic has to be legit bic for a bank
      * @param iban has to be legit iban for a bank account
      */
-    public BankDetail(String bic, String iban)
-    {
+    public BankDetail(String bic, String iban) {
         this.bic = bic;
         this.iban = iban;
     }
 
-    public String getBic()
-    {
+    public String getBic() {
         return bic;
     }
 
-    public void setBic(String bic)
-    {
+    public void setBic(String bic) {
         this.bic = bic;
     }
 
-    public String getIban()
-    {
+    public String getIban() {
         return iban;
     }
 
-    public void setIban(String iban)
-    {
+    public void setIban(String iban) {
         this.iban = iban;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return super.toString() + " BankDetail{" + "bic=" + bic + ", iban=" + iban + '}';
     }
 }

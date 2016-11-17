@@ -11,74 +11,66 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Represents an Adress
- * 
+ *
  * @author Florian
  */
 @Embeddable
-public class Adress implements Serializable
-{
+public class Adress implements Serializable {
+
     @NotNull
     private String street;
-    
+
     @NotNull
     private String city;
-    
+
     @NotNull
     private int postNumber;
 
     /**
      * Creates an Adress with empty fields
      */
-    public Adress()
-    {
+    public Adress() {
     }
-    
+
     /**
      * Creates an Adress with given fields
+     *
      * @param street Name of the street
      * @param city Name of the city
      * @param postNumber postnumber has do be 5 digits long to be legit
      */
-    public Adress(String street, String city, int postNumber)
-    {
+    public Adress(String street, String city, int postNumber) {
         this.street = street;
         this.city = city;
         this.postNumber = postNumber;
     }
 
-    public String getStreet()
-    {
+    public String getStreet() {
         return street;
     }
 
-    public void setStreet(String street)
-    {
+    public void setStreet(String street) {
         this.street = street;
     }
 
-    public String getCity()
-    {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(String city)
-    {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public int getPostNumber()
-    {
+    public int getPostNumber() {
         return postNumber;
     }
 
-    public void setPostNumber(int postNumber)
-    {
+    public void setPostNumber(int postNumber) {
         this.postNumber = postNumber;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return super.toString() + " Adress{" + "street=" + street + ", city=" + city + ", postNumber=" + postNumber + '}';
     }
 }

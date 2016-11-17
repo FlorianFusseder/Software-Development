@@ -7,53 +7,41 @@ package Entitys;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 
 /**
  * Creates a E-AbstractBook
- * 
+ *
  * @author Florian
  */
 @Entity
-public class ElectronicBook extends AbstractBook
-{
+public class ElectronicBook extends AbstractBook {
+
+    //todo: machste mal mit übergebenen autor in den constructoren wa
     private String license;
 
     /**
      * Create a empty E-AbstractBook
      */
-    public ElectronicBook()
-    {
+    public ElectronicBook() {
     }
 
-    /**
-     * Creates an E-AbstractBook with given fields
-     * 
-     * @param license
-     * @param name
-     * @param isbn
-     * @param release
-     * @param price 
-     */
-    public ElectronicBook(String name, String isbn, Date release, BigDecimal price, String license)
-    {
+    public ElectronicBook(String name, String isbn, Date release, BigDecimal price, String license) {
         super(name, isbn, release, price);
         this.license = license;
     }
 
-    public String getLicense()
-    {
+    public String getLicense() {
         return license;
     }
 
-    public void setLicense(String license)
-    {
+    public void setLicense(String license) {
         this.license = license;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return super.toString() + " ElectronicBook{" + "license=" + license + '}';
     }
 }

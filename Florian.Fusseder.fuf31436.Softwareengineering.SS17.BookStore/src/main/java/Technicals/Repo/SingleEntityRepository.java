@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Technicals;
+package Technicals.Repo;
 
+import Technicals.Id.SingleIdEntity;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,62 +20,57 @@ import javax.persistence.criteria.Root;
  * @param <K>
  * @param <E>
  */
- public class SingleIdEntityRepository<K , E extends SingleIdEntity>
-{
+public abstract class SingleEntityRepository<K, E extends SingleIdEntity> {
 
     @PersistenceContext(unitName = "BookStorePU")
-    public EntityManager manager;    
-    
+    public EntityManager manager;
+
     private final Class<E> type;
 
-    public SingleIdEntityRepository(Class<E> type)
-    {
+    public SingleEntityRepository(Class<E> type) {
         this.type = type;
     }
 
-    public EntityManager getManager()
-    {
+    public EntityManager getManager() {
         return manager;
     }
 
-    public void setManager(EntityManager manager)
-    {
+    public void setManager(EntityManager manager) {
         this.manager = manager;
     }
 
-    public void persist(E entity)
-    {
+    public void perist(List<E> entityList) {
+        entityList.forEach(e -> this.persist(e));
+    }
+
+    public void persist(E entity) {
         this.manager.persist(entity);
     }
 
-    public E merge(E entity)
-    {
+    public E merge(E entity) {
         return this.manager.merge(entity);
     }
 
-    public void remove(E entity)
-    {
+    public void remove(E entity) {
         this.manager.remove(entity);
     }
 
-    public E findById(K Id)
-    {
+    public E findById(K Id) {
         return this.manager.find(type, Id);
     }
-    
-    public List<E> findAll(){
-        
+
+    public List<E> findAll() {
+
         CriteriaBuilder cb = manager.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(type);
         Root<E> rootEntry = cq.from(type);
         CriteriaQuery<E> all = cq.select(rootEntry);
         TypedQuery<E> allQuery = manager.createQuery(all);
-        
+
         return (List<E>) allQuery.getResultList();
     }
-    
-    public List<E> findByRange(int from, int to){
-        
+
+    public List<E> findByRange(int from, int to) {
         return findAll().subList(from, to);
     }
 

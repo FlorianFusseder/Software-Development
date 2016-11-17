@@ -5,8 +5,8 @@
  */
 package Entitys;
 
-import Technicals.GeneratedIdEntity;
-import Technicals.SingleIdEntity;
+import Technicals.Id.GeneratedIdEntity;
+import Technicals.Id.SingleIdEntity;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -18,59 +18,48 @@ import javax.persistence.InheritanceType;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Person extends GeneratedIdEntity
-{
+public abstract class Person extends GeneratedIdEntity {
 
     private String firstName;
     private String lastName;
     private Adress adress;
 
-    protected Person()
-    {
+    protected Person() {
     }
 
-    protected Person(String firstName, String lastName, Adress adress)
-    {
+    protected Person(String firstName, String lastName, Adress adress) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.adress = adress;
     }
 
-    public String getFirstName()
-    {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName)
-    {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName()
-    {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName)
-    {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public Adress getAdress()
-    {
+    public Adress getAdress() {
         return adress;
     }
 
-    public void setAdress(Adress adress)
-    {
+    public void setAdress(Adress adress) {
         this.adress = adress;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Person{" + "firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress + '}';
     }
-    
-    
+
 }

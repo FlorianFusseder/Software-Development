@@ -3,21 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Services;
+package Technicals.Repo;
 
-import Technicals.Repo.BankRepo;
-import javax.inject.Inject;
+import Entitys.BankDetail;
 
 /**
  *
  * @author Florian
  */
-public class BankService {
+public class BankRepo extends SingleEntityRepository<Long, BankDetail> {
 
-    @Inject
-    private BankRepo manager;
-
-    public BankService() {
+    public BankRepo() {
+        super(BankDetail.class);
     }
 
 }
