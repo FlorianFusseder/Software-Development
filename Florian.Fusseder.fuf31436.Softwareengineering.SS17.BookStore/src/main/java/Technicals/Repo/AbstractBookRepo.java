@@ -16,5 +16,4 @@ public class AbstractBookRepo extends SingleEntityRepository<String, AbstractBoo
     public AbstractBookRepo() {
         super(AbstractBook.class);
     }
-
 }

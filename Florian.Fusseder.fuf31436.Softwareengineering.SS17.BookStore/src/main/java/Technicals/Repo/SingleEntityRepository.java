@@ -39,7 +39,7 @@ public abstract class SingleEntityRepository<K, E extends SingleIdEntity> {
         this.manager = manager;
     }
 
-    public void perist(List<E> entityList) {
+    public void persist(List<E> entityList) {
         entityList.forEach(e -> this.persist(e));
     }
 

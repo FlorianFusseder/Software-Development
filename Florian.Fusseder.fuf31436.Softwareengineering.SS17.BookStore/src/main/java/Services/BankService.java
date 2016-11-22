@@ -5,8 +5,10 @@
  */
 package Services;
 
+import Entitys.BankDetail;
 import Technicals.Repo.BankRepo;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -15,9 +17,13 @@ import javax.inject.Inject;
 public class BankService {
 
     @Inject
-    private BankRepo manager;
+    private BankRepo bankManager;
 
     public BankService() {
     }
-
+    
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void persist(BankDetail b) {
+        this.bankManager.persist(b);
+    }
 }

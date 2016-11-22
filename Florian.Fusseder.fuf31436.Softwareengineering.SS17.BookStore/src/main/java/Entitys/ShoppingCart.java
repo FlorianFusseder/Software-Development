@@ -6,52 +6,73 @@
 package Entitys;
 
 import Technicals.Id.GeneratedIdEntity;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.PostUpdate;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Florian
  */
 @Entity
-public class ShoppingCart extends GeneratedIdEntity
-{
-    private List<AbstractBook> items;
-    private Customer customer;
+public class ShoppingCart extends GeneratedIdEntity {
 
-    public ShoppingCart()
-    {
+    @ManyToMany //todo: ManyToMany richtig?
+    private List<AbstractBook> shoppingList;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
+    private BigDecimal total;
+    
+    
+
+    public ShoppingCart() {
+        this.shoppingList = new ArrayList<>();
+        this.creationDate = new Date();
+        this.total = BigDecimal.ZERO;
+    }
+    
+    @PreUpdate
+    @PrePersist
+    private void Load(){
+        shoppingList.stream().map((abstractBook) -> abstractBook.getPrice()).forEach((b) -> {
+            this.total = this.total.add(b);
+        });
     }
 
-    public ShoppingCart(List<AbstractBook> items, Customer customer)
-    {
-        this.items = items;
-        this.customer = customer;
+    public List<AbstractBook> getShoppingList() {
+        return Collections.unmodifiableList(shoppingList);
     }
 
-    public List<AbstractBook> getItems()
-    {
-        return items;
+    public void addToShoppingList(AbstractBook abstractBook) {
+        this.shoppingList.add(abstractBook);
     }
 
-    public void setItems(List<AbstractBook> items)
-    {
-        this.items = items;
+    public void addToShoppingList(List<AbstractBook> abstractBooks) {
+        this.shoppingList.addAll(abstractBooks);
     }
 
-    public Customer getCustomer()
-    {
-        return customer;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setCustomer(Customer customer)
-    {
-        this.customer = customer;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
-    @Override
-    public String toString()
-    {
-        return "ShoppingCart{" + "items=" + items + ", customer=" + customer + '}';
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

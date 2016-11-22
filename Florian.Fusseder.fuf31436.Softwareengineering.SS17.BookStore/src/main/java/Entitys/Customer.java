@@ -30,12 +30,14 @@ public class Customer extends Person {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Bill> bills;
+    
+    private ShoppingCart shoppingCart;
 
     /**
-     * Creates a customer with empty fields and initializes a empty List<Bill>
+     * Creates a customer with empty fields and initializes a empty List of Bill and a ShoppingCart
      */
     public Customer() {
-        bills = new ArrayList<>();
+        this.bills = new ArrayList<>();
     }
 
     /**
@@ -86,6 +88,14 @@ public class Customer extends Person {
         this.bankDetail = bankDetail;
     }
 
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+    
     public List<Bill> getBills() {
         return Collections.unmodifiableList(bills);
     }
@@ -106,6 +116,6 @@ public class Customer extends Person {
 
     @Override
     public String toString() {
-        return super.toString() + " Customer{" + "bankDetail=" + bankDetail + ", bills=" + bills + '}';
+        return "Customer{" + "bankDetail=" + bankDetail + ", bills=" + bills + ", shoppingCart=" + shoppingCart + '}';
     }
 }

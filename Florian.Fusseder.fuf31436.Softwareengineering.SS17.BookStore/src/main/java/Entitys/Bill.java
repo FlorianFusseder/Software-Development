@@ -14,6 +14,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,11 +58,18 @@ public class Bill extends GeneratedIdEntity {
         this.books = books;
         this.total = new BigDecimal(BigInteger.ZERO);
         if (this.books != null) {
-            for (AbstractBook book : books) {
-                BigDecimal dd = book.getPrice();
+            books.stream().map((book) -> book.getPrice()).forEachOrdered((dd) -> {
                 this.total = this.total.add(dd);
-            }
+            });
         }
+    }
+
+    @PreUpdate
+    @PrePersist
+    private void Load() {
+        books.stream().map((abstractBook) -> abstractBook.getPrice()).forEach((b) -> {
+            this.total = this.total.add(b);
+        });
     }
 
     public List<AbstractBook> getBooks() {

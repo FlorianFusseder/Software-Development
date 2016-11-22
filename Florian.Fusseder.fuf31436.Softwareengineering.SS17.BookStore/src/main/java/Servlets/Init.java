@@ -18,7 +18,7 @@ import Services.BankService;
 import Services.BillService;
 import Services.BookService;
 import Services.PersonService;
-import Services.ShopingService;
+import Services.ShoppingService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -52,7 +52,7 @@ public class Init extends HttpServlet {
     private BankService bankService;
 
     @Inject
-    private ShopingService shoppingService;
+    private ShoppingService shoppingService;
 
     @Inject
     private BillService billService;
@@ -84,25 +84,36 @@ public class Init extends HttpServlet {
             //weil der autor ja schon davor bei einem ersten buch kommitet wurde
             Adress addr = new Adress("MusterStrasse", "Musterstadt", 84140);
             BankDetail b = new BankDetail("55551", "55551");
+            ShoppingCart shoppingCart = new ShoppingCart();
             Author a = new Author("MaxAuthor", "MusterAuthor", addr, 0);
             Customer c = new Customer("Max", "MusterCustomer", addr);
 
+            
             AbstractBook pb = new PaperBook("Musterbuch", "ff-ff--fff", new Date(), BigDecimal.ONE, 14);
             AbstractBook eb = new ElectronicBook("MusterEBook", "ee-eee-333", new Date(), new BigDecimal(150), "lichensetwo2");
 
             List<AbstractBook> blist = new ArrayList<>();
             blist.add(eb);
             blist.add(pb);
-            ShoppingCart shoppingCart = new ShoppingCart(blist, c);
-
+            
+            shoppingService.persist(shoppingCart);
+            bankService.persist(b);
+            
+            c.setShoppingCart(shoppingCart);
+            c.setBankDetail(b);
+            
             personService.persist(c);
             personService.persist(a);
             a = bookService.persistNewBook(eb, a);
             a = bookService.persistNewBook(pb, a);
-
-            //AbstractBook aa = bookService.find(eb);
+            
+            
+            AbstractBook aa = bookService.find(eb);
             List<AbstractBook> bb = bookService.findAll();
-
+            
+            shoppingService.addBookToCart(c.getShoppingCart(), aa);
+            
+            
             out(a.toString(), out);
 
             bb.forEach(bbb -> out(bbb.toString(), out));

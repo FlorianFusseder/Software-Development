@@ -11,11 +11,9 @@ import Entitys.ShoppingCart;
  *
  * @author Florian
  */
-public class ShopingCartRepo extends SingleEntityRepository<Long, ShoppingCart> {
+public class ShoppingCartRepo extends SingleEntityRepository<Long, ShoppingCart> {
 
-    public ShopingCartRepo() {
+    public ShoppingCartRepo() {
         super(ShoppingCart.class);
     }
-
-    //todo: ShoppongCart based shit goes here
 }
