@@ -5,9 +5,7 @@
  */
 package Technicals.Repo;
 
-import Entitys.AbstractBook;
 import Entitys.Bill;
-import Entitys.Person;
 
 /**
  *

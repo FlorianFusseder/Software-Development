@@ -7,7 +7,6 @@ package Entitys;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 
 /**
@@ -18,7 +17,6 @@ import javax.persistence.Entity;
 @Entity
 public class ElectronicBook extends AbstractBook {
 
-    //todo: machste mal mit übergebenen autor in den constructoren wa
     private String license;
 
     /**

@@ -28,13 +28,15 @@ public class Customer extends Person {
     @OneToOne
     private BankDetail bankDetail;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Bill> bills;
-    
+
+    @OneToOne
     private ShoppingCart shoppingCart;
 
     /**
-     * Creates a customer with empty fields and initializes a empty List of Bill and a ShoppingCart
+     * Creates a customer with empty fields and initializes a empty List of Bill
+     * and a ShoppingCart
      */
     public Customer() {
         this.bills = new ArrayList<>();
@@ -95,7 +97,7 @@ public class Customer extends Person {
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
-    
+
     public List<Bill> getBills() {
         return Collections.unmodifiableList(bills);
     }

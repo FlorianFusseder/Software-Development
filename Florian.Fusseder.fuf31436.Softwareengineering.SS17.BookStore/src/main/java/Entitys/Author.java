@@ -22,7 +22,6 @@ import javax.persistence.Table;
 @Table(name = "author")
 public class Author extends Person {
 
-    //todo: machste mal mit übergebenen autor in den construcktoren wa
     @ManyToMany(cascade = CascadeType.ALL)
     private List<AbstractBook> books;
 

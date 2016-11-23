@@ -5,7 +5,6 @@
  */
 package Technicals.Id;
 
-import Technicals.Id.SingleIdEntity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;

@@ -5,7 +5,6 @@
  */
 package Technicals.Id;
 
-import Technicals.Id.SingleIdEntity;
 import java.util.UUID;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;

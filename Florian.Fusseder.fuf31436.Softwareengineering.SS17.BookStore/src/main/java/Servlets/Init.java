@@ -10,9 +10,9 @@ import Entitys.Author;
 import Entitys.Customer;
 import Entitys.Adress;
 import Entitys.BankDetail;
+import Entitys.Bill;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
-import Entitys.Person;
 import Entitys.ShoppingCart;
 import Services.BankService;
 import Services.BillService;
@@ -57,8 +57,6 @@ public class Init extends HttpServlet {
     @Inject
     private BillService billService;
 
-    //@Inject               todo funktinoert so nicht...
-    //private BookService bookService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -72,7 +70,7 @@ public class Init extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            /* todo output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -80,13 +78,13 @@ public class Init extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
 
-            //todo construtoren wie in den anderen todos angemerkt ändern und versuchen ein Buch mit autor zu erstellen und nur das buch ohne dne autor zu kommiten
-            //weil der autor ja schon davor bei einem ersten buch kommitet wurde
             Adress addr = new Adress("MusterStrasse", "Musterstadt", 84140);
             BankDetail b = new BankDetail("55551", "55551");
-            ShoppingCart shoppingCart = new ShoppingCart();
+            ShoppingCart shoppingCart1 = new ShoppingCart();
+            ShoppingCart shoppingCart2 = new ShoppingCart();
             Author a = new Author("MaxAuthor", "MusterAuthor", addr, 0);
-            Customer c = new Customer("Max", "MusterCustomer", addr);
+            Customer c1 = new Customer("Max", "MusterCustomer", addr);
+            Customer c2 = new Customer("Maxi", "MusterCustomer", addr);
 
             
             AbstractBook pb = new PaperBook("Musterbuch", "ff-ff--fff", new Date(), BigDecimal.ONE, 14);
@@ -95,28 +93,41 @@ public class Init extends HttpServlet {
             List<AbstractBook> blist = new ArrayList<>();
             blist.add(eb);
             blist.add(pb);
+            //blist.add(pb);
             
-            shoppingService.persist(shoppingCart);
+            shoppingService.persist(shoppingCart1);
+            shoppingService.persist(shoppingCart2);
             bankService.persist(b);
             
-            c.setShoppingCart(shoppingCart);
-            c.setBankDetail(b);
+            c1.setShoppingCart(shoppingCart1);
+            c1.setBankDetail(b);
+            c2.setShoppingCart(shoppingCart2);
+            c2.setBankDetail(b);
             
-            personService.persist(c);
+            personService.persist(c1);
+            personService.persist(c2);
             personService.persist(a);
             a = bookService.persistNewBook(eb, a);
             a = bookService.persistNewBook(pb, a);
             
+                      
             
             AbstractBook aa = bookService.find(eb);
-            List<AbstractBook> bb = bookService.findAll();
             
-            shoppingService.addBookToCart(c.getShoppingCart(), aa);
+            shoppingService.addBookToCart(c1, eb);
+            shoppingService.addBookToCart(c1, pb);
+            shoppingService.addBookToCart(c2, pb);
+            //shoppingService.addBookToCart(c1, eb);
+            
+            //shoppingService.addBookListToCart(c, blist);
+            
+            Bill bi1 = billService.createBill(c1);
+            Bill bi2 = billService.createBill(c2);
             
             
             out(a.toString(), out);
 
-            bb.forEach(bbb -> out(bbb.toString(), out));
+            blist.forEach(bbb -> out(bbb.toString(), out));
 
             out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
             out.println("</body>");

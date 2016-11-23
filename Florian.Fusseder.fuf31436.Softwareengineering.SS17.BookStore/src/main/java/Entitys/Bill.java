@@ -14,6 +14,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -34,6 +35,7 @@ public class Bill extends GeneratedIdEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date buyingDate;
 
+    @ManyToOne
     private Customer customer;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -50,23 +52,19 @@ public class Bill extends GeneratedIdEntity {
      * Timestamp and total price will be automatically filled in
      *
      * @param customer Customer that owns the Bill
-     * @param books List of bought books
      */
-    public Bill(Customer customer, List<AbstractBook> books) {
+    public Bill(Customer customer) {
         this.buyingDate = new Date();
         this.customer = customer;
-        this.books = books;
+        this.books = customer.getShoppingCart().getShoppingList();
         this.total = new BigDecimal(BigInteger.ZERO);
-        if (this.books != null) {
-            books.stream().map((book) -> book.getPrice()).forEachOrdered((dd) -> {
-                this.total = this.total.add(dd);
-            });
-        }
+        this.total = BigDecimal.ZERO;
     }
 
     @PreUpdate
     @PrePersist
     private void Load() {
+        this.total = BigDecimal.ZERO;
         books.stream().map((abstractBook) -> abstractBook.getPrice()).forEach((b) -> {
             this.total = this.total.add(b);
         });

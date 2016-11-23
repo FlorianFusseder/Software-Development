@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -28,21 +27,23 @@ public class ShoppingCart extends GeneratedIdEntity {
 
     @ManyToMany //todo: ManyToMany richtig?
     private List<AbstractBook> shoppingList;
+
     @Temporal(TemporalType.TIMESTAMP)
+
     private Date creationDate;
+
     private BigDecimal total;
-    
-    
 
     public ShoppingCart() {
         this.shoppingList = new ArrayList<>();
         this.creationDate = new Date();
         this.total = BigDecimal.ZERO;
     }
-    
+
     @PreUpdate
     @PrePersist
-    private void Load(){
+    private void Load() {
+        this.total = BigDecimal.ZERO;
         shoppingList.stream().map((abstractBook) -> abstractBook.getPrice()).forEach((b) -> {
             this.total = this.total.add(b);
         });
@@ -58,6 +59,10 @@ public class ShoppingCart extends GeneratedIdEntity {
 
     public void addToShoppingList(List<AbstractBook> abstractBooks) {
         this.shoppingList.addAll(abstractBooks);
+    }
+
+    public void clearShoppingCart() {
+        this.shoppingList.clear();
     }
 
     public BigDecimal getTotal() {

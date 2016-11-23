@@ -25,7 +25,6 @@ import javax.persistence.TemporalType;
 @Entity
 abstract public class AbstractBook extends RandomIdEntity {
 
-    //todo: machste mal mit übergebenen autor in den constructor hinzu pls
     private String name;
 
     private String isbn;
