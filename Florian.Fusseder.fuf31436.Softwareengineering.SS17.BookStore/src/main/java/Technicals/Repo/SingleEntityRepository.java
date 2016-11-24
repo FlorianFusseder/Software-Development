@@ -73,5 +73,4 @@ public abstract class SingleEntityRepository<K, E extends SingleIdEntity> {
     public List<E> findByRange(int from, int to) {
         return findAll().subList(from, to);
     }
-
 }

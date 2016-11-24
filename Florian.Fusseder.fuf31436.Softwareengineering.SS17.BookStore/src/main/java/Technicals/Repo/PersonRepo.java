@@ -18,7 +18,7 @@ import Entitys.Person;
  */
 public class PersonRepo extends SingleEntityRepository<Long, Person> {
 
-    public PersonRepo() {
-        super(Person.class);
-    }
+	public PersonRepo() {
+		super(Person.class);
+	}
 }

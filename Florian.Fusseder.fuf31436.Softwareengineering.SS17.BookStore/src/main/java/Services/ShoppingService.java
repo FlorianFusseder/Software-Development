@@ -8,11 +8,10 @@ package Services;
 import Entitys.AbstractBook;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
-import Technicals.Repo.AbstractBookRepo;
+import Entitys.CartItem;
+import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
@@ -22,40 +21,68 @@ import javax.transaction.Transactional;
  */
 public class ShoppingService {
 
-    @Inject
-    private ShoppingCartRepo shoppingManager;
-    
-    @Inject
-    private AbstractBookRepo bookManager;
-    
-    @Inject
-    private PersonRepo personManager;
+	@Inject
+	private ShoppingCartRepo shoppingManager;
 
-    public ShoppingService() {
-    }
-    
+	@Inject
+	private CartItemRepo cartItemManager;
 
-    @Transactional(Transactional.TxType.REQUIRED)
-    public void persist(ShoppingCart shoppingCart) {
-        this.shoppingManager.persist(shoppingCart);
-    }
-    
-    @Transactional(Transactional.TxType.REQUIRED)
-    public void addBookToCart(Customer customer, AbstractBook abstractBook) {
-        customer = (Customer) this.personManager.merge(customer);
-        ShoppingCart shoppingCart = this.shoppingManager.merge(customer.getShoppingCart());
-        abstractBook = this.bookManager.merge(abstractBook);
-        shoppingCart.addToShoppingList(abstractBook); 
-    }
-    
-    @Transactional(Transactional.TxType.REQUIRED)
-    public void addBookListToCart(Customer customer, List<AbstractBook> abstractBooks) {
-        customer = (Customer) this.personManager.merge(customer);
-        ShoppingCart shoppingCart = this.shoppingManager.merge(customer.getShoppingCart());
-        List<AbstractBook> books = new ArrayList<>();
-        
-        abstractBooks.forEach(b -> books.add(this.bookManager.merge(b)));
-        shoppingCart.addToShoppingList(books); 
-    }
+	@Inject
+	private PersonRepo personManager;
 
+	public ShoppingService() {
+	}
+
+	@Transactional(Transactional.TxType.REQUIRED)
+	public void persist(ShoppingCart shoppingCart) {
+		this.shoppingManager.persist(shoppingCart);
+	}
+
+	/**
+	 * Wraps a AbstractBook into a CartItem and adds it to the ShoppingCart.
+	 * If already existent the counter of the CartItem will be increased by one.
+	 * @param customer
+	 * @param abstractBook 
+	 */
+	@Transactional(Transactional.TxType.REQUIRED)
+	public void addBookToCart(Customer customer, AbstractBook abstractBook) {
+		addBookToCart(customer, abstractBook, 1);
+	}
+
+	/**
+	 * Wraps a AbstractBook into a CartItem and adds it to the ShoppingCart.
+	 * If already existent the counter of the CartItem will be increased 
+	 * by <amount>.
+	 * @param customer
+	 * @param abstractBook
+	 * @param amount 
+	 */
+	@Transactional(Transactional.TxType.REQUIRED)
+	public void addBookToCart(Customer customer, AbstractBook abstractBook, int amount) {
+		customer = (Customer) this.personManager.merge(customer);
+		ShoppingCart shoppingCart = this.shoppingManager.merge(customer.getShoppingCart());
+
+		for (CartItem cartItem : shoppingCart.getShoppingList()) {
+			if (cartItem.getAbstractBook() == abstractBook) {
+				CartItem ci = cartItemManager.merge(cartItem);
+				ci.addCount(1);
+				return;
+			}
+		}
+
+		CartItem cartItem = new CartItem(abstractBook, amount);
+		cartItemManager.persist(cartItem);
+		shoppingCart.addToShoppingList(cartItem);
+	}
+	
+	@Transactional(Transactional.TxType.REQUIRED)
+	public void buyCurrentCart(Customer customer){
+		customer = (Customer) personManager.merge(customer);
+		ShoppingCart shoppingCart = shoppingManager.merge(customer.getShoppingCart());
+		
+		customer.addPayedShoppingCart(shoppingCart);
+		ShoppingCart newCart = new ShoppingCart();
+		shoppingManager.persist(newCart);
+		customer.setShoppingCart(newCart);
+	}
 }

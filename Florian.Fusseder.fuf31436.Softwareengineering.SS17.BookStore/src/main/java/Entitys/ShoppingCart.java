@@ -25,11 +25,10 @@ import javax.persistence.TemporalType;
 @Entity
 public class ShoppingCart extends GeneratedIdEntity {
 
-    @ManyToMany //todo: ManyToMany richtig?
-    private List<AbstractBook> shoppingList;
+    @ManyToMany
+    private List<CartItem> shoppingList;
 
     @Temporal(TemporalType.TIMESTAMP)
-
     private Date creationDate;
 
     private BigDecimal total;
@@ -43,22 +42,21 @@ public class ShoppingCart extends GeneratedIdEntity {
     @PreUpdate
     @PrePersist
     private void Load() {
-        this.total = BigDecimal.ZERO;
-        shoppingList.stream().map((abstractBook) -> abstractBook.getPrice()).forEach((b) -> {
-            this.total = this.total.add(b);
-        });
+        this.total = shoppingList.stream()
+				.map((cartItem) -> cartItem.getAbstractBook().getPrice())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public List<AbstractBook> getShoppingList() {
+    public List<CartItem> getShoppingList() {
         return Collections.unmodifiableList(shoppingList);
     }
 
-    public void addToShoppingList(AbstractBook abstractBook) {
-        this.shoppingList.add(abstractBook);
+    public void addToShoppingList(CartItem cartItem) {
+        this.shoppingList.add(cartItem);
     }
 
-    public void addToShoppingList(List<AbstractBook> abstractBooks) {
-        this.shoppingList.addAll(abstractBooks);
+    public void addToShoppingList(List<CartItem> cartItems) {
+        this.shoppingList.addAll(cartItems);
     }
 
     public void clearShoppingCart() {

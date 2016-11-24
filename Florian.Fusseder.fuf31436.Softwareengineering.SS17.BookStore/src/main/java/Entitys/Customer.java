@@ -6,7 +6,6 @@
 package Entitys;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,8 +27,8 @@ public class Customer extends Person {
     @OneToOne
     private BankDetail bankDetail;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Bill> bills;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ShoppingCart> payedShoppingCarts;
 
     @OneToOne
     private ShoppingCart shoppingCart;
@@ -39,7 +38,7 @@ public class Customer extends Person {
      * and a ShoppingCart
      */
     public Customer() {
-        this.bills = new ArrayList<>();
+        this.payedShoppingCarts = new ArrayList<>();
     }
 
     /**
@@ -64,7 +63,7 @@ public class Customer extends Person {
     public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail) {
         super(firstName, lastName, adress);
         this.bankDetail = bankDetail;
-        this.bills = new ArrayList<>();
+        this.payedShoppingCarts = new ArrayList<>();
     }
 
     /**
@@ -74,12 +73,12 @@ public class Customer extends Person {
      * @param lastName
      * @param adress
      * @param bankDetail
-     * @param bills
+     * @param payedShoppingCarts
      */
-    public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail, List<Bill> bills) {
+    public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail, List<ShoppingCart> payedShoppingCarts) {
         super(firstName, lastName, adress);
         this.bankDetail = bankDetail;
-        this.bills = bills;
+        this.payedShoppingCarts = payedShoppingCarts;
     }
 
     public BankDetail getBankDetail() {
@@ -98,26 +97,26 @@ public class Customer extends Person {
         this.shoppingCart = shoppingCart;
     }
 
-    public List<Bill> getBills() {
-        return Collections.unmodifiableList(bills);
+    public List<ShoppingCart> getShoppingCarts() {
+        return Collections.unmodifiableList(payedShoppingCarts);
     }
 
-    public void setBills(List<Bill> bills) {
-        this.bills = bills;
+    public void setShoppingCarts(List<ShoppingCart> payedShoppingCarts) {
+        this.payedShoppingCarts = payedShoppingCarts;
     }
+	
+	public void addPayedShoppingCart(ShoppingCart shoppingCart){
+		this.payedShoppingCarts.add(shoppingCart);
+	}
 
     public BigDecimal getTotalPayment() {
-        BigDecimal dec = new BigDecimal(BigInteger.ZERO);
-        bills.stream().forEach(b -> dec.add(b.getTotal()));
-        return dec;
-    }
-
-    public void addBill(Bill b) {
-        this.bills.add(b);
+        return this.payedShoppingCarts.stream()
+				.map(e -> e.getTotal())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
     public String toString() {
-        return "Customer{" + "bankDetail=" + bankDetail + ", bills=" + bills + ", shoppingCart=" + shoppingCart + '}';
+        return "Customer{" + "bankDetail=" + bankDetail + ", bills=" + payedShoppingCarts + ", shoppingCart=" + shoppingCart + '}';
     }
 }

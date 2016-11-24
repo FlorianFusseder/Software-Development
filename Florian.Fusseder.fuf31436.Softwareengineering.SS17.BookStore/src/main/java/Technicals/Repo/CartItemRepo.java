@@ -5,15 +5,16 @@
  */
 package Technicals.Repo;
 
-import Entitys.Bill;
+import Entitys.CartItem;
 
 /**
  *
  * @author Florian
  */
-public class BillRepo extends SingleEntityRepository<Long, Bill> {
-
-    public BillRepo() {
-        super(Bill.class);
-    }
+public class CartItemRepo extends SingleEntityRepository<Long, CartItem>{
+	
+	public CartItemRepo() {
+		super(CartItem.class);
+	}
+	
 }

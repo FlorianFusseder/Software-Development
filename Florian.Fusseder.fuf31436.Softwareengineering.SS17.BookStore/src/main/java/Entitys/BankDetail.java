@@ -6,7 +6,6 @@
 package Entitys;
 
 import Technicals.Id.GeneratedIdEntity;
-import Technicals.Id.SingleIdEntity;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
