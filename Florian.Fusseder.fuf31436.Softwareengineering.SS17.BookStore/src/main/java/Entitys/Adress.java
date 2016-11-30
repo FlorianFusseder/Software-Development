@@ -33,7 +33,6 @@ public class Adress implements Serializable {
     @NonNull
     private String city;
 
-    @NonNull
     private int postNumber;
 
 }

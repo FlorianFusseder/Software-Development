@@ -12,6 +12,7 @@ import Entitys.Adress;
 import Entitys.BankDetail;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
+import Entitys.Person;
 import Services.BankService;
 import Services.BookService;
 import Services.PersonService;
@@ -21,6 +22,8 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,7 +53,6 @@ public class Init extends HttpServlet {
 	@Inject
 	private ShoppingService shoppingService;
 
-
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
@@ -71,8 +73,6 @@ public class Init extends HttpServlet {
 			out.println("<title>Servlet Init</title>");
 			out.println("</head>");
 			out.println("<body>");
-			
-			
 
 			Adress addr = new Adress("MusterStrasse", "Musterstadt", 84140);
 			BankDetail b = new BankDetail("55551", "55551");
@@ -85,24 +85,19 @@ public class Init extends HttpServlet {
 			Customer c2 = personService.createCustomer("Max", "MusterCustomer2", addr, b);
 			Author a = personService.createAuthor("Max", "MusterAuthor", addr);
 
-			//todo warum muss ich a zurückgeben um den eintrag für das zweite buch zu haben,
-			//aber nicht bei addBookToCarpet
 			a = bookService.persistNewBook(eb, a);
 			a = bookService.persistNewBook(pb, a);
 
 			shoppingService.addBookToCart(c1, eb);
 			shoppingService.addBookToCart(c1, pb);
 			shoppingService.addBookToCart(c1, pb);
-			
+
 			shoppingService.addBookToCart(c2, eb);
 			shoppingService.addBookToCart(c2, pb);
 			shoppingService.addBookToCart(c2, pb);
-			
-			shoppingService.buyCurrentCart(c1);
-			
-			out(a.toString(), out);
 
-			out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
+			shoppingService.buyCurrentCart(c1);
+
 			out.println("</body>");
 			out.println("</html>");
 		}
