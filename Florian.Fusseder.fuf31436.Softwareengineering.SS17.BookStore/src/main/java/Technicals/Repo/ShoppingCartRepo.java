@@ -6,12 +6,16 @@
 package Technicals.Repo;
 
 import Entitys.ShoppingCart;
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author Florian
  */
-public class ShoppingCartRepo extends SingleEntityRepository<Long, ShoppingCart> {
+@SessionScoped
+public class ShoppingCartRepo extends SingleEntityRepository<Long, ShoppingCart>
+implements Serializable {
 
     public ShoppingCartRepo() {
         super(ShoppingCart.class);

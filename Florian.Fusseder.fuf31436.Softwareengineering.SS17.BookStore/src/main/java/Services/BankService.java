@@ -7,14 +7,17 @@ package Services;
 
 import Entitys.BankDetail;
 import Technicals.Repo.BankRepo;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.io.Serializable;
 
 /**
  *
  * @author Florian
  */
-public class BankService {
+@RequestScoped
+public class BankService implements Serializable {
 
     @Inject
     private BankRepo bankManager;

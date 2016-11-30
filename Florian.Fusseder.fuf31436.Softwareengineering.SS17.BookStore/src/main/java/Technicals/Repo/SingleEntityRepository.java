@@ -7,6 +7,7 @@ package Technicals.Repo;
 
 import Technicals.Id.SingleIdEntity;
 import java.util.List;
+import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -20,10 +21,11 @@ import javax.persistence.criteria.Root;
  * @param <K>
  * @param <E>
  */
+@Dependent
 public abstract class SingleEntityRepository<K, E extends SingleIdEntity> {
 
     @PersistenceContext(unitName = "BookStorePU")
-    public EntityManager manager;
+    private EntityManager manager;
 
     private final Class<E> type;
 

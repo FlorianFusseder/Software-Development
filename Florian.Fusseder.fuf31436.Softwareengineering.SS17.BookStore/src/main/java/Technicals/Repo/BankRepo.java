@@ -6,12 +6,16 @@
 package Technicals.Repo;
 
 import Entitys.BankDetail;
+import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 
 /**
  *
  * @author Florian
  */
-public class BankRepo extends SingleEntityRepository<Long, BankDetail> {
+@RequestScoped
+public class BankRepo extends SingleEntityRepository<Long, BankDetail> 
+implements Serializable{
 
     public BankRepo() {
         super(BankDetail.class);

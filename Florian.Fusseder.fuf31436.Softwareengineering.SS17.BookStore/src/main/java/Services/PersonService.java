@@ -15,15 +15,17 @@ import Technicals.Repo.BankRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 
 /**
  *
  * @author Florian
  */
-public class PersonService {
+@RequestScoped
+public class PersonService implements Serializable {
 
 	@Inject
 	private PersonRepo personRepo;

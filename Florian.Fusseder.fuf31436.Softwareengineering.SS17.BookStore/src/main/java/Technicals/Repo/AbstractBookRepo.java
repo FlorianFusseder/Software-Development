@@ -6,12 +6,16 @@
 package Technicals.Repo;
 
 import Entitys.AbstractBook;
+import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 
 /**
  *
  * @author Florian
  */
-public class AbstractBookRepo extends SingleEntityRepository<String, AbstractBook> {
+@RequestScoped
+public class AbstractBookRepo extends SingleEntityRepository<String, AbstractBook>
+implements Serializable {
 
     public AbstractBookRepo() {
         super(AbstractBook.class);

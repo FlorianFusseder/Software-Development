@@ -12,6 +12,9 @@ import Entitys.CartItem;
 import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
+import java.io.Serializable;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
@@ -19,8 +22,12 @@ import javax.transaction.Transactional;
  *
  * @author Florian
  */
-public class ShoppingService {
+@ConversationScoped
+public class ShoppingService implements Serializable{
 
+	@Inject
+	private Conversation converstation;
+	
 	@Inject
 	private ShoppingCartRepo shoppingManager;
 
@@ -35,6 +42,7 @@ public class ShoppingService {
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void persist(ShoppingCart shoppingCart) {
+		
 		this.shoppingManager.persist(shoppingCart);
 	}
 
@@ -46,6 +54,10 @@ public class ShoppingService {
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, AbstractBook abstractBook) {
+		
+		if(this.converstation.isTransient())
+			this.converstation.begin();
+		
 		addBookToCart(customer, abstractBook, 1);
 	}
 
@@ -59,6 +71,11 @@ public class ShoppingService {
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, AbstractBook abstractBook, int amount) {
+		
+		if(this.converstation.isTransient())
+			this.converstation.begin();
+		
+		
 		customer = (Customer) this.personManager.merge(customer);
 		ShoppingCart shoppingCart = this.shoppingManager.merge(customer.getShoppingCart());
 
@@ -84,5 +101,8 @@ public class ShoppingService {
 		ShoppingCart newCart = new ShoppingCart();
 		shoppingManager.persist(newCart);
 		customer.setShoppingCart(newCart);
+		
+		if(!this.converstation.isTransient())
+			this.converstation.end();
 	}
 }

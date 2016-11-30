@@ -6,17 +6,17 @@
 package Technicals.Repo;
 
 import Entitys.Person;
+import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 
-/**
- *
- * @author Florian
- */
 /**
  * Manages all DB related functions for the Person extendes classes
  *
  * @author Florian
  */
-public class PersonRepo extends SingleEntityRepository<Long, Person> {
+@RequestScoped
+public class PersonRepo extends SingleEntityRepository<Long, Person> 
+		implements Serializable {
 
 	public PersonRepo() {
 		super(Person.class);

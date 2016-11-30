@@ -6,12 +6,16 @@
 package Technicals.Repo;
 
 import Entitys.CartItem;
+import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 
 /**
  *
  * @author Florian
  */
-public class CartItemRepo extends SingleEntityRepository<Long, CartItem>{
+@RequestScoped
+public class CartItemRepo extends SingleEntityRepository<Long, CartItem> 
+implements Serializable{
 	
 	public CartItemRepo() {
 		super(CartItem.class);
