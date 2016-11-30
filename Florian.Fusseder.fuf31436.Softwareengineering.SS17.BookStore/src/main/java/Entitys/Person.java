@@ -12,7 +12,6 @@ import javax.persistence.InheritanceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -33,4 +32,5 @@ public abstract class Person extends GeneratedIdEntity {
     private String firstName;
     private String lastName;
     private Adress adress;
+	
 }

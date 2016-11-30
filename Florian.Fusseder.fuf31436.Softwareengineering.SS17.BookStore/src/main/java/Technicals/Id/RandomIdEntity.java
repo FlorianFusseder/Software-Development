@@ -8,7 +8,6 @@ package Technicals.Id;
 import java.util.UUID;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import lombok.NoArgsConstructor;
 
 /**
  *

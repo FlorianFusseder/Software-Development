@@ -99,6 +99,8 @@ public class Init extends HttpServlet {
 			shoppingService.addBookToCart(c2, pb);
 			
 			shoppingService.buyCurrentCart(c1);
+			
+			out(a.toString(), out);
 
 			out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
 			out.println("</body>");
