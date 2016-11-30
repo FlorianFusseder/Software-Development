@@ -7,48 +7,30 @@ package Entitys;
 
 import Technicals.Id.GeneratedIdEntity;
 import javax.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
  * @author Florian
  */
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class CartItem extends GeneratedIdEntity {
 
-	
 	private AbstractBook abstractBook;
+
 	private int count;
 
-	public CartItem() {
-	}
-
-	public CartItem(AbstractBook abstractBook, int count) {
-		this.abstractBook = abstractBook;
-		this.count = count;
-	}
-
-	public AbstractBook getAbstractBook() {
-		return abstractBook;
-	}
-
-	public void setAbstractBook(AbstractBook abstractBook) {
-		this.abstractBook = abstractBook;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-	
-	public void addCount(int i){
+	public void addCount(int i) {
 		this.count += i;
-	}
-
-	@Override
-	public String toString() {
-		return "ShoppingCartItem{" + "abstractBook=" + abstractBook + ", count=" + count + '}';
 	}
 }

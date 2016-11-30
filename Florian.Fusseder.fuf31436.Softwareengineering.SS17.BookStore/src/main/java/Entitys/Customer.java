@@ -14,6 +14,13 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Creates a Customer
@@ -21,102 +28,42 @@ import javax.persistence.Table;
  * @author Florian
  */
 @Entity
-@Table(name = "customer")
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class Customer extends Person {
 
-    @OneToOne
-    private BankDetail bankDetail;
+	@OneToOne
+	private BankDetail bankDetail;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<ShoppingCart> payedShoppingCarts;
+	@OneToOne
+	@NonNull
+	private ShoppingCart shoppingCart = new ShoppingCart();	
 
-    @OneToOne
-    private ShoppingCart shoppingCart;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<ShoppingCart> payedShoppingCarts = new ArrayList<>();
 
-    /**
-     * Creates a customer with empty fields and initializes a empty List of Bill
-     * and a ShoppingCart
-     */
-    public Customer() {
-        this.payedShoppingCarts = new ArrayList<>();
-    }
-
-    /**
-     * Creates a customer with given fieldes
-     *
-     * @param firstName
-     * @param lastName
-     * @param adress
-     */
-    public Customer(String firstName, String lastName, Adress adress) {
-        super(firstName, lastName, adress);
-    }
-
-    /**
-     * Creates a customer with given fieldes
-     *
-     * @param firstName
-     * @param lastName
-     * @param adress
-     * @param bankDetail
-     */
-    public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail) {
-        super(firstName, lastName, adress);
-        this.bankDetail = bankDetail;
-        this.payedShoppingCarts = new ArrayList<>();
-    }
-
-    /**
-     * Creates a customer with given fieldes
-     *
-     * @param firstName
-     * @param lastName
-     * @param adress
-     * @param bankDetail
-     * @param payedShoppingCarts
-     */
-    public Customer(String firstName, String lastName, Adress adress, BankDetail bankDetail, List<ShoppingCart> payedShoppingCarts) {
-        super(firstName, lastName, adress);
-        this.bankDetail = bankDetail;
-        this.payedShoppingCarts = payedShoppingCarts;
-    }
-
-    public BankDetail getBankDetail() {
-        return bankDetail;
-    }
-
-    public void setBankDetail(BankDetail bankDetail) {
-        this.bankDetail = bankDetail;
-    }
-
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
-
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
-
-    public List<ShoppingCart> getShoppingCarts() {
-        return Collections.unmodifiableList(payedShoppingCarts);
-    }
-
-    public void setShoppingCarts(List<ShoppingCart> payedShoppingCarts) {
-        this.payedShoppingCarts = payedShoppingCarts;
-    }
+	public Customer(String firstName, String lastName, Adress adress) {
+		super(firstName, lastName, adress);
+	}
 	
-	public void addPayedShoppingCart(ShoppingCart shoppingCart){
+	public Customer(String firstName, String lastName, Adress adress, ShoppingCart shoppingCart) {
+		super(firstName, lastName, adress);
+		this.shoppingCart = shoppingCart;
+	}
+
+	public List<ShoppingCart> getShoppingCarts() {
+		return Collections.unmodifiableList(payedShoppingCarts);
+	}
+
+	public void addPayedShoppingCart(ShoppingCart shoppingCart) {
 		this.payedShoppingCarts.add(shoppingCart);
 	}
 
-    public BigDecimal getTotalPayment() {
-        return this.payedShoppingCarts.stream()
+	public BigDecimal getTotalPayment() {
+		return this.payedShoppingCarts.stream()
 				.map(e -> e.getTotal())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" + "bankDetail=" + bankDetail + ", bills=" + payedShoppingCarts + ", shoppingCart=" + shoppingCart + '}';
-    }
+	}
 }

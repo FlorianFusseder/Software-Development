@@ -12,6 +12,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Represents an Author
@@ -19,58 +25,34 @@ import javax.persistence.Table;
  * @author Florian
  */
 @Entity
-@Table(name = "author")
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class Author extends Person {
-
+	
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<AbstractBook> books;
+	private List<AbstractBook> books = new ArrayList<>();
 
-	/**
-	 * Creates an Author with empty fields but initializeses a empty books List
-	 */
-	public Author() {
-		this.books = new ArrayList<>();
-	}
-
-	/**
-	 * Creates an Author with given Fieldes and a empty books List
-	 *
-	 * @param firstName Firstname
-	 * @param lastName Lastname
-	 * @param adress Adress Object
-	 */
 	public Author(String firstName, String lastName, Adress adress) {
 		super(firstName, lastName, adress);
-		this.books = new ArrayList<>();
 	}
-
-	/**
-	 * Creates an Author with given Fieldes
-	 *
-	 * @param firstName
-	 * @param lastName
-	 * @param adress
-	 * @param books
-	 */
-	public Author(String firstName, String lastName, Adress adress, List<AbstractBook> books) {
+	
+	public Author(String firstName, String lastName, Adress adress, AbstractBook book) {
 		super(firstName, lastName, adress);
-		this.books = books;
-	}
-
-	public List<AbstractBook> getBooks() {
-		return Collections.unmodifiableList(books);
-	}
-
-	public void setBooks(List<AbstractBook> books) {
-		this.books = books;
-	}
-
-	public void addBook(AbstractBook book) {
 		this.books.add(book);
 	}
 
-	@Override
-	public String toString() {
-		return "Author{" + "booksSize=" + books.size() + '}';
+	public Author(String firstName, String lastName, Adress adress, List<AbstractBook> books) {
+		super(firstName, lastName, adress);
+		books.addAll(books);
+	}
+
+	public List<AbstractBook> getBooks() {
+		return Collections.unmodifiableList(this.books);
+	}
+	
+	public void addBook(AbstractBook book){
+		this.books.add(book);
 	}
 }

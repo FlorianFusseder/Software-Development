@@ -7,7 +7,14 @@ package Entitys;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Creates a Paperbook object
@@ -15,39 +22,32 @@ import javax.persistence.Entity;
  * @author Florian
  */
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class PaperBook extends AbstractBook {
 
     private long copies;
 
-    /**
-     * Creates a Paperbook object with empty Copies
-     */
-    public PaperBook() {
-    }
+	public PaperBook(String name, String isbn, Date releaseDate, BigDecimal price, long copies) {
+		super(name, isbn, releaseDate, price);
+		this.copies = copies;
+	}
+	
+	public PaperBook(String name, String isbn, Date releaseDate, Author author, BigDecimal price, long copies) {
+		super(name, isbn, releaseDate, price);
+		this.addAuthor(author);
+		this.copies = copies;
+	}
+	
 
-    /**
-     *
-     * @param name
-     * @param isbn
-     * @param release
-     * @param price
-     * @param copies
-     */
-    public PaperBook(String name, String isbn, Date release, BigDecimal price, long copies) {
-        super(name, isbn, release, price);
-        this.copies = copies;
-    }
-
-    public long getCopies() {
-        return copies;
-    }
-
-    public void setCopies(Long copies) {
-        this.copies = copies;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " PaperBook{" + "copies=" + copies + "}";
+	public PaperBook(String name, String isbn, Date releaseDate, List<Author> AuthorList, BigDecimal price, long copies) {
+		super(name, isbn, releaseDate, AuthorList, price);
+		this.copies = copies;
+	}
+	
+    public void addCopies(Long copies) {
+        this.copies += copies;
     }
 }

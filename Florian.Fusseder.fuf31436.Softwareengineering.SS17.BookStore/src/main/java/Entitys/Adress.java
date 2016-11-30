@@ -7,7 +7,12 @@ package Entitys;
 
 import java.io.Serializable;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Represents an Adress
@@ -15,62 +20,20 @@ import javax.validation.constraints.NotNull;
  * @author Florian
  */
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Adress implements Serializable {
 
-    @NotNull
+    @NonNull
     private String street;
 
-    @NotNull
+    @NonNull
     private String city;
 
-    @NotNull
+    @NonNull
     private int postNumber;
 
-    /**
-     * Creates an Adress with empty fields
-     */
-    public Adress() {
-    }
-
-    /**
-     * Creates an Adress with given fields
-     *
-     * @param street Name of the street
-     * @param city Name of the city
-     * @param postNumber postnumber has do be 5 digits long to be legit
-     */
-    public Adress(String street, String city, int postNumber) {
-        this.street = street;
-        this.city = city;
-        this.postNumber = postNumber;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public int getPostNumber() {
-        return postNumber;
-    }
-
-    public void setPostNumber(int postNumber) {
-        this.postNumber = postNumber;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " Adress{" + "street=" + street + ", city=" + city + ", postNumber=" + postNumber + '}';
-    }
 }

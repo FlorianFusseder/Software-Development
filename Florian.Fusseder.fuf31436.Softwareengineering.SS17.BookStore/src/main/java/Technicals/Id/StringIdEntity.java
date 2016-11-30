@@ -7,27 +7,24 @@ package Technicals.Id;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  *
  * @author Florian
  */
 @MappedSuperclass
+@NoArgsConstructor
 public class StringIdEntity extends SingleIdEntity<String> {
 
     @Id
+	@Setter
     private String Id;
-
-    public StringIdEntity(String Id) {
-        this.Id = Id;
-    }
-
+	
     @Override
     public String getID() {
         return this.Id;
-    }
-
-    public void setId(String Id) {
-        this.Id = Id;
     }
 }

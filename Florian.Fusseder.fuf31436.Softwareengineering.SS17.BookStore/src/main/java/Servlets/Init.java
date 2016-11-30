@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -76,6 +77,8 @@ public class Init extends HttpServlet {
 			Adress addr = new Adress("MusterStrasse", "Musterstadt", 84140);
 			BankDetail b = new BankDetail("55551", "55551");
 			AbstractBook pb = new PaperBook("Musterbuch", "ff-ff--fff", new Date(), BigDecimal.ONE, 14);
+
+			List<Author> aa = pb.getAuthor();
 			AbstractBook eb = new ElectronicBook("MusterEBook", "ee-eee-333", new Date(), new BigDecimal(150), "lichensetwo2");
 
 			Customer c1 = personService.createCustomer("Max", "MusterCustomer1", addr, b);
@@ -96,8 +99,6 @@ public class Init extends HttpServlet {
 			shoppingService.addBookToCart(c2, pb);
 			
 			shoppingService.buyCurrentCart(c1);
-
-			out(a.toString(), out);
 
 			out.println("<h1>Servlet Init at " + request.getContextPath() + "</h1>");
 			out.println("</body>");

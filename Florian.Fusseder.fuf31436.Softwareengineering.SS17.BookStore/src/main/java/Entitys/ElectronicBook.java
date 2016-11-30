@@ -6,8 +6,17 @@
 package Entitys;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Creates a E-AbstractBook
@@ -15,31 +24,28 @@ import javax.persistence.Entity;
  * @author Florian
  */
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class ElectronicBook extends AbstractBook {
 
-    private String license;
+	@NonNull
+	private String license;
 
-    /**
-     * Create a empty E-AbstractBook
-     */
-    public ElectronicBook() {
-    }
+	public ElectronicBook(String name, String isbn, Date releaseDate, BigDecimal price, String license) {
+		super(name, isbn, releaseDate, price);
+		this.license = license;
+	}
 
-    public ElectronicBook(String name, String isbn, Date release, BigDecimal price, String license) {
-        super(name, isbn, release, price);
-        this.license = license;
-    }
+	public ElectronicBook(String name, String isbn, Date releaseDate, BigDecimal price, Author author, String license) {
+		super(name, isbn, releaseDate, price);
+		this.addAuthor(author);
+	}
 
-    public String getLicense() {
-        return license;
-    }
+	public ElectronicBook(String name, String isbn, Date releaseDate, BigDecimal price, List<Author> authorList, String license) {
+		super(name, isbn, releaseDate, authorList, price);
+		this.license = license;
+	}
 
-    public void setLicense(String license) {
-        this.license = license;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " ElectronicBook{" + "license=" + license + '}';
-    }
 }

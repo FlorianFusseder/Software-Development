@@ -17,27 +17,31 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
  * @author Florian
  */
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class ShoppingCart extends GeneratedIdEntity {
 
     @ManyToMany
-    private List<CartItem> shoppingList;
+    private List<CartItem> shoppingList = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private Date creationDate = new Date();
 
-    private BigDecimal total;
+    private BigDecimal total = BigDecimal.ZERO;
 
-    public ShoppingCart() {
-        this.shoppingList = new ArrayList<>();
-        this.creationDate = new Date();
-        this.total = BigDecimal.ZERO;
-    }
 
     @PreUpdate
     @PrePersist
@@ -61,21 +65,5 @@ public class ShoppingCart extends GeneratedIdEntity {
 
     public void clearShoppingCart() {
         this.shoppingList.clear();
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 }

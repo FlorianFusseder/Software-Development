@@ -8,12 +8,14 @@ package Technicals.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Florian
  */
 @MappedSuperclass
+@NoArgsConstructor
 public class GeneratedIdEntity extends SingleIdEntity<Long> {
 
     @Id
