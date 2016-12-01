@@ -8,8 +8,6 @@ package Models;
 import Entitys.Customer;
 import Services.PersonService;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
@@ -17,8 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
