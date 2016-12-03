@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Seeder</title>
     </h:head>
@@ -19,7 +20,10 @@
         <br/>
         <br/>
         <br/>
-        #{seederModel.output}
+        <c:forEach items="#{seederModel.output}" var="line">
+            <h:outputText value="#{line}"/>
+            <br/>
+        </c:forEach>
     </h:body>
 </html>
 
