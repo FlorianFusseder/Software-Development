@@ -18,7 +18,6 @@ import Services.ShoppingService;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,7 +30,7 @@ import lombok.Getter;
  */
 @RequestScoped
 @Named
-public class SeedingModel implements Serializable{
+public class SeederModel implements Serializable {
 
 	@Inject
 	private PersonService personService;
@@ -44,23 +43,23 @@ public class SeedingModel implements Serializable{
 
 	@Setter
 	private String output;
-	
+
 	@Getter
 	@Setter
 	private StringBuilder builder;
 
-	public SeedingModel() {
-		
+	public SeederModel() {
+
 	}
 
-	private void addToOutput(Object s){
+	private void addToOutput(Object s) {
 		this.builder.append(s.toString() + "\n");
 	}
 
 	public String getOutput() {
-		
-				this.builder = new StringBuilder();
-		
+
+		this.builder = new StringBuilder();
+
 		Adress addr = new Adress("MusterStrasse", "Musterstadt", 84140);
 		this.addToOutput(addr);
 		BankDetail b = new BankDetail("55551", "55551");
@@ -77,7 +76,7 @@ public class SeedingModel implements Serializable{
 		this.addToOutput(c2);
 		Author a = personService.createAuthor("Max", "MusterAuthor", addr);
 		this.addToOutput(a);
-		
+
 		a = bookService.persistNewBook(eb, a);
 		a = bookService.persistNewBook(pb, a);
 		this.addToOutput(a);
@@ -93,9 +92,8 @@ public class SeedingModel implements Serializable{
 		this.addToOutput(c2);
 
 		shoppingService.buyCurrentCart(c1);
-		this.addToOutput(c1); 
+		this.addToOutput(c1);
 		return builder.toString();
 	}
-	
-	
+
 }

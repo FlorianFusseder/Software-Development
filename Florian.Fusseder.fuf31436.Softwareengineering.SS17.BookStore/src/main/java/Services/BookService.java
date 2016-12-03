@@ -40,8 +40,12 @@ public class BookService implements Serializable {
 		return a;
 	}
 
-	public AbstractBook find(AbstractBook book) {
+	public AbstractBook findByObject(AbstractBook book) {
 		return BookManager.findById(book.getID());
+	}
+	
+	public AbstractBook findById(String Id){
+		return BookManager.findById(Id);
 	}
 
 	public List<AbstractBook> findAll() {

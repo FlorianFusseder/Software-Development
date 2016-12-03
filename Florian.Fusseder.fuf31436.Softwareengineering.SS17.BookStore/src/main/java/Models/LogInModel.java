@@ -10,45 +10,49 @@ import Services.PersonService;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  *
  * @author Florian
  */
-@ToString
 @Named
 @NoArgsConstructor
-@RequestScoped
-public class ChooseUserModel implements Serializable{
-	
-	
+@ManagedBean
+@ApplicationScoped
+public class LogInModel implements Serializable {
+
 	@Inject
 	private PersonService personManager;
-	
 
+	@Setter
 	private Map<String, Customer> customerMap;
-	
+
 	@Getter
 	@Setter
 	private Customer choosenCustomer;
 
-	public Map<String, Customer> getCumstomerMap() {
+	@PostConstruct
+	public void setData() {
 		this.customerMap = personManager.findAll()
-						.stream()
-						.filter(p -> p.getClass() == Customer.class)
-						.map(p -> (Customer) p)
-						.collect(Collectors.toMap(c -> c.toString(), c -> c));
-		
-		this.choosenCustomer = customerMap.entrySet().iterator().next().getValue();
-		return customerMap;
+				.stream()
+				.filter(p -> p.getClass() == Customer.class)
+				.map(p -> (Customer) p)
+				.collect(Collectors.toMap(c -> c.getFirstName() + " " + c.getLastName(), c -> c));
+
+		this.choosenCustomer = this.customerMap.entrySet().iterator().next().getValue();
 	}
-	
-	
+
+	public Map<String, Customer> getCumstomerMap() {
+		this.setData();
+		return this.customerMap;
+	}
+
 }

@@ -22,11 +22,13 @@ import javax.transaction.Transactional;
  *
  * @author Florian
  */
+//todo: Macht converstaionscoped sinn in Services?
+
 @ConversationScoped
 public class ShoppingService implements Serializable{
 
 	@Inject
-	private Conversation converstation;
+	private Conversation conversation;
 	
 	@Inject
 	private ShoppingCartRepo shoppingManager;
@@ -36,14 +38,23 @@ public class ShoppingService implements Serializable{
 
 	@Inject
 	private PersonRepo personManager;
+	
+	@Inject
+	private BookService bookService;
 
 	public ShoppingService() {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void persist(ShoppingCart shoppingCart) {
-		
 		this.shoppingManager.persist(shoppingCart);
+	}
+	
+	public void addBookToCart(Customer customer, String Id){
+		if(this.conversation.isTransient())
+			this.conversation.begin();
+		
+		addBookToCart(customer, bookService.findById(Id));
 	}
 
 	/**
@@ -55,8 +66,8 @@ public class ShoppingService implements Serializable{
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, AbstractBook abstractBook) {
 		
-		if(this.converstation.isTransient())
-			this.converstation.begin();
+		if(this.conversation.isTransient())
+			this.conversation.begin();
 		
 		addBookToCart(customer, abstractBook, 1);
 	}
@@ -72,8 +83,8 @@ public class ShoppingService implements Serializable{
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, AbstractBook abstractBook, int amount) {
 		
-		if(this.converstation.isTransient())
-			this.converstation.begin();
+		if(this.conversation.isTransient())
+			this.conversation.begin();
 		
 		
 		customer = (Customer) this.personManager.merge(customer);
@@ -101,8 +112,5 @@ public class ShoppingService implements Serializable{
 		ShoppingCart newCart = new ShoppingCart();
 		shoppingManager.persist(newCart);
 		customer.setShoppingCart(newCart);
-		
-		if(!this.converstation.isTransient())
-			this.converstation.end();
 	}
 }

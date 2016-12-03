@@ -11,11 +11,11 @@
         <b:container style="width: 350px; padding-top: 100px;">
             <h:form styleClass="form-signin" prependId="false">
                 <h2 class="form-signin-heading">Sign In</h2>
-                <h:selectOneMenu value="#{chooseUserModel.choosenCustomer}">
-                    <f:selectItems value="#{chooseUserModel.cumstomerMap}"/>
+                <h:selectOneMenu value="#{logInModel.choosenCustomer}">
+                    <f:selectItems value="#{logInModel.cumstomerMap}"/>
                 </h:selectOneMenu>
                 <b:commandButton look="primary btn-block" 
-                                 value="Send" icon="log-in" 
+                                 value="Log In" icon="log-in" 
                                  size="lg"/>
             </h:form>
         </b:container>
