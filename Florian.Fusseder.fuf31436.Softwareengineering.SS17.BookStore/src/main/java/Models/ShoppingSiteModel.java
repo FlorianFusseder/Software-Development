@@ -40,7 +40,7 @@ public class ShoppingSiteModel implements Serializable {
 	//todo: Loginmodel implementen für das shoppingchart
 	//@Inject
 	//private LogInModel logInModel;
-
+	
 	@Getter
 	@Setter
 	private Customer customer;
@@ -56,24 +56,22 @@ public class ShoppingSiteModel implements Serializable {
 		this.shoppingService.addBookToCart(this.customer, abstractBook);
 	}
 
+	public List<AbstractBook> getBookList() {
+		if (this.conversation.isTransient()) {
+			this.conversation.begin();
+		}
+
+		//this.customer = this.logInModel.getChoosenCustomer();
+		this.bookList = this.bookService.findAll();
+		return bookList;
+	}
+
 	public void buyShoppingCart() {
 		this.shoppingService.buyCurrentCart(this.customer);
 
 		if (!this.conversation.isTransient()) {
 			this.conversation.end();
 		}
-	}
-
-	public List<AbstractBook> getBookList() {
-		if (this.conversation.isTransient()) {
-			this.conversation.begin();
-		}
-		
-		//this.customer = this.logInModel.getChoosenCustomer();
-		
-		
-		this.bookList = this.bookService.findAll();
-		return bookList;
 	}
 
 }

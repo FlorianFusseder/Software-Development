@@ -32,7 +32,6 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString(callSuper = true)

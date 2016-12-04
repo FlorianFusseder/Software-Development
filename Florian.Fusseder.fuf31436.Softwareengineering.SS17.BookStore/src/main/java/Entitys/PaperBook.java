@@ -33,18 +33,6 @@ public class PaperBook extends AbstractBook {
 		this.copies = copies;
 	}
 	
-	public PaperBook(String name, String isbn, Date releaseDate, Author author, BigDecimal price, long copies) {
-		super(name, isbn, releaseDate, price);
-		this.addAuthor(author);
-		this.copies = copies;
-	}
-	
-
-	public PaperBook(String name, String isbn, Date releaseDate, List<Author> AuthorList, BigDecimal price, long copies) {
-		super(name, isbn, releaseDate, AuthorList, price);
-		this.copies = copies;
-	}
-	
     public void addCopies(Long copies) {
         this.copies += copies;
     }

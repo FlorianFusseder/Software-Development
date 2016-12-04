@@ -32,6 +32,7 @@ public class LogInModel implements Serializable {
 	@Inject
 	private PersonService personManager;
 
+	//todo: Converter needed
 	@Setter
 	private Map<String, Customer> customerMap;
 
@@ -40,7 +41,7 @@ public class LogInModel implements Serializable {
 	private Customer choosenCustomer;
 
 	@PostConstruct
-	public void setData() {
+	public void init() {
 		this.customerMap = personManager.findAll()
 				.stream()
 				.filter(p -> p.getClass() == Customer.class)
@@ -51,7 +52,7 @@ public class LogInModel implements Serializable {
 	}
 
 	public Map<String, Customer> getCumstomerMap() {
-		this.setData();
+		this.init();
 		return this.customerMap;
 	}
 

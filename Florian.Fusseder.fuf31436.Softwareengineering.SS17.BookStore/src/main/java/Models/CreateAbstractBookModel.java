@@ -5,29 +5,24 @@
  */
 package Models;
 
-import Entitys.Adress;
+import Entitys.AbstractBook;
 import Entitys.Author;
-import Entitys.BankDetail;
+import Entitys.ElectronicBook;
 import Entitys.PaperBook;
 import Services.BookService;
 import Services.PersonService;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -45,28 +40,47 @@ public class CreateAbstractBookModel implements Serializable {
 	@Inject
 	private BookService bookService;
 
+	@Inject
+	PersonService personService;
+
 	private String name;
 
 	private String isbn;
 
 	private Date release;
 
-	private List<Author> author = new ArrayList<>();
-
 	private BigDecimal price;
 
 	private Integer copies;
 
 	private String license;
-	
+
+	//todo: Converter needed
+	private Map<String, Author> authorMap;
+
+	private Author choosenAuthors;
+
 	@PostConstruct
-	public void init(){
+	public void init() {
+
 		this.copies = null;
+		this.authorMap = personService.findAll()
+				.stream()
+				.filter(p -> p.getClass() == Author.class)
+				.map(p -> (Author) p)
+				.collect(Collectors.toMap(a -> a.getFirstName() + " " + a.getLastName(), a -> a));
 	}
 
 	public void createBook() {
-		if(this.copies != null)
-			this.bookService.persistNewBook(new PaperBook(this.name, this.isbn, this.release, this.author, this.price, this.copies), author);
+		AbstractBook book;
+		if (this.copies != null) {
+			book = new PaperBook(this.name, this.isbn, this.release, this.price, this.copies);
+		} else {
+			book = new ElectronicBook(this.name, this.isbn, this.release, this.price, this.license);
+		}
+
+		this.bookService.persistNewBook(book, this.choosenAuthors);
+
 	}
 
 }

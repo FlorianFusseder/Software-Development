@@ -34,15 +34,4 @@ public class ElectronicBook extends AbstractBook {
 		super(name, isbn, releaseDate, price);
 		this.license = license;
 	}
-
-	public ElectronicBook(String name, String isbn, Date releaseDate, BigDecimal price, Author author, String license) {
-		super(name, isbn, releaseDate, price);
-		this.addAuthor(author);
-	}
-
-	public ElectronicBook(String name, String isbn, Date releaseDate, BigDecimal price, List<Author> authorList, String license) {
-		super(name, isbn, releaseDate, authorList, price);
-		this.license = license;
-	}
-
 }

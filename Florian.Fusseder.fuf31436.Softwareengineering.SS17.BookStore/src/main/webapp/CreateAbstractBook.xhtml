@@ -10,30 +10,44 @@
     <h:body>
         <b:container style="width: 350px; padding-top: 100px;">
             <h:form styleClass="form-signin-heading" prependId="false">
-                <h2 class="form-signin-heading"> Create a new Author </h2>
+                <h2 class="form-signin-heading"> Create a Book </h2>
                 <h:panelGrid columns="2" cellpadding="5" >
 
-                    <h:outputText value="Firstname:"/>
-                    <b:inputText value="#{createAuthorModel.firstName}" required="true"/>
+                    <h:outputText value="Author/s"/>
+                    <b:selectMultiMenu value="#{createAbstractBookModel.choosenAuthors}" size="5">
+                        <f:selectItems value="#{createAbstractBookModel.authorMap}"/>
+                    </b:selectMultiMenu>
 
-                    <h:outputText value="Lastname:"/>
-                    <b:inputText value="#{createAuthorModel.lastName}" required="true"/>
 
-                    <h:outputText value="Street:"/>
-                    <b:inputText value="#{createAuthorModel.street}" required="true"/>
+                    <h:outputText value="Title:"/>
+                    <b:inputText value="#{createAbstractBookModel.name}" required="true"/>
 
-                    <h:outputText value="City:"/>
-                    <b:inputText value="#{createAuthorModel.city}" required="true"/>
+                    <h:outputText value="Isbn:"/>
+                    <b:inputText value="#{createAbstractBookModel.isbn}" required="true"/>
 
-                    <h:outputText value="Postnumber:"/>
-                    <b:inputText value="#{createAuthorModel.postNumber}" required="true"/>
+                    <h:outputText value="ReleaseDate:"/>
+                    <b:datepicker value="#{createAbstractBookModel.release}"/>
+
+                    <h:outputText value="Price: "/>
+                    <b:inputText value="#{createAbstractBookModel.price}" required="true">
+                        <f:facet name="postpend">
+                            <h:outputText value="€" />
+                        </f:facet>
+                    </b:inputText>
+
+                    <h:outputText value="Copies:"/>
+                    <b:inputText value="#{createAbstractBookModel.copies}" required="true"/>
+
+                    <h:outputText value="License"/>
+                    <b:inputText value="#{createAbstractBookModel.license}" required="false"/>
 
                 </h:panelGrid>
                 <b:commandButton 
-                                 value="Create"
-                                 icon="plus-sign" 
-                                 look="success"
-                                 action="#{createAuthorModel.createAuthor()}"/>
+                    value="Create"
+                    icon="plus-sign" 
+                    look="success"
+                    action="#{createAbstractBookModel.createBook()}"
+                    />
             </h:form>
         </b:container>
     </h:body>
