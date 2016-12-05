@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>FF</groupId>
-    <artifactId>Florian.Fusseder.fuf31436.Softwareengineering.SS17.BookStore</artifactId>
+    <artifactId>Florian.Fusseder.fuf31436.SoftwareDevelopment.SS17.BookStore</artifactId>
     <version>0.1.0</version>
     <packaging>war</packaging>
 
-    <name>Florian.Fusseder.fuf31436.Softwareengineering.SS17.BookStore</name>
+    <name>Florian.Fusseder.fuf31436.SoftwareDevelopment.SS17.BookStore</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
