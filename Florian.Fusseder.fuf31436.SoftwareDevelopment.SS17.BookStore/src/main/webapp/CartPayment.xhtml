@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Checkout</title>
+    </h:head>
+    <h:body>
+        <b:container style="width: 350px; padding-top: 100px;">
+            <h:form styleClass="form-signin-heading" prependId="false">
+                <h2 class="form-signin-heading"> Check your Shopping Cart </h2>
+                <h:panelGrid columns="2" cellpadding="5" >
+
+                    <c:forEach items="#{cartPaymentModel.shoppingCart}" var="sc">
+                        <h:outputText value="#{sc}"/>
+                        <br/>
+                    </c:forEach>
+
+
+                    <h:outputText value="Firstname:"/>
+                    <h:outputText value="#{cartPaymentModel.customer.firstName}"/>
+
+                    <h:outputText value="Lastname:"/>
+                    <h:outputText value="#{cartPaymentModel.customer.lastName}"/>
+
+                    <h:outputText value="Street:"/>
+                    <h:outputText value="#{cartPaymentModel.customer.adress.street}"/>
+
+                    <h:outputText value="City:"/>
+                    <h:outputText value="#{cartPaymentModel.customer.adress.city}"/>
+
+                    <h:outputText value="Postnumber:"/>
+                    <h:outputText value="#{cartPaymentModel.customer.adress.postNumber}"/>
+
+                    <h:outputText value="iban:"/>
+                    <h:outputText value="#{cartPaymentModel.customer.bankDetail.iban}"/>
+
+                    <h:outputText value="bic:"/>
+                    <h:outputText value="#{cartPaymentModel.customer.bankDetail.bic}"/>
+
+                </h:panelGrid>
+                <b:commandButton 
+                    value="Create"
+                    icon="plus-sign" 
+                    look="success"
+                    action="#{cartPaymentModel.buyNow()}"/>
+            </h:form>
+        </b:container>
+    </h:body>
+</html>
+

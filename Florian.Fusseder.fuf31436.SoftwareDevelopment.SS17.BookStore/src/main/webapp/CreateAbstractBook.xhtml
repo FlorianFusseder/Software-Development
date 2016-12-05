@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Create a Book</title>
+    </h:head>
+    <h:body>
+        <b:container style="width: 350px; padding-top: 100px;">
+            <h:form styleClass="form-signin-heading" prependId="false">
+                <h2 class="form-signin-heading"> Create a Book </h2>
+                <h:panelGrid columns="2" cellpadding="5" >
+
+                    <h:outputText value="Author/s"/>
+                    <b:selectMultiMenu value="#{createAbstractBookModel.choosenAuthors}" size="5">
+                        <f:selectItems value="#{createAbstractBookModel.authorMap}"/>
+                    </b:selectMultiMenu>
+
+
+                    <h:outputText value="Title:"/>
+                    <b:inputText value="#{createAbstractBookModel.name}" required="true"/>
+
+                    <h:outputText value="Isbn:"/>
+                    <b:inputText value="#{createAbstractBookModel.isbn}" required="true"/>
+
+                    <h:outputText value="ReleaseDate:"/>
+                    <b:datepicker value="#{createAbstractBookModel.release}"/>
+
+                    <h:outputText value="Price: "/>
+                    <b:inputText value="#{createAbstractBookModel.price}" required="true">
+                        <f:facet name="postpend">
+                            <h:outputText value="€" />
+                        </f:facet>
+                    </b:inputText>
+
+                    <h:outputText value="Copies:"/>
+                    <b:inputText value="#{createAbstractBookModel.copies}" required="true"/>
+
+                    <h:outputText value="License"/>
+                    <b:inputText value="#{createAbstractBookModel.license}" required="false"/>
+
+                </h:panelGrid>
+                <b:commandButton 
+                    value="Create"
+                    icon="plus-sign" 
+                    look="success"
+                    action="#{createAbstractBookModel.createBook()}"
+                    />
+            </h:form>
+        </b:container>
+    </h:body>
+</html>
+
