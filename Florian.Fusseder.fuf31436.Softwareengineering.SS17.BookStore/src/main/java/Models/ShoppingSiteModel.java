@@ -74,4 +74,4 @@ public class ShoppingSiteModel implements Serializable {
 		}
 	}
 
-}
+} 

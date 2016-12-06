@@ -13,8 +13,7 @@ import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
 import java.io.Serializable;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
@@ -24,11 +23,12 @@ import javax.transaction.Transactional;
  */
 //todo: Macht converstaionscoped sinn in Services?
 
-@ConversationScoped
+//@ConversationScoped
+@RequestScoped
 public class ShoppingService implements Serializable{
 
-	@Inject
-	private Conversation conversation;
+//	@Inject
+//	private Conversation conversation;
 	
 	@Inject
 	private ShoppingCartRepo shoppingManager;
@@ -50,9 +50,10 @@ public class ShoppingService implements Serializable{
 		this.shoppingManager.persist(shoppingCart);
 	}
 	
+	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, String Id){
-		if(this.conversation.isTransient())
-			this.conversation.begin();
+//		if(this.conversation.isTransient())
+//			this.conversation.begin();
 		
 		addBookToCart(customer, bookService.findById(Id));
 	}
@@ -66,8 +67,8 @@ public class ShoppingService implements Serializable{
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, AbstractBook abstractBook) {
 		
-		if(this.conversation.isTransient())
-			this.conversation.begin();
+//		if(this.conversation.isTransient())
+//			this.conversation.begin();
 		
 		addBookToCart(customer, abstractBook, 1);
 	}
@@ -83,8 +84,8 @@ public class ShoppingService implements Serializable{
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, AbstractBook abstractBook, int amount) {
 		
-		if(this.conversation.isTransient())
-			this.conversation.begin();
+//		if(this.conversation.isTransient())
+//			this.conversation.begin();
 		
 		
 		customer = (Customer) this.personManager.merge(customer);
@@ -112,5 +113,9 @@ public class ShoppingService implements Serializable{
 		ShoppingCart newCart = new ShoppingCart();
 		shoppingManager.persist(newCart);
 		customer.setShoppingCart(newCart);
+		
+//		if (!this.conversation.isTransient()) {
+//			this.conversation.end();
+//		}
 	}
 }

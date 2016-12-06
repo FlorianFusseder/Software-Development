@@ -19,7 +19,6 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.convert.CustomerConverter;
 
 /**
  *
