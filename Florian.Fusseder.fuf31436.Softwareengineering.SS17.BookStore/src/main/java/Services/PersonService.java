@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.convert.CustomerConverter;
 
 /**
  *
@@ -49,7 +50,11 @@ public class PersonService implements Serializable {
 				? (Author) this.personRepo.findById(person.getID())
 				: (Customer) this.personRepo.findById(person.getID());
 	}
-
+	
+	public Person find(Long Id){
+		return this.personRepo.findById(Id);
+	}
+	
 	public List<Person> findAll() {
 		return personRepo.findAll();
 	}

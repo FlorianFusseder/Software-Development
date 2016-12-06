@@ -8,11 +8,11 @@ package Models;
 import Entitys.Customer;
 import Services.PersonService;
 import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.convert.CustomerConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
@@ -32,28 +32,26 @@ public class LogInModel implements Serializable {
 	@Inject
 	private PersonService personManager;
 
-	//todo: Converter needed
+	@Inject
+	@Getter
 	@Setter
-	private Map<String, Customer> customerMap;
+	private CustomerConverter converter;
 
 	@Getter
 	@Setter
 	private Customer choosenCustomer;
 
-	@PostConstruct
-	public void init() {
-		this.customerMap = personManager.findAll()
+	public List<Customer> GetCustomerList() {
+		List<Customer> customerList = personManager.findAll()
 				.stream()
 				.filter(p -> p.getClass() == Customer.class)
 				.map(p -> (Customer) p)
-				.collect(Collectors.toMap(c -> c.getFirstName() + " " + c.getLastName(), c -> c));
+				.collect(Collectors.toList());
 
-		this.choosenCustomer = this.customerMap.entrySet().iterator().next().getValue();
-	}
-
-	public Map<String, Customer> getCumstomerMap() {
-		this.init();
-		return this.customerMap;
+		if (!customerList.isEmpty() && this.choosenCustomer == null) {
+			this.choosenCustomer = customerList.get(0);
+		}
+		return customerList;
 	}
 
 }

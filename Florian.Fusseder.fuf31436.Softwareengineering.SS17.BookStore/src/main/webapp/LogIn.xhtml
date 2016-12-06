@@ -12,11 +12,12 @@
             <h:form styleClass="form-signin" prependId="false">
                 <h2 class="form-signin-heading">Sign In</h2>
                 <h:selectOneMenu value="#{logInModel.choosenCustomer}">
-                    <f:selectItems value="#{logInModel.cumstomerMap}"/>
+                    <f:converter binding="#{logInModel.converter}"/>
+                    <f:selectItems value="#{logInModel.GetCustomerList()}"/>
                 </h:selectOneMenu>
                 <b:commandButton look="primary btn-block" 
                                  value="Log In" icon="log-in" 
-                                 size="lg"/>
+                                 size="lg" action="/ShoppingSite"/>
             </h:form>
         </b:container>
     </h:body>
