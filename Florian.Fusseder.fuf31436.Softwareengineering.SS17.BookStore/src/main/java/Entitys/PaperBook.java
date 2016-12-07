@@ -26,14 +26,14 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class PaperBook extends AbstractBook {
 
-    private long copies;
+	private long copies;
 
 	public PaperBook(String name, String isbn, Date releaseDate, BigDecimal price, long copies) {
 		super(name, isbn, releaseDate, price);
 		this.copies = copies;
 	}
-	
-    public void addCopies(Long copies) {
-        this.copies += copies;
-    }
+
+	public void addCopies(Long copies) {
+		this.copies += copies;
+	}
 }

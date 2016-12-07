@@ -8,6 +8,7 @@ package Models;
 import Entitys.Adress;
 import Services.PersonService;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
@@ -40,10 +41,29 @@ public class CreateAuthorModel implements Serializable {
 	private String city;
 
 	private String postNumber;
+	
+	private String log;
+	
+	@PostConstruct
+	public void init(){
+		log = "";
+	}
 
 	public void createAuthor() {
 		this.personService.createAuthor(this.firstName, this.lastName,
 				new Adress(this.street, this.city, Integer.valueOf(this.postNumber)));
+		
+		log += "New Author: " +  this.firstName
+				+ " " + this.lastName
+				+ " " + this.street
+				+ " " + this.city
+				+ " " + this.postNumber + "\n";
+		
+		this.firstName = "";
+		this.lastName = "";
+		this.street = "";
+		this.city = "";
+		this.postNumber = "";
 	}
 
 }

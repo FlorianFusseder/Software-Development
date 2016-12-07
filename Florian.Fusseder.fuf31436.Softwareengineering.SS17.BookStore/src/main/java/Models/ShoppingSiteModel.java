@@ -60,14 +60,21 @@ public class ShoppingSiteModel implements Serializable {
 		this.bookList = this.bookService.findAll();
 		return this.bookList;
 	}
+	
+	public List<ShoppingCart> getAllBoughtCarts(){
+		return this.customer.getPayedShoppingCarts();
+	}
 
 	public ShoppingCart getShoppingCart() {
 		return this.customer.getShoppingCart();
 	}
 
 	public String buyShoppingCart() {
-		this.customer = this.shoppingService.buyCurrentCart(this.customer);
-		return "/ShoppingSite.xhtml";
+		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
+			this.customer = this.shoppingService.buyCurrentCart(this.customer);
+			return "/ShoppingSite.xhtml";
+		}
+		return "";
 	}
 
 	public List<Customer> getCustomerList() {
@@ -87,8 +94,8 @@ public class ShoppingSiteModel implements Serializable {
 	public void removeBook(CartItem cartItem) {
 		this.customer = shoppingService.alterShoppingCart(this.customer, cartItem.getAbstractBook(), -1);
 	}
-	
-	public int booksInCart(){
+
+	public int booksInCart() {
 		return this.customer.getShoppingCart().getShoppingList().stream()
 				.mapToInt(ci -> ci.getCount())
 				.sum();

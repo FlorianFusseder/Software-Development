@@ -14,9 +14,10 @@
                 <h:panelGrid columns="2" cellpadding="5" >
 
                     <h:outputText value="Author/s"/>
-                    <b:selectMultiMenu value="#{createAbstractBookModel.choosenAuthors}" size="5">
-                        <f:selectItems value="#{createAbstractBookModel.authorMap}"/>
-                    </b:selectMultiMenu>
+                    <h:selectManyListbox value="#{createAbstractBookModel.choosenAuthors}" size="5" >
+                        <f:converter binding="#{createAbstractBookModel.converter}"/>
+                        <f:selectItems value="#{createAbstractBookModel.authorList}"/>
+                    </h:selectManyListbox>
 
 
                     <h:outputText value="Title:"/>
@@ -36,7 +37,7 @@
                     </b:inputText>
 
                     <h:outputText value="Copies:"/>
-                    <b:inputText value="#{createAbstractBookModel.copies}" required="true"/>
+                    <b:inputText value="#{createAbstractBookModel.copies}" required="false"/>
 
                     <h:outputText value="License"/>
                     <b:inputText value="#{createAbstractBookModel.license}" required="false"/>
@@ -48,6 +49,8 @@
                     look="success"
                     action="#{createAbstractBookModel.createBook()}"
                     />
+                <br/>
+                #{createAbstractBookModel.log}
             </h:form>
         </b:container>
     </h:body>

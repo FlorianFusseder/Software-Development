@@ -9,8 +9,6 @@ import Entitys.AbstractBook;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
 import Entitys.CartItem;
-import Technicals.Repo.AbstractBookRepo;
-import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
 import java.io.Serializable;
@@ -58,10 +56,6 @@ public class ShoppingService implements Serializable {
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, String Id) {
 		this.alterShoppingCart(customer, this.bookManager.findById(Id), 1);
-	}
-
-	public void removeBookFromCart() {
-
 	}
 
 	/**

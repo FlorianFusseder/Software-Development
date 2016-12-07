@@ -13,12 +13,16 @@ import Services.BookService;
 import Services.PersonService;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.convert.AuthorConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
@@ -41,7 +45,10 @@ public class CreateAbstractBookModel implements Serializable {
 	private BookService bookService;
 
 	@Inject
-	PersonService personService;
+	private PersonService personService;
+
+	@Inject
+	private AuthorConverter converter;
 
 	private String name;
 
@@ -55,20 +62,21 @@ public class CreateAbstractBookModel implements Serializable {
 
 	private String license;
 
-	//todo: Converter needed
-	private Map<String, Author> authorMap;
+	private List<Author> authorList;
 
-	private Author choosenAuthors;
+	private Author[] choosenAuthors;
+
+	private String log;
 
 	@PostConstruct
 	public void init() {
-
+		this.log = "";
 		this.copies = null;
-		this.authorMap = personService.findAll()
+		this.authorList = personService.findAll()
 				.stream()
 				.filter(p -> p.getClass() == Author.class)
 				.map(p -> (Author) p)
-				.collect(Collectors.toMap(a -> a.getFirstName() + " " + a.getLastName(), a -> a));
+				.collect(Collectors.toList());
 	}
 
 	public void createBook() {
@@ -78,9 +86,18 @@ public class CreateAbstractBookModel implements Serializable {
 		} else {
 			book = new ElectronicBook(this.name, this.isbn, this.release, this.price, this.license);
 		}
+		this.bookService.persistNewBook(book, Arrays.asList(choosenAuthors));
 
-		this.bookService.persistNewBook(book, this.choosenAuthors);
-
+		this.log += "New Book " + this.name + " " + this.price + " created\n";
+		
+		
+		this.name = "";
+		this.isbn = "";
+		this.release = null;
+		this.price = null;
+		this.copies = null;
+		this.license = "";
+		this.choosenAuthors = null;
 	}
 
 }
