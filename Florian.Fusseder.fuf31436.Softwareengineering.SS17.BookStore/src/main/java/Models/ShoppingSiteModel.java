@@ -65,11 +65,7 @@ public class ShoppingSiteModel implements Serializable {
 		return this.customer.getShoppingCart();
 	}
 
-	public void addBookToCart(String Id) {
-		this.shoppingService.addBookToCart(this.customer, Id);
-	}
-
-	public String  buyShoppingCart() {
+	public String buyShoppingCart() {
 		this.customer = this.shoppingService.buyCurrentCart(this.customer);
 		return "/ShoppingSite.xhtml";
 	}
@@ -83,9 +79,19 @@ public class ShoppingSiteModel implements Serializable {
 
 		return customerList;
 	}
-	
-	public void removeBook(CartItem cartItem){
+
+	public void addBookToCart(AbstractBook book) {
+		this.customer = this.shoppingService.alterShoppingCart(this.customer, book, 1);
+	}
+
+	public void removeBook(CartItem cartItem) {
 		this.customer = shoppingService.alterShoppingCart(this.customer, cartItem.getAbstractBook(), -1);
+	}
+	
+	public int booksInCart(){
+		return this.customer.getShoppingCart().getShoppingList().stream()
+				.mapToInt(ci -> ci.getCount())
+				.sum();
 	}
 
 }

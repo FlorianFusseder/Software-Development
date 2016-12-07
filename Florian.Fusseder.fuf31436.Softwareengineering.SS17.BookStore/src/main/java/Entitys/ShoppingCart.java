@@ -13,11 +13,12 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,40 +35,43 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class ShoppingCart extends GeneratedIdEntity {
 
-    @ManyToMany
-    private List<CartItem> shoppingList = new ArrayList<>();
+	@ManyToMany
+	private List<CartItem> shoppingList = new ArrayList<>();
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate = new Date();
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creationDate = new Date();
 
-    private BigDecimal total = BigDecimal.ZERO;
+	private BigDecimal total = BigDecimal.ZERO;
 
+	@PreUpdate
+	@PrePersist
+	private void Load() {
+		this.total = this.getTotal();
+	}
 
-    @PreUpdate
-    @PrePersist
-    private void Load() {
-        this.total = shoppingList.stream()
-				.map((cartItem) -> cartItem.getAbstractBook().getPrice())
+	public BigDecimal getTotal() {
+		return shoppingList.stream()
+				.map((cartItem) -> cartItem.getAbstractBook().getPrice().multiply(new BigDecimal(cartItem.getCount())))
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+	}
 
-    public List<CartItem> getShoppingList() {
-        return Collections.unmodifiableList(shoppingList);
-    }
+	public List<CartItem> getShoppingList() {
+		return Collections.unmodifiableList(shoppingList);
+	}
 
-    public void addToShoppingList(CartItem cartItem) {
-        this.shoppingList.add(cartItem);
-    }
-	
-	public void removeFromShoppingList(CartItem cartItem){
+	public void addToShoppingList(CartItem cartItem) {
+		this.shoppingList.add(cartItem);
+	}
+
+	public void removeFromShoppingList(CartItem cartItem) {
 		this.shoppingList.remove(cartItem);
 	}
 
-    public void addToShoppingList(List<CartItem> cartItems) {
-        this.shoppingList.addAll(cartItems);
-    }
+	public void addToShoppingList(List<CartItem> cartItems) {
+		this.shoppingList.addAll(cartItems);
+	}
 
-    public void clearShoppingCart() {
-        this.shoppingList.clear();
-    }
+	public void clearShoppingCart() {
+		this.shoppingList.clear();
+	}
 }

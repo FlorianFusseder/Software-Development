@@ -38,7 +38,7 @@
 
 
                 <b:commandButton 
-                    value="Buy Cart"
+                    value="Buy Cart for #{shoppingSiteModel.shoppingCart.total}"
                     icon="plus-sign" 
                     look="success"
                     action="#{shoppingSiteModel.buyShoppingCart()}"/>
@@ -69,6 +69,25 @@
 
             </h:panelGrid>
 
+            <h:dataTable value="#{shoppingSiteModel.customer.payedShoppingCarts}" var="payedItem"
+                         styleClass="order-table" headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row">
+
+                <h:column>
+                    <f:facet name="header"> #{payedItem.ID}, #{payedItem.total} </f:facet>
+                    <h:dataTable value="#{payedItem.shoppingList}" var="listItem"
+                                 styleClass="order-table" headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
+                        <h:column>
+                            <f:facet name="header"> #{listItem} </f:facet>
+                            #{listItem}
+                        </h:column>
+                    </h:dataTable>
+
+                </h:column>
+
+
+            </h:dataTable>
         </b:container>
     </h:body>
 </html>

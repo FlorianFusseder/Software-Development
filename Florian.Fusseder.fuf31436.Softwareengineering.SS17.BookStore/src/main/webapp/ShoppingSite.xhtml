@@ -11,7 +11,7 @@
     <h:body>
 
         <h:form>
-            <b:commandButton value="ShoppingCart : #{shoppingSiteModel.shoppingCart.shoppingList.size()}" icon="shopping-cart" size="lg" 
+            <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" icon="shopping-cart" size="lg" 
                              action="Payment.xhtml"/>
         </h:form>
         <b:container style="width: 350px; padding-top: 100px;">
@@ -26,43 +26,47 @@
         </b:container>
         <b:container style="width: 800px; padding-top: 100px;">
             <h2>Books Available</h2>
+            <h:form>
+                <h:dataTable value="#{shoppingSiteModel.bookList}" var="book"
+                             styleClass="order-table" headerClass="order-table-header"
+                             rowClasses="order-table-odd-row,order-table-even-row">
 
-            <h:dataTable value="#{shoppingSiteModel.bookList}" var="book"
-                         styleClass="order-table" headerClass="order-table-header"
-                         rowClasses="order-table-odd-row,order-table-even-row">
-
-                <h:column>
-                    <f:facet name="header"> ISBN </f:facet>
-                        #{book.isbn}
-                </h:column>
-
-
-                <h:column>
-                    <f:facet name="header"> Name </f:facet>
-                        #{book.name}
-                </h:column>
+                    <h:column>
+                        <f:facet name="header"> ISBN </f:facet>
+                            #{book.isbn}
+                    </h:column>
 
 
-                <h:column>
-                    <f:facet name="header"> Release </f:facet>
-                        #{book.release}
-                </h:column>
+                    <h:column>
+                        <f:facet name="header"> Name </f:facet>
+                            #{book.name}
+                    </h:column>
 
-                <h:column>
-                    <f:facet name="header"> Authors </f:facet>
-                        #{book.author}
-                </h:column>
 
-                <h:column>
-                    <f:facet name="header"> Price </f:facet>
-                        #{book.price}
-                </h:column>
+                    <h:column>
+                        <f:facet name="header"> Release </f:facet>
+                            #{book.release}
+                    </h:column>
 
-                <h:column>
-                    <b:button value="BUY" icon="cart-plus" look="success" size="xs" />
-                </h:column>
+                    <h:column>
+                        <f:facet name="header"> Authors </f:facet>
+                            #{book.author}
+                    </h:column>
 
-            </h:dataTable>
+                    <h:column>
+                        <f:facet name="header"> Price </f:facet>
+                            #{book.price}
+                    </h:column>
+
+                    <h:column>
+                        <b:commandButton value="BUY" 
+                                         icon="cart-plus" 
+                                         look="success" 
+                                         size="xs" 
+                                         action="#{shoppingSiteModel.addBookToCart(book)}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
         </b:container>
     </h:body>
 </html>

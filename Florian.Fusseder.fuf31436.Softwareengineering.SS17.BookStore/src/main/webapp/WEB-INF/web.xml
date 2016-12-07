@@ -19,6 +19,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>Seeder.xhtml</welcome-file>
+        <welcome-file>LogIn.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>
