@@ -30,7 +30,12 @@ public class CartItem extends GeneratedIdEntity {
 
 	private int count;
 
-	public void addCount(int i) {
-		this.count += i;
+	/**
+	 * Alters the amount of Books in this item and returns the new amount
+	 * @param i
+	 * @return 
+	 */
+	public int alterCount(int i) {
+		return this.count += i;
 	}
 }

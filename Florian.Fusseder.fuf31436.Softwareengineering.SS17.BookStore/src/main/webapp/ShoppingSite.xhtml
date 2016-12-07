@@ -10,10 +10,11 @@
     </h:head>
     <h:body>
 
+        <h:form>
+            <b:commandButton value="ShoppingCart : #{shoppingSiteModel.shoppingCart.shoppingList.size()}" icon="shopping-cart" size="lg" 
+                             action="Payment.xhtml"/>
+        </h:form>
         <b:container style="width: 350px; padding-top: 100px;">
-            <h:outputText value="Items in Cart: "/>
-            #{logInModel.choosenCustomer.shoppingCart.shoppingList.size()}
-            
             <h2>Books</h2>
             <h:form prependId="false">
                 <b:inputText placeholder="Search for Books...">
@@ -25,45 +26,43 @@
         </b:container>
         <b:container style="width: 800px; padding-top: 100px;">
             <h2>Books Available</h2>
-            
+
             <h:dataTable value="#{shoppingSiteModel.bookList}" var="book"
                          styleClass="order-table" headerClass="order-table-header"
                          rowClasses="order-table-odd-row,order-table-even-row">
-                
+
                 <h:column>
                     <f:facet name="header"> ISBN </f:facet>
-                    #{book.isbn}
+                        #{book.isbn}
                 </h:column>
-                
-                
+
+
                 <h:column>
                     <f:facet name="header"> Name </f:facet>
-                    #{book.name}
+                        #{book.name}
                 </h:column>
-                
-                
+
+
                 <h:column>
                     <f:facet name="header"> Release </f:facet>
-                    #{book.release}
+                        #{book.release}
                 </h:column>
-                
+
                 <h:column>
                     <f:facet name="header"> Authors </f:facet>
-                    #{book.author}
+                        #{book.author}
                 </h:column>
-                
+
                 <h:column>
                     <f:facet name="header"> Price </f:facet>
-                    #{book.price}
+                        #{book.price}
                 </h:column>
-                
+
                 <h:column>
-                    <b:button value="BUY" icon="cart-plus" look="success" />
+                    <b:button value="BUY" icon="cart-plus" look="success" size="xs" />
                 </h:column>
-                
+
             </h:dataTable>
-            
-            
         </b:container>
     </h:body>
 </html>

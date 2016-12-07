@@ -6,13 +6,18 @@
 package Models;
 
 import Entitys.AbstractBook;
+import Entitys.CartItem;
 import Entitys.Customer;
+import Entitys.ShoppingCart;
 import Services.BookService;
+import Services.PersonService;
 import Services.ShoppingService;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import java.util.stream.Collectors;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.convert.CustomerConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
@@ -24,12 +29,10 @@ import lombok.Setter;
  * @author Florian
  */
 @Named
-@ConversationScoped
+@ApplicationScoped
 @NoArgsConstructor
+@ManagedBean
 public class ShoppingSiteModel implements Serializable {
-
-	@Inject
-	private Conversation conversation;
 
 	@Inject
 	private BookService bookService;
@@ -37,10 +40,9 @@ public class ShoppingSiteModel implements Serializable {
 	@Inject
 	private ShoppingService shoppingService;
 
-	//todo: Loginmodel implementen für das shoppingchart
-	//@Inject
-	//private LogInModel logInModel;
-	
+	@Inject
+	private PersonService personService;
+
 	@Getter
 	@Setter
 	private Customer customer;
@@ -48,30 +50,42 @@ public class ShoppingSiteModel implements Serializable {
 	@Setter
 	private List<AbstractBook> bookList;
 
+	//todo: warum unsatisfiyd dependency?
+	@Inject
+	@Getter
+	@Setter
+	private CustomerConverter converter;
+
+	public List<AbstractBook> getBookList() {
+		this.bookList = this.bookService.findAll();
+		return this.bookList;
+	}
+
+	public ShoppingCart getShoppingCart() {
+		return this.customer.getShoppingCart();
+	}
+
 	public void addBookToCart(String Id) {
 		this.shoppingService.addBookToCart(this.customer, Id);
 	}
 
-	public void addBookToCart(AbstractBook abstractBook) {
-		this.shoppingService.addBookToCart(this.customer, abstractBook);
+	public String  buyShoppingCart() {
+		this.customer = this.shoppingService.buyCurrentCart(this.customer);
+		return "/ShoppingSite.xhtml";
 	}
 
-	public List<AbstractBook> getBookList() {
-		if (this.conversation.isTransient()) {
-			this.conversation.begin();
-		}
+	public List<Customer> getCustomerList() {
+		List<Customer> customerList = personService.findAll()
+				.stream()
+				.filter(p -> p.getClass() == Customer.class)
+				.map(p -> (Customer) p)
+				.collect(Collectors.toList());
 
-		//this.customer = this.logInModel.getChoosenCustomer();
-		this.bookList = this.bookService.findAll();
-		return bookList;
+		return customerList;
+	}
+	
+	public void removeBook(CartItem cartItem){
+		this.customer = shoppingService.alterShoppingCart(this.customer, cartItem.getAbstractBook(), -1);
 	}
 
-	public void buyShoppingCart() {
-		this.shoppingService.buyCurrentCart(this.customer);
-
-		if (!this.conversation.isTransient()) {
-			this.conversation.end();
-		}
-	}
-
-} 
+}

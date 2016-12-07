@@ -93,14 +93,12 @@ public class SeederModel implements Serializable {
 		this.addToOutput(a);
 		this.addToOutput(b);
 
-		shoppingService.addBookToCart(c1, eb);
-		shoppingService.addBookToCart(c1, pb);
-		shoppingService.addBookToCart(c1, pb);
+		shoppingService.alterShoppingCart(c1, eb, 1);
+		shoppingService.alterShoppingCart(c1, pb, 2);
 		this.addToOutput(c1);
 
-		shoppingService.addBookToCart(c2, eb);
-		shoppingService.addBookToCart(c2, pb);
-		shoppingService.addBookToCart(c2, pb);
+		shoppingService.alterShoppingCart(c2, eb, 1);
+		shoppingService.alterShoppingCart(c2, pb, 2);
 		this.addToOutput(c2);
 
 		shoppingService.buyCurrentCart(c1);

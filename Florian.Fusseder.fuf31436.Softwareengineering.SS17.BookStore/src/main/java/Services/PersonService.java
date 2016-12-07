@@ -39,23 +39,23 @@ public class PersonService implements Serializable {
 	public PersonService() {
 	}
 
-	@Transactional(Transactional.TxType.REQUIRED)
-	public void persist(Person person) {
-		this.personRepo.persist(person);
-	}
-
 	public Person find(Person person) {
 		return (person.getClass() == Author.class)
 				? (Author) this.personRepo.findById(person.getID())
 				: (Customer) this.personRepo.findById(person.getID());
 	}
-	
-	public Person find(Long Id){
+
+	public Person find(Long Id) {
 		return this.personRepo.findById(Id);
 	}
-	
+
 	public List<Person> findAll() {
 		return personRepo.findAll();
+	}
+
+	@Transactional(Transactional.TxType.REQUIRED)
+	public void persist(Person person) {
+		this.personRepo.persist(person);
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)

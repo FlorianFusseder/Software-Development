@@ -7,14 +7,12 @@ package Services;
 
 import Entitys.AbstractBook;
 import Entitys.Author;
-import Entitys.PaperBook;
 import Technicals.Repo.AbstractBookRepo;
 import Technicals.Repo.PersonRepo;
 import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import javax.enterprise.context.RequestScoped;
 

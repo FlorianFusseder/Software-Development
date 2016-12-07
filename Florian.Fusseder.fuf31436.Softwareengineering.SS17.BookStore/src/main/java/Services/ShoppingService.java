@@ -9,10 +9,12 @@ import Entitys.AbstractBook;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
 import Entitys.CartItem;
+import Technicals.Repo.AbstractBookRepo;
 import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
 import java.io.Serializable;
+import java.util.Iterator;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -22,100 +24,92 @@ import javax.transaction.Transactional;
  * @author Florian
  */
 //todo: Macht converstaionscoped sinn in Services?
-
-//@ConversationScoped
 @RequestScoped
-public class ShoppingService implements Serializable{
-
-//	@Inject
-//	private Conversation conversation;
-	
-	@Inject
-	private ShoppingCartRepo shoppingManager;
+public class ShoppingService implements Serializable {
 
 	@Inject
-	private CartItemRepo cartItemManager;
+	private ShoppingCartRepo shoppingCartManager;
+
+	@Inject
+	private CartItemService cartItemManager;
 
 	@Inject
 	private PersonRepo personManager;
-	
+
 	@Inject
-	private BookService bookService;
+	private BookService bookManager;
 
 	public ShoppingService() {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void persist(ShoppingCart shoppingCart) {
-		this.shoppingManager.persist(shoppingCart);
-	}
-	
-	@Transactional(Transactional.TxType.REQUIRED)
-	public void addBookToCart(Customer customer, String Id){
-//		if(this.conversation.isTransient())
-//			this.conversation.begin();
-		
-		addBookToCart(customer, bookService.findById(Id));
+		this.shoppingCartManager.persist(shoppingCart);
 	}
 
 	/**
-	 * Wraps a AbstractBook into a CartItem and adds it to the ShoppingCart.
-	 * If already existent the counter of the CartItem will be increased by one.
+	 * Wraps AbstractBook from the Id into a CartItem and adds it to the
+	 * ShoppingCart. If already existent the counter of the CartItem will be
+	 * increased by 1.
+	 *
 	 * @param customer
-	 * @param abstractBook 
+	 * @param Id
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
-	public void addBookToCart(Customer customer, AbstractBook abstractBook) {
-		
-//		if(this.conversation.isTransient())
-//			this.conversation.begin();
-		
-		addBookToCart(customer, abstractBook, 1);
+	public void addBookToCart(Customer customer, String Id) {
+		this.alterShoppingCart(customer, this.bookManager.findById(Id), 1);
+	}
+
+	public void removeBookFromCart() {
+
 	}
 
 	/**
-	 * Wraps a AbstractBook into a CartItem and adds it to the ShoppingCart.
-	 * If already existent the counter of the CartItem will be increased 
-	 * by <amount>.
+	 * Wraps a AbstractBook into a CartItem and adds it to the ShoppingCart. If
+	 * already existent the counter of the CartItem will be increased by
+	 * <amount>.
+	 *
 	 * @param customer
 	 * @param abstractBook
-	 * @param amount 
+	 * @param amount
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
-	public void addBookToCart(Customer customer, AbstractBook abstractBook, int amount) {
-		
-//		if(this.conversation.isTransient())
-//			this.conversation.begin();
-		
-		
-		customer = (Customer) this.personManager.merge(customer);
-		ShoppingCart shoppingCart = this.shoppingManager.merge(customer.getShoppingCart());
+	public Customer alterShoppingCart(Customer customer, AbstractBook abstractBook, int amount) {
 
-		for (CartItem cartItem : shoppingCart.getShoppingList()) {
-			if (cartItem.getAbstractBook() == abstractBook) {
+		customer = (Customer) this.personManager.merge(customer);
+		ShoppingCart shoppingCart = this.shoppingCartManager.merge(customer.getShoppingCart());
+		Iterator<CartItem> items = shoppingCart.getShoppingList().iterator();
+
+		while (items.hasNext()) {
+			CartItem cartItem = items.next();
+
+			if (cartItem.getAbstractBook().equals(abstractBook)) {
 				CartItem ci = cartItemManager.merge(cartItem);
-				ci.addCount(1);
-				return;
+				ci.alterCount(amount);
+				if (ci.getCount() < 1) {
+					this.cartItemManager.remove(customer, ci);
+				}
+				return customer;
 			}
 		}
 
-		CartItem cartItem = new CartItem(abstractBook, amount);
-		cartItemManager.persist(cartItem);
-		shoppingCart.addToShoppingList(cartItem);
+		if (amount > 0) {
+			CartItem cartItem = new CartItem(abstractBook, amount);
+			cartItemManager.persist(cartItem);
+			shoppingCart.addToShoppingList(cartItem);
+		}
+		return customer;
 	}
-	
+
 	@Transactional(Transactional.TxType.REQUIRED)
-	public void buyCurrentCart(Customer customer){
+	public Customer buyCurrentCart(Customer customer) {
 		customer = (Customer) personManager.merge(customer);
-		ShoppingCart shoppingCart = shoppingManager.merge(customer.getShoppingCart());
-		
+		ShoppingCart shoppingCart = shoppingCartManager.merge(customer.getShoppingCart());
+
 		customer.addPayedShoppingCart(shoppingCart);
 		ShoppingCart newCart = new ShoppingCart();
-		shoppingManager.persist(newCart);
+		shoppingCartManager.persist(newCart);
 		customer.setShoppingCart(newCart);
-		
-//		if (!this.conversation.isTransient()) {
-//			this.conversation.end();
-//		}
+		return customer;
 	}
 }

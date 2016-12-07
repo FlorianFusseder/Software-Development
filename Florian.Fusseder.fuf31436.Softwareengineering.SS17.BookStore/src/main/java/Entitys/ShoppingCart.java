@@ -58,6 +58,10 @@ public class ShoppingCart extends GeneratedIdEntity {
     public void addToShoppingList(CartItem cartItem) {
         this.shoppingList.add(cartItem);
     }
+	
+	public void removeFromShoppingList(CartItem cartItem){
+		this.shoppingList.remove(cartItem);
+	}
 
     public void addToShoppingList(List<CartItem> cartItems) {
         this.shoppingList.addAll(cartItems);
