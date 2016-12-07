@@ -79,6 +79,16 @@ public class CreateAbstractBookModel implements Serializable {
 				.collect(Collectors.toList());
 	}
 
+	public List<Author> getAuthorList() {
+		this.authorList = personService.findAll()
+				.stream()
+				.filter(p -> p.getClass() == Author.class)
+				.map(p -> (Author) p)
+				.collect(Collectors.toList());
+		
+		return this.authorList;
+	}
+
 	public void createBook() {
 		AbstractBook book;
 		if (this.copies != null) {
@@ -89,8 +99,7 @@ public class CreateAbstractBookModel implements Serializable {
 		this.bookService.persistNewBook(book, Arrays.asList(choosenAuthors));
 
 		this.log += "New Book " + this.name + " " + this.price + " created\n";
-		
-		
+
 		this.name = "";
 		this.isbn = "";
 		this.release = null;

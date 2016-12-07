@@ -29,6 +29,7 @@ import lombok.Setter;
 @Setter
 public class CreateCustomerModel implements Serializable {
 
+	//todo: bessere Ausgabe
 	@Inject
 	private PersonService personService;
 
