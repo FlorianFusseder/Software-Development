@@ -14,7 +14,7 @@
             <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" icon="shopping-cart" size="lg" 
                              action="Payment.xhtml"/>
         </h:form>
-        <b:container style="width: 350px; padding-top: 100px;">
+        <b:container style="width: 350px; padding-top: 10px;">
             <h2>Books</h2>
             <h:form prependId="false">
                 <b:inputText placeholder="Search for Books...">
@@ -24,7 +24,7 @@
                 </b:inputText>
             </h:form>
         </b:container>
-        <b:container style="width: 800px; padding-top: 100px;">
+        <b:container style="width: 800px; padding-top: 10px;">
             <h2>Books Available</h2>
             <h:form>
                 <h:dataTable value="#{shoppingSiteModel.bookList}" var="book"
