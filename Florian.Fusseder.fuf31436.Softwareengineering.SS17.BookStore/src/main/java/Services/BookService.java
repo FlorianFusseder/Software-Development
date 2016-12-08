@@ -14,6 +14,8 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 
 /**
@@ -67,4 +69,13 @@ public class BookService implements Serializable {
 		return bookManager.findAll();
 	}
 
+	public List<AbstractBook> searchBooks(String term) {
+
+		String s = "SELECT B FROM AbstractBook AS B WHERE ";
+		s = s.concat(Arrays.asList(term.split(" ")).stream()
+				.map(str -> "LOWER(B.name) LIKE '%" + str.toLowerCase() + "%'")
+				.collect(Collectors.joining(" OR ")));
+
+		return bookManager.createQuery(s).getResultList();
+	}
 }

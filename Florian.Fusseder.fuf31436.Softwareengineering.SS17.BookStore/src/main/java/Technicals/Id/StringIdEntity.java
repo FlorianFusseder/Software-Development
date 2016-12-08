@@ -7,7 +7,6 @@ package Technicals.Id;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 

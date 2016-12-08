@@ -12,9 +12,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -35,7 +34,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class ShoppingCart extends GeneratedIdEntity {
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<CartItem> shoppingList = new ArrayList<>();
 
 	@Temporal(TemporalType.TIMESTAMP)

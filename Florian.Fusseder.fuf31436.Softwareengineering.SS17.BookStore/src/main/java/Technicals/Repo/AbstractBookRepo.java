@@ -8,6 +8,7 @@ package Technicals.Repo;
 import Entitys.AbstractBook;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -20,4 +21,8 @@ implements Serializable {
     public AbstractBookRepo() {
         super(AbstractBook.class);
     }
+	
+	public TypedQuery createQuery(String query){
+		return this.getManager().createQuery(query, AbstractBook.class);		
+	}
 }

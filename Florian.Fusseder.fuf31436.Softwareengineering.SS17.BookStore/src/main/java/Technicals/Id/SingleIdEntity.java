@@ -3,7 +3,6 @@ package Technicals.Id;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.MappedSuperclass;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 

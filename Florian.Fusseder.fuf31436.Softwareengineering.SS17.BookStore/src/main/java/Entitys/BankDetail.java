@@ -7,7 +7,6 @@ package Entitys;
 
 import Technicals.Id.GeneratedIdEntity;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

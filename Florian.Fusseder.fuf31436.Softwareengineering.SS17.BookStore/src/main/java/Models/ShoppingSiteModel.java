@@ -15,6 +15,7 @@ import Services.ShoppingService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.convert.CustomerConverter;
@@ -48,16 +49,24 @@ public class ShoppingSiteModel implements Serializable {
 	private Customer customer;
 
 	@Setter
+	@Getter
 	private List<AbstractBook> bookList;
 
-	//todo: warum unsatisfiyd dependency?
 	@Inject
 	@Getter
 	@Setter
 	private CustomerConverter converter;
+	
+	@Getter
+	@Setter
+	private String searchTerm;
+	
+	@PostConstruct
+	public void init(){
+		this.bookList = this.bookService.findAll();
+	}
 
 	public List<AbstractBook> getBookList() {
-		this.bookList = this.bookService.findAll();
 		return this.bookList;
 	}
 	
@@ -99,6 +108,10 @@ public class ShoppingSiteModel implements Serializable {
 		return this.customer.getShoppingCart().getShoppingList().stream()
 				.mapToInt(ci -> ci.getCount())
 				.sum();
+	}
+	
+	public void searchFor(){
+		this.bookList = this.bookService.searchBooks(this.searchTerm);
 	}
 
 }

@@ -8,7 +8,7 @@
         <title>Create a Book</title>
     </h:head>
     <h:body>
-        <b:container style="width: 350px; padding-top: 100px;">
+        <b:container style="padding-top: 10px;">
             <h:form styleClass="form-signin-heading" prependId="false">
                 <h2 class="form-signin-heading"> Create a Book </h2>
                 <h:panelGrid columns="2" cellpadding="5" >
@@ -27,7 +27,7 @@
                     <b:inputText value="#{createAbstractBookModel.isbn}" required="true"/>
 
                     <h:outputText value="ReleaseDate:"/>
-                    <b:datepicker value="#{createAbstractBookModel.release}"/>
+                    <b:datepicker value="#{createAbstractBookModel.release}" required="true"/>
 
                     <h:outputText value="Price: "/>
                     <b:inputText value="#{createAbstractBookModel.price}" required="true">
@@ -37,10 +37,10 @@
                     </b:inputText>
 
                     <h:outputText value="Copies:"/>
-                    <b:inputText value="#{createAbstractBookModel.copies}" required="false"/>
+                    <b:inputText value="#{createAbstractBookModel.copies}"/>
 
                     <h:outputText value="License"/>
-                    <b:inputText value="#{createAbstractBookModel.license}" required="false"/>
+                    <b:inputText value="#{createAbstractBookModel.license}"/>
 
                 </h:panelGrid>
                 <b:commandButton 

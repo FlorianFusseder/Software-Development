@@ -6,7 +6,6 @@
 package javax.faces.convert;
 
 import Entitys.Author;
-import Entitys.Customer;
 import Services.PersonService;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;

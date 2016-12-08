@@ -9,17 +9,19 @@
         <title>Go Shopping</title>
     </h:head>
     <h:body>
-
         <h:form>
             <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" icon="shopping-cart" size="lg" 
                              action="Payment.xhtml"/>
+            <b:commandButton value="Log Out" icon="glyphicons-log-out" size="lg"
+                             look="danger" action="/LogIn.xhtml"/>
         </h:form>
         <b:container style="width: 350px; padding-top: 10px;">
             <h2>Books</h2>
             <h:form prependId="false">
-                <b:inputText placeholder="Search for Books...">
+                <b:inputText value="#{shoppingSiteModel.searchTerm}" placeholder="Search for Books...">
                     <f:facet name="append">
-                        <b:commandButton value="Search" icon="search" look="primary" />
+                        <b:commandButton value="Search" icon="search" 
+                                         look="primary" action="#{shoppingSiteModel.searchFor()}"/>
                     </f:facet>
                 </b:inputText>
             </h:form>
@@ -27,9 +29,9 @@
         <b:container style="width: 800px; padding-top: 10px;">
             <h2>Books Available</h2>
             <h:form>
-                <h:dataTable value="#{shoppingSiteModel.bookList}" var="book"
-                             styleClass="order-table" headerClass="order-table-header"
-                             rowClasses="order-table-odd-row,order-table-even-row">
+
+                <b:dataTable value="#{shoppingSiteModel.bookList}" var="book"
+                             styleClass="order-table" searching="false">
 
                     <h:column>
                         <f:facet name="header"> ISBN </f:facet>
@@ -59,13 +61,14 @@
                     </h:column>
 
                     <h:column>
+                        <f:facet name="header"/> 
                         <b:commandButton value="BUY" 
                                          icon="cart-plus" 
                                          look="success" 
                                          size="xs" 
                                          action="#{shoppingSiteModel.addBookToCart(book)}"/>
                     </h:column>
-                </h:dataTable>
+                </b:dataTable>
             </h:form>
         </b:container>
     </h:body>

@@ -9,7 +9,6 @@ import Entitys.AbstractBook;
 import Entitys.Adress;
 import Entitys.Author;
 import Entitys.BankDetail;
-import Entitys.Customer;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
 import Services.BookService;
@@ -49,60 +48,52 @@ public class SeederModel implements Serializable {
 
 	@Inject
 	private ShoppingService shoppingService;
-
-	private List<String> output;
-
-	private void addToOutput(Object s) {
-		this.output.add(s.toString());
-	}
+	
+	String output = "hello";
 
 	@PostConstruct
 	public void init() {
 
-		this.output = new ArrayList<>();
+		Adress addr1 = new Adress("Regensburg", "Brunhuberstrasse", 93053);
+		Adress addr2 = new Adress("Gangekofen", "Langenkatzbach", 84140);
 
-		Adress addr = new Adress("MusterStrasse", "Musterstadt", 84140);
-		this.addToOutput(addr);
-		BankDetail bank = new BankDetail("55551", "55551");
-		this.addToOutput(bank);
-		AbstractBook pb = new PaperBook("Musterbuch", "ff-ff--fff", new Date(), BigDecimal.ONE, 14);
-		this.addToOutput(pb);
-		AbstractBook eb = new ElectronicBook("MusterEBook", "ee-eee-333",
-				new Date(), new BigDecimal(150), "lichensetwo2");
-		this.addToOutput(eb);
+		BankDetail bank1 = new BankDetail("111111", "11111");
+		BankDetail bank2 = new BankDetail("222222", "22222");
 
-		Customer c1 = personService.createCustomer("Max", "MusterCustomer1", addr, bank);
-		this.addToOutput(c1);
-		Customer c2 = personService.createCustomer("Max", "MusterCustomer2", addr, bank);
-		this.addToOutput(c2);
-		Author a = personService.createAuthor("Max", "MusterAuthor", addr);
-		this.addToOutput(a);
-		Author b = personService.createAuthor("Max", "MusterAuthor2", addr);
-		this.addToOutput(a);
+		AbstractBook pb1 = new PaperBook("Harry Potter und der Stein der Weisen",
+				"fff-fff-fff1", new Date(), BigDecimal.valueOf(49.99), 15);
 
-		a = bookService.persistNewBook(eb, a);
+		AbstractBook pb2 = new PaperBook("Harry Potter und der Stein die Kammer des Schreckens",
+				"fff-fff-fff1", new Date(), BigDecimal.valueOf(59.99), 15);
+
+		AbstractBook fb = new PaperBook("Ulimativ Wizzard Knight Fight", "ababa-ababa",
+				new Date(), BigDecimal.valueOf(99.99), 2);
+
+		AbstractBook eb1 = new ElectronicBook("A Song of Ice and Fire A Game of Thrones", "ee-eee-333",
+				new Date(), BigDecimal.valueOf(60.00), "12-34-45-3232");
+
+		AbstractBook eb2 = new ElectronicBook("A Song of Ice and Fire A Clash of Kings", "ee-eee-334",
+				new Date(), BigDecimal.valueOf(65.00), "12-34-45-3233");
+
+		personService.createCustomer("Florian", "Fusseder", addr1, bank1);
+		personService.createCustomer("DJ", "Obst", addr2, bank2);
+		Author a = personService.createAuthor("Joanne K.", "Rowling", addr1);
+		Author b = personService.createAuthor("George R. R.", "Martin", addr2);
+
+		a = bookService.persistNewBook(pb1, a);
+		a = bookService.persistNewBook(pb2, a);
+
+		b = bookService.persistNewBook(eb1, b);
+		b = bookService.persistNewBook(eb2, b);
 
 		List<Author> alist = new ArrayList<Author>();
 		alist.add(a);
 		alist.add(b);
 
-		alist = bookService.persistNewBook(pb, alist);
+		alist = bookService.persistNewBook(fb, alist);
 		a = alist.get(0);
 		b = alist.get(1);
 
-		this.addToOutput(a);
-		this.addToOutput(b);
-
-		shoppingService.alterShoppingCart(c1, eb, 1);
-		shoppingService.alterShoppingCart(c1, pb, 2);
-		this.addToOutput(c1);
-
-		shoppingService.alterShoppingCart(c2, eb, 1);
-		shoppingService.alterShoppingCart(c2, pb, 2);
-		this.addToOutput(c2);
-
-		shoppingService.buyCurrentCart(c1);
-		this.addToOutput(c1);
 	}
 
 }

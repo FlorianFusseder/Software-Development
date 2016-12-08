@@ -47,10 +47,12 @@ public class CreateCustomerModel implements Serializable {
 	
 	private String bic;
 
-	public void createCustomer() {
+	public String  createCustomer() {
 		this.personService.createCustomer(this.firstName, this.lastName,
 				new Adress(this.street, this.city, Integer.valueOf(this.postNumber)),
 				new BankDetail(this.bic, this.iban));
+		
+		return "/LogIn.xhtml";
 	}
 
 }

@@ -12,7 +12,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +41,7 @@ import lombok.ToString;
 abstract public class AbstractBook extends RandomIdEntity {
 
 	@NonNull
+	@Column(name = "title")
 	private String name;
 
 	@NonNull
@@ -48,7 +51,7 @@ abstract public class AbstractBook extends RandomIdEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date release;
 	
-	@ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "books", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Author> author = new ArrayList<>();
 
 	@NonNull
