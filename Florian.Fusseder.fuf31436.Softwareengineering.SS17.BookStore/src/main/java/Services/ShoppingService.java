@@ -99,7 +99,11 @@ public class ShoppingService implements Serializable {
 	public Customer buyCurrentCart(Customer customer) {
 		customer = (Customer) personManager.merge(customer);
 		ShoppingCart shoppingCart = shoppingCartManager.merge(customer.getShoppingCart());
-
+		
+		for (CartItem cartItem : shoppingCart.getShoppingList()) {
+			bookManager.alterCountCopies(cartItem.getAbstractBook(), cartItem.getCount());
+		}
+		
 		customer.addPayedShoppingCart(shoppingCart);
 		ShoppingCart newCart = new ShoppingCart();
 		shoppingCartManager.persist(newCart);

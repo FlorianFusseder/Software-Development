@@ -7,6 +7,7 @@ package Services;
 
 import Entitys.AbstractBook;
 import Entitys.Author;
+import Entitys.PaperBook;
 import Technicals.Repo.AbstractBookRepo;
 import Technicals.Repo.PersonRepo;
 import java.util.List;
@@ -77,5 +78,17 @@ public class BookService implements Serializable {
 				.collect(Collectors.joining(" OR ")));
 
 		return bookManager.createQuery(s).getResultList();
+	}
+	
+	/**
+	 * Removes the amount of copies <copiesSold> from stock
+	 * @param abstractbook
+	 * @param copiesSold 
+	 */
+	public void alterCountCopies(AbstractBook abstractbook, int copiesSold){
+		if(abstractbook.getClass() == PaperBook.class){
+			PaperBook pb = (PaperBook) bookManager.merge(abstractbook);
+			pb.alterCopies(-copiesSold);			
+		}
 	}
 }

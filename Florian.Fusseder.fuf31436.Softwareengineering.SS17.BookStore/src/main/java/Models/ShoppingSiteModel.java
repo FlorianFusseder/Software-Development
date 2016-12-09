@@ -67,6 +67,7 @@ public class ShoppingSiteModel implements Serializable {
 	}
 
 	public List<AbstractBook> getBookList() {
+		this.init();
 		return this.bookList;
 	}
 	
