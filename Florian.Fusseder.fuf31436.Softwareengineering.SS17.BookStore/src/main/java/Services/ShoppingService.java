@@ -9,19 +9,20 @@ import Entitys.AbstractBook;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
 import Entitys.CartItem;
+import Entitys.PaperBook;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
 import java.io.Serializable;
 import java.util.Iterator;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.jws.WebService;
 import javax.transaction.Transactional;
 
 /**
  *
  * @author Florian
  */
-//todo: Macht converstaionscoped sinn in Services?
 @RequestScoped
 public class ShoppingService implements Serializable {
 
@@ -99,11 +100,18 @@ public class ShoppingService implements Serializable {
 	public Customer buyCurrentCart(Customer customer) {
 		customer = (Customer) personManager.merge(customer);
 		ShoppingCart shoppingCart = shoppingCartManager.merge(customer.getShoppingCart());
-		
+
 		for (CartItem cartItem : shoppingCart.getShoppingList()) {
-			bookManager.alterCountCopies(cartItem.getAbstractBook(), cartItem.getCount());
+
+			AbstractBook abstractbook = cartItem.getAbstractBook();
+			int copiesSold = cartItem.getCount();
+
+			if (abstractbook.getClass() == PaperBook.class) {
+				PaperBook pb = (PaperBook) bookManager.merge(abstractbook);
+				pb.alterCopies(-copiesSold);
+			}
 		}
-		
+
 		customer.addPayedShoppingCart(shoppingCart);
 		ShoppingCart newCart = new ShoppingCart();
 		shoppingCartManager.persist(newCart);

@@ -18,12 +18,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
 /**
  *
  * @author Florian
  */
 @RequestScoped
+@WebService
 public class BookService implements Serializable {
 
 	@Inject
@@ -35,6 +38,13 @@ public class BookService implements Serializable {
 	public BookService() {
 	}
 
+	@WebMethod(exclude = true)
+	@Transactional(Transactional.TxType.REQUIRED)
+	public AbstractBook merge(AbstractBook abstractBook) {
+		return bookManager.merge(abstractBook);
+	}
+
+	@WebMethod(exclude = true)
 	@Transactional(Transactional.TxType.REQUIRED)
 	public Author persistNewBook(AbstractBook b, Author author) {
 		List<Author> newList = new ArrayList<>();
@@ -43,6 +53,7 @@ public class BookService implements Serializable {
 		return newList.get(0);
 	}
 
+	@WebMethod(exclude = true)
 	@Transactional(Transactional.TxType.REQUIRED)
 	public List<Author> persistNewBook(AbstractBook b, List<Author> author) {
 		List<Author> newList = new ArrayList<>();
@@ -58,14 +69,16 @@ public class BookService implements Serializable {
 		return newList;
 	}
 
+	@WebMethod(exclude = true)
 	public AbstractBook findByObject(AbstractBook book) {
 		return bookManager.findById(book.getID());
 	}
 
+	@WebMethod(exclude = true)
 	public AbstractBook findById(String Id) {
 		return bookManager.findById(Id);
 	}
-
+	
 	public List<AbstractBook> findAll() {
 		return bookManager.findAll();
 	}
@@ -78,17 +91,5 @@ public class BookService implements Serializable {
 				.collect(Collectors.joining(" OR ")));
 
 		return bookManager.createQuery(s).getResultList();
-	}
-	
-	/**
-	 * Removes the amount of copies <copiesSold> from stock
-	 * @param abstractbook
-	 * @param copiesSold 
-	 */
-	public void alterCountCopies(AbstractBook abstractbook, int copiesSold){
-		if(abstractbook.getClass() == PaperBook.class){
-			PaperBook pb = (PaperBook) bookManager.merge(abstractbook);
-			pb.alterCopies(-copiesSold);			
-		}
 	}
 }

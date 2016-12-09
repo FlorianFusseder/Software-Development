@@ -67,7 +67,6 @@ public class ShoppingSiteModel implements Serializable {
 	}
 
 	public List<AbstractBook> getBookList() {
-		this.init();
 		return this.bookList;
 	}
 	
@@ -82,6 +81,8 @@ public class ShoppingSiteModel implements Serializable {
 	public String buyShoppingCart() {
 		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
 			this.customer = this.shoppingService.buyCurrentCart(this.customer);
+			this.searchTerm = "";
+			this.init();
 			return "/ShoppingSite.xhtml";
 		}
 		return "";
