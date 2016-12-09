@@ -35,4 +35,9 @@ public class PaperBook extends AbstractBook {
 	public void addCopies(Long copies) {
 		this.copies += copies;
 	}
+
+	@Override
+	public String getSpecificFieldAsString() {
+		return (this.copies > 0)?String.valueOf(this.copies) : "Not on Stock";
+	}
 }

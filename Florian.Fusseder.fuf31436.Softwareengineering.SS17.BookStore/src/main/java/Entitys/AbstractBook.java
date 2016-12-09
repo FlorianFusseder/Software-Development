@@ -64,4 +64,6 @@ abstract public class AbstractBook extends RandomIdEntity {
 	public void addAuthor(Author author) {
 		this.author.add(author);
 	}
+	
+	public abstract String getSpecificFieldAsString();
 }

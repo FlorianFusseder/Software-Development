@@ -33,4 +33,9 @@ public class ElectronicBook extends AbstractBook {
 		super(name, isbn, releaseDate, price);
 		this.license = license;
 	}
+
+	@Override
+	public String getSpecificFieldAsString() {
+		return this.license;
+	}
 }
