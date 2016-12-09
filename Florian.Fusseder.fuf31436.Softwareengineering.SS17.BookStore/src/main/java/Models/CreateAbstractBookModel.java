@@ -65,6 +65,10 @@ public class CreateAbstractBookModel implements Serializable {
 	private Author[] choosenAuthors;
 
 	private String log;
+	
+	private Boolean isEbook;
+	
+	private Boolean isPaperbook;
 
 	@PostConstruct
 	public void init() {
@@ -75,6 +79,14 @@ public class CreateAbstractBookModel implements Serializable {
 				.filter(p -> p.getClass() == Author.class)
 				.map(p -> (Author) p)
 				.collect(Collectors.toList());
+	}
+	
+	public Boolean getIsEbook(){
+		return (!(this.copies == null));
+	}
+	
+	public Boolean getIsPaperbook(){
+		return !this.license.isEmpty();
 	}
 
 	public List<Author> getAuthorList() {

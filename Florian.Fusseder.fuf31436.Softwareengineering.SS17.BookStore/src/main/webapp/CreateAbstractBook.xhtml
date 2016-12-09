@@ -36,11 +36,15 @@
                         </f:facet>
                     </b:inputText>
 
-                    <h:outputText value="Copies:"/>
-                    <b:inputText value="#{createAbstractBookModel.copies}"/>
+                    <h:outputText  value="Copies:"/>
+                    <b:inputText id="license" value="#{createAbstractBookModel.copies}">
+                        <f:ajax render="copies"/>
+                    </b:inputText>
 
                     <h:outputText value="License"/>
-                    <b:inputText value="#{createAbstractBookModel.license}"/>
+                    <b:inputText id="copies" value="#{createAbstractBookModel.license}">
+                        <f:ajax render="license"/>
+                    </b:inputText>
 
                 </h:panelGrid>
                 <b:commandButton 

@@ -10,7 +10,6 @@
     <h:body>
         <h:form>
             <b:commandButton value="Admin" look="primary" action="/Admin.xhtml"/>
-            <b:commandButton value="Sign Up" look="primary" action="/CreateCustomer.xhtml"/>
         </h:form>
         <b:container style="width: 350px; padding-top: 100px;">
             <h:form styleClass="form-signin" prependId="false">
@@ -22,6 +21,12 @@
                 <b:commandButton look="primary btn-block" 
                                  value="Log In" icon="log-in" 
                                  size="lg" action="/ShoppingSite"/>
+                
+                <b:commandButton look="primary btn-block"
+                                 value="Sign Up" icon="glyphicon glyphicon-plus" 
+                                 size="lg" action="/CreateCustomer.xhtml"
+                                 style="margin-top: 5px"/>
+
             </h:form>
         </b:container>
     </h:body>
