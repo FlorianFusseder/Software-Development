@@ -16,8 +16,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.convert.CustomerConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,7 +30,7 @@ import lombok.Setter;
  * @author Florian
  */
 @Named
-@ApplicationScoped
+@SessionScoped
 @NoArgsConstructor
 @ManagedBean
 public class ShoppingSiteModel implements Serializable {
@@ -49,28 +49,35 @@ public class ShoppingSiteModel implements Serializable {
 	private Customer customer;
 
 	@Setter
-	@Getter
 	private List<AbstractBook> bookList;
 
 	@Inject
 	@Getter
 	@Setter
 	private CustomerConverter converter;
-	
+
 	@Getter
 	@Setter
 	private String searchTerm;
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
+		searchTerm = "";
 		this.bookList = this.bookService.findAll();
 	}
 
 	public List<AbstractBook> getBookList() {
-		return this.bookList;
+		if (searchTerm.isEmpty()) {
+			this.bookList = this.bookService.findAll();
+		}
+		return bookList;
 	}
-	
-	public List<ShoppingCart> getAllBoughtCarts(){
+
+	public void searchFor() {
+		this.bookList = this.bookService.searchBooks(this.searchTerm);
+	}
+
+	public List<ShoppingCart> getAllBoughtCarts() {
 		return this.customer.getPayedShoppingCarts();
 	}
 
@@ -111,9 +118,4 @@ public class ShoppingSiteModel implements Serializable {
 				.mapToInt(ci -> ci.getCount())
 				.sum();
 	}
-	
-	public void searchFor(){
-		this.bookList = this.bookService.searchBooks(this.searchTerm);
-	}
-
 }
