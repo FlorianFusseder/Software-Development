@@ -70,11 +70,15 @@
             </b:panelGrid>
 
             <c:forEach items="#{shoppingSiteModel.allBoughtCarts}" var="paidCarts">
-                <h3> Cart from: #{paidCarts.checkoutDate} </h3>
+                <h3> Cart from: #{paidCarts.checkoutDate} for #{paidCarts.total}€ </h3>
                 <b:dataTable value="#{paidCarts.shoppingList}" var="book" customOptions="false">
                     <h:column>
                         <f:facet name="header"> Amount </f:facet>
                         <h:outputText value="#{book.count}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"> Price per Book </f:facet>
+                        <h:outputText value="#{book.abstractBook.price}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"> Book </f:facet>
