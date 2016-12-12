@@ -38,7 +38,7 @@ public class ShoppingCart extends GeneratedIdEntity {
 	private List<CartItem> shoppingList = new ArrayList<>();
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationDate = new Date();
+	private Date checkoutDate;
 
 	private BigDecimal total = BigDecimal.ZERO;
 

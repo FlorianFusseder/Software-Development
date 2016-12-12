@@ -13,6 +13,8 @@ import Services.BookService;
 import Services.PersonService;
 import Services.ShoppingService;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -24,6 +26,7 @@ import javax.inject.Named;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import sun.net.www.content.audio.x_aiff;
 
 /**
  *
@@ -78,7 +81,20 @@ public class ShoppingSiteModel implements Serializable {
 	}
 
 	public List<ShoppingCart> getAllBoughtCarts() {
-		return this.customer.getPayedShoppingCarts();
+
+		return this.customer.getPayedShoppingCarts().stream()
+				.sorted(new Comparator<ShoppingCart>() {
+					@Override
+					public int compare(ShoppingCart t, ShoppingCart t1) {
+						if (t.getCheckoutDate().after(t1.getCheckoutDate())) {
+							return -1;
+						} else {
+							return 1;
+						}
+					}
+				})
+				.collect(Collectors.toList());
+
 	}
 
 	public ShoppingCart getShoppingCart() {

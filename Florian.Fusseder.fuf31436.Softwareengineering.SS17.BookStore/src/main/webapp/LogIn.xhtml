@@ -12,21 +12,27 @@
             <b:commandButton value="Admin" look="primary" action="/Admin.xhtml"/>
         </h:form>
         <b:container style="width: 350px; padding-top: 100px;">
-            <h:form styleClass="form-signin" prependId="false">
-                <h2 class="form-signin-heading">Sign In</h2>
-                <h:selectOneMenu value="#{shoppingSiteModel.customer}">
-                    <f:converter binding="#{shoppingSiteModel.converter}"/>
-                    <f:selectItems value="#{shoppingSiteModel.customerList}"/>
-                </h:selectOneMenu>
-                <b:commandButton look="primary btn-block" 
-                                 value="Log In" icon="log-in" 
-                                 size="lg" action="/ShoppingSite"/>
-                
-                <b:commandButton look="primary btn-block"
-                                 value="Sign Up" icon="glyphicon glyphicon-plus" 
-                                 size="lg" action="/CreateCustomer.xhtml"
-                                 style="margin-top: 5px"/>
-
+            <h:form>
+                <b:row>
+                    <h2>Sign In</h2>
+                </b:row>
+                <b:row>
+                    <h:selectOneMenu value="#{shoppingSiteModel.customer}">
+                        <f:converter binding="#{shoppingSiteModel.converter}"/>
+                        <f:selectItems value="#{shoppingSiteModel.customerList}"/>
+                    </h:selectOneMenu>
+                </b:row>
+                <b:row>
+                    <b:commandButton look="primary btn-block" 
+                                     value="Log In" icon="log-in" 
+                                     size="lg" action="/ShoppingSite"/>
+                </b:row>
+                <b:row>
+                    <b:commandButton look="primary btn-block"
+                                     value="Sign Up" icon="glyphicon glyphicon-plus" 
+                                     size="lg" action="/CreateCustomer.xhtml"
+                                     style="margin-top: 5px"/>
+                </b:row>
             </h:form>
         </b:container>
     </h:body>

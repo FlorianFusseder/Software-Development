@@ -13,6 +13,7 @@ import Entitys.PaperBook;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Iterator;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -112,6 +113,7 @@ public class ShoppingService implements Serializable {
 			}
 		}
 
+		shoppingCart.setCheckoutDate(new Date());
 		customer.addPayedShoppingCart(shoppingCart);
 		ShoppingCart newCart = new ShoppingCart();
 		shoppingCartManager.persist(newCart);

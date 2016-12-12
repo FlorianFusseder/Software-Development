@@ -9,24 +9,26 @@
         <title>Checkout</title>
     </h:head>
     <h:body>
-        <b:container style="padding-top: 10px;">
+        <h:form>
+            <b:commandButton value="Keep Shoppin"
+                             look="success"
+                             icon="glyphicon glyphicon-menu-left"
+                             action="/ShoppingSite.xhtml"/>
+        </h:form>
+        
+        <b:container style="width: 800px; padding-top: 10px;">
             <h:form styleClass="form-signin-heading" prependId="false">
                 <h2 class="form-signin-heading"> Check your Shopping Cart </h2>
-
-                <h:dataTable value="#{shoppingSiteModel.shoppingCart.shoppingList}" var="item"
-                             styleClass="order-table" headerClass="order-table-header"
-                             rowClasses="order-table-odd-row,order-table-even-row">
-
+                <b:dataTable value="#{shoppingSiteModel.shoppingCart.shoppingList}" var="item"
+                             styleClass="order-table" custom-options="false">
                     <h:column>
                         <f:facet name="header"> Name </f:facet>
                             #{item.abstractBook.name}
                     </h:column>
-
                     <h:column>
                         <f:facet name="header"> Count </f:facet>
                             #{item.count}
                     </h:column>
-
                     <h:column>
                         <f:facet name="header"> Remove </f:facet>
                         <b:commandButton value="" 
@@ -34,8 +36,7 @@
                                          icon="glyphicon-minus"
                                          action="#{shoppingSiteModel.removeBook(item)}"/>
                     </h:column>
-                </h:dataTable>
-
+                </b:dataTable>
 
                 <b:commandButton 
                     value="Buy Cart for #{shoppingSiteModel.shoppingCart.total}"
@@ -43,8 +44,7 @@
                     look="success"
                     action="#{shoppingSiteModel.buyShoppingCart()}"/>
             </h:form>
-            <h:panelGrid columns="2" cellpadding="5" >
-
+            <b:panelGrid columns="2" style="margin-top: 25px" >
 
                 <h:outputText value="Firstname:"/>
                 <h:outputText value="#{shoppingSiteModel.customer.firstName}"/>
@@ -67,13 +67,20 @@
                 <h:outputText value="bic:"/>
                 <h:outputText value="#{shoppingSiteModel.customer.bankDetail.bic}"/>
 
-            </h:panelGrid>
+            </b:panelGrid>
 
             <c:forEach items="#{shoppingSiteModel.allBoughtCarts}" var="paidCarts">
-                <h3> Cart from: #{paidCarts.creationDate} </h3>
-                <c:forEach items="#{paidCarts.shoppingList}" var="book">
-                    #{book.abstractBook.name}    Amount: #{book.count} 
-                </c:forEach>
+                <h3> Cart from: #{paidCarts.checkoutDate} </h3>
+                <b:dataTable value="#{paidCarts.shoppingList}" var="book" customOptions="false">
+                    <h:column>
+                        <f:facet name="header"> Amount </f:facet>
+                        <h:outputText value="#{book.count}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"> Book </f:facet>
+                        <h:outputText value="#{book.abstractBook.name}"/>
+                    </h:column>
+                </b:dataTable>
             </c:forEach>
         </b:container>
     </h:body>

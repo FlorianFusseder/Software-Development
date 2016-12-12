@@ -22,7 +22,7 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Author" package="Entitys" visibility="public" xPosition="577.0" yPosition="231.0">
+    <Class name="Author" package="Entitys" visibility="public" xPosition="587.0" yPosition="269.0">
       <Fields>
         <Field name="books" type="List&lt;AbstractBook&gt;" visibility="private"/>
       </Fields>
@@ -37,7 +37,7 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="CartItem" package="Entitys" visibility="public" xPosition="21.0" yPosition="418.0">
+    <Class name="CartItem" package="Entitys" visibility="public" xPosition="21.0" yPosition="432.0">
       <Fields>
         <Field name="abstractBook" type="AbstractBook" visibility="private"/>
         <Field name="count" type="int" visibility="private"/>
