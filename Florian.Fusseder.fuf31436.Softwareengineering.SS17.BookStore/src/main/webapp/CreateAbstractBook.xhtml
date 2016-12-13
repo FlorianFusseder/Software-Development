@@ -3,73 +3,74 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Create a Book</title>
     </h:head>
     <h:body>
-        <b:container style="width: 800px; padding-top: 10px;">
-            <h:form>
-                <b:row>
-                    <h2> Create a Book </h2>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Authors:"/>
-                    <br/>
-                    <h:selectManyListbox value="#{createAbstractBookModel.choosenAuthors}" size="5"
-                                         required="true">
-                        <f:converter binding="#{createAbstractBookModel.converter}"/>
-                        <f:selectItems value="#{createAbstractBookModel.authorList}" var="author" itemLabel="#{author.lastName}, #{author.firstName}"/>
-                    </h:selectManyListbox>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Title:"/>
-                    <b:inputText value="#{createAbstractBookModel.name}" required="true"/>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Isbn:"/>
-                    <b:inputText value="#{createAbstractBookModel.isbn}" required="true"/>
-                </b:row>
+                <b:container style="width: 800px; padding-top: 10px;">
+                    <h:form>
+                        <b:row>
+                            <h2> Create a Book </h2>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Authors:"/>
+                            <br/>
+                            <h:selectManyListbox value="#{createAbstractBookModel.choosenAuthors}" size="5"
+                                                 required="true">
+                                <f:converter binding="#{createAbstractBookModel.converter}"/>
+                                <f:selectItems value="#{createAbstractBookModel.authorList}" var="author" itemLabel="#{author.lastName}, #{author.firstName}"/>
+                            </h:selectManyListbox>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Title:"/>
+                            <b:inputText value="#{createAbstractBookModel.name}" required="true"/>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Isbn:"/>
+                            <b:inputText value="#{createAbstractBookModel.isbn}" required="true"/>
+                        </b:row>
 
-                <b:row>
-                    <h:outputText value="ReleaseDate:"/>
-                    <b:datepicker value="#{createAbstractBookModel.release}" mode="inline"/>
-                </b:row>
+                        <b:row>
+                            <h:outputText value="ReleaseDate:"/>
+                            <b:datepicker value="#{createAbstractBookModel.release}" mode="inline"/>
+                        </b:row>
 
-                <b:row style="margin-top: 10px">
-                    <h:outputText value="Price: "/>
-                    <b:inputText value="#{createAbstractBookModel.price}" required="true">
-                        <f:facet name="postpend">
-                            <h:outputText value="€" />
-                        </f:facet>
-                    </b:inputText>
-                </b:row>
+                        <b:row style="margin-top: 10px">
+                            <h:outputText value="Price: "/>
+                            <b:inputText value="#{createAbstractBookModel.price}" required="true">
+                                <f:facet name="postpend">
+                                    <h:outputText value="€" />
+                                </f:facet>
+                            </b:inputText>
+                        </b:row>
 
-                <b:row>
-                    <h:outputText  value="Copies:"/>
-                    <b:inputText id="license" value="#{createAbstractBookModel.copies}">
-                        <f:ajax render="copies"/>
-                    </b:inputText>
-                </b:row>
+                        <b:row>
+                            <h:outputText  value="Copies:"/>
+                            <b:inputText id="license" value="#{createAbstractBookModel.copies}">
+                                <f:ajax render="copies"/>
+                            </b:inputText>
+                        </b:row>
 
-                <b:row>
-                    <h:outputText value="License"/>
-                    <b:inputText id="copies" value="#{createAbstractBookModel.license}">
-                        <f:ajax render="license"/>
-                    </b:inputText>
-                </b:row>
+                        <b:row>
+                            <h:outputText value="License"/>
+                            <b:inputText id="copies" value="#{createAbstractBookModel.license}">
+                                <f:ajax render="license"/>
+                            </b:inputText>
+                        </b:row>
 
-                <b:row>
-                    <b:commandButton 
-                        value="Create"
-                        icon="plus-sign" 
-                        look="success"
-                        action="#{createAbstractBookModel.createBook()}"
-                        />
-                </b:row>
-                #{createAbstractBookModel.log}
-            </h:form>
-        </b:container>
+                        <b:row>
+                            <b:commandButton 
+                                value="Create"
+                                icon="plus-sign" 
+                                look="success"
+                                action="#{createAbstractBookModel.createBook()}"
+                                />
+                        </b:row>
+                        #{createAbstractBookModel.log}
+                    </h:form>
+                </b:container>
     </h:body>
 </html>
 

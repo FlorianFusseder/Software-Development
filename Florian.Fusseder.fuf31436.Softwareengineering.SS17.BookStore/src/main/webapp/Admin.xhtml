@@ -8,14 +8,18 @@
         <title>Admin</title>
     </h:head>
     <h:body>
-        <h:form>
-            <b:commandButton value="Done" action="login" look="danger"/>
-        </h:form>
+        <ui:composition template="./WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <b:commandButton value="Done" action="login" look="danger"/>
+                </h:form>
 
-        <b:row>
-            <ui:include src="CreateAbstractBook.xhtml"/>
-            <ui:include src="CreateAuthor.xhtml"/>
-        </b:row>
+                <b:row>
+                    <ui:include src="CreateAbstractBook.xhtml"/>
+                    <ui:include src="CreateAuthor.xhtml"/>
+                </b:row>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

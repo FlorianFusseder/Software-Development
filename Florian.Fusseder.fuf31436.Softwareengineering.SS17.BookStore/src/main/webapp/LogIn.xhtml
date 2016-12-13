@@ -3,39 +3,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Choose User</title>
     </h:head>
     <h:body>
-        <h:form>
-            <b:commandButton value="Seeder" look="danger" action="seed"/>
-            <b:commandButton value="Admin" look="primary" action="admin"/>
-        </h:form>
-        <b:container style="width: 350px; padding-top: 100px;">
-            <h:form>
-                <b:row>
-                    <h2>Sign In</h2>
-                </b:row>
-                <b:row>
-                    <b:selectOneMenu value="#{shoppingSiteModel.customer}" >
-                        <f:converter binding="#{shoppingSiteModel.converter}"/>
-                        <f:selectItems value="#{shoppingSiteModel.customerList}" var="name" itemLabel="#{name.firstName} #{name.lastName}"/>
-                    </b:selectOneMenu>
-                </b:row>
-                <b:row>
-                    <b:commandButton look="primary btn-block" 
-                                     value="Log In" icon="log-in" 
-                                     size="lg" action="shop"/>
-                </b:row>
-                <b:row>
-                    <b:commandButton look="primary btn-block"
-                                     value="Sign Up" icon="glyphicon glyphicon-plus" 
-                                     size="lg" action="createCustomer"
-                                     style="margin-top: 5px"/>
-                </b:row>
-            </h:form>
-        </b:container>
+        <ui:composition template="./WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <b:commandButton value="Seeder" look="danger" action="seed"/>
+                    <b:commandButton value="Admin" look="primary" action="admin"/>
+                </h:form>
+                <b:container style="width: 350px; padding-top: 100px;">
+                    <h:form>
+                        <b:row>
+                            <h2>Sign In</h2>
+                        </b:row>
+                        <b:row>
+                            <b:selectOneMenu value="#{shoppingSiteModel.customer}" >
+                                <f:converter binding="#{shoppingSiteModel.converter}"/>
+                                <f:selectItems value="#{shoppingSiteModel.customerList}" var="name" itemLabel="#{name.firstName} #{name.lastName}"/>
+                            </b:selectOneMenu>
+                        </b:row>
+                        <b:row>
+                            <b:commandButton look="primary btn-block" 
+                                             value="Log In" icon="log-in" 
+                                             size="lg" action="shop"/>
+                        </b:row>
+                        <b:row>
+                            <b:commandButton look="primary btn-block"
+                                             value="Sign Up" icon="glyphicon glyphicon-plus" 
+                                             size="lg" action="createCustomer"
+                                             style="margin-top: 5px"/>
+                        </b:row>
+                    </h:form>
+                </b:container>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

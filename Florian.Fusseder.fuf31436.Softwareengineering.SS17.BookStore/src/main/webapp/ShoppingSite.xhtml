@@ -4,87 +4,92 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Go Shopping</title>
     </h:head>
     <h:body>
-        <h:form>
-            <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" icon="shopping-cart" size="lg" 
-                             action="pay" look="primary"/>
-            <b:commandButton value="Log Out" icon="glyphicons-log-out" size="lg"
-                             look="danger" action="login"/>
-        </h:form>
-        <b:container style="width: 800px; padding-top: 10px;">
-            <h:form>
-                <b:row>
-                    <h2>Books</h2>
-                    <b:inputText value="#{shoppingSiteModel.searchTerm}" 
-                                 placeholder="Search for Books..." 
-                                 tiny-screen="one-third" 
-                                 small-screen="two-thirds" >
-                        <f:facet name="append">
-                            <b:commandButton value="Search" icon="search" 
-                                             look="primary" action="#{shoppingSiteModel.searchFor()}"/>
-                        </f:facet>
-                        <f:facet name="prepend">
-                            <b:commandButton value="" icon="glyphicon glyphicon-remove" look="danger"
-                                             action="#{shoppingSiteModel.resetSearch()}"/>
-                        </f:facet>
-                    </b:inputText>
-                </b:row>
-            </h:form>
-        </b:container>
-        <b:container style="width: 800px; padding-top: 10px;">
-            <h2>Books Available</h2>
-            <h:form>
+        <ui:composition template="./WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" icon="shopping-cart" size="lg" 
+                                     action="pay" look="primary"/>
+                    <b:commandButton value="Log Out" icon="glyphicons-log-out" size="lg"
+                                     look="danger" action="login"/>
+                </h:form>
+                <b:container style="width: 800px; padding-top: 10px;">
+                    <h:form>
+                        <b:row>
+                            <h2>Books</h2>
+                            <b:inputText value="#{shoppingSiteModel.searchTerm}" 
+                                         placeholder="Search for Books..." 
+                                         tiny-screen="one-third" 
+                                         small-screen="two-thirds" >
+                                <f:facet name="append">
+                                    <b:commandButton value="Search" icon="search" 
+                                                     look="primary" action="#{shoppingSiteModel.searchFor()}"/>
+                                </f:facet>
+                                <f:facet name="prepend">
+                                    <b:commandButton value="" icon="glyphicon glyphicon-remove" look="danger"
+                                                     action="#{shoppingSiteModel.resetSearch()}"/>
+                                </f:facet>
+                            </b:inputText>
+                        </b:row>
+                    </h:form>
+                </b:container>
+                <b:container style="width: 800px; padding-top: 10px;">
+                    <h2>Books Available</h2>
+                    <h:form>
 
-                <b:dataTable value="#{shoppingSiteModel.bookList}" var="book"
-                             styleClass="order-table" searching="false">
+                        <b:dataTable value="#{shoppingSiteModel.bookList}" var="book"
+                                     styleClass="order-table" searching="false">
 
-                    <h:column>
-                        <f:facet name="header"> Isbn </f:facet>
-                            #{book.isbn}
-                    </h:column>
-
-
-                    <h:column>
-                        <f:facet name="header"> title </f:facet>
-                            #{book.name}
-                    </h:column>
+                            <h:column>
+                                <f:facet name="header"> Isbn </f:facet>
+                                    #{book.isbn}
+                            </h:column>
 
 
-                    <h:column>
-                        <f:facet name="header"> Release </f:facet>
-                            #{book.release}
-                    </h:column>
+                            <h:column>
+                                <f:facet name="header"> title </f:facet>
+                                    #{book.name}
+                            </h:column>
 
-                    <h:column>
-                        <f:facet name="header"> Authors </f:facet>
-                            #{shoppingSiteModel.authorsAsString(book.author)}
-                    </h:column>
 
-                    <h:column>
-                        <f:facet name="header"> Price </f:facet>
-                            #{book.price}
-                    </h:column>
+                            <h:column>
+                                <f:facet name="header"> Release </f:facet>
+                                    #{book.release}
+                            </h:column>
 
-                    <h:column>
-                        <f:facet name="header"> License/Copies </f:facet>
-                            #{book.getSpecificFieldAsString()}
-                    </h:column>
+                            <h:column>
+                                <f:facet name="header"> Authors </f:facet>
+                                    #{shoppingSiteModel.authorsAsString(book.author)}
+                            </h:column>
 
-                    <h:column>
-                        <f:facet name="header" > Add to Cart </f:facet> 
-                        <b:commandButton value="BUY" 
-                                         icon="cart-plus" 
-                                         look="success" 
-                                         size="xs" 
-                                         action="#{shoppingSiteModel.addBookToCart(book)}"/>
-                    </h:column>
-                </b:dataTable>
-            </h:form>
-        </b:container>
+                            <h:column>
+                                <f:facet name="header"> Price </f:facet>
+                                    #{book.price}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header"> License/Copies </f:facet>
+                                    #{book.getSpecificFieldAsString()}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header" > Add to Cart </f:facet> 
+                                <b:commandButton value="BUY" 
+                                                 icon="cart-plus" 
+                                                 look="success" 
+                                                 size="xs" 
+                                                 action="#{shoppingSiteModel.addBookToCart(book)}"/>
+                            </h:column>
+                        </b:dataTable>
+                    </h:form>
+                </b:container>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

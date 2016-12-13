@@ -2,59 +2,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Create a new customer</title>
     </h:head>
     <h:body>
-        <b:container style="width: 800px; padding-top: 10px;">
-            <h:form>
-                <b:row>
-                    <h2> Create a new Customer </h2>
-                </b:row>
-                <b:row>
-                    <h4>Personal Information</h4>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Firstname:"/>
-                    <b:inputText value="#{createCustomerModel.firstName}"/>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Lastname:"/>
-                    <b:inputText value="#{createCustomerModel.lastName}"/>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Street:"/>
-                    <b:inputText value="#{createCustomerModel.street}"/>
-                </b:row>
-                <b:row>
-                    <h:outputText value="City:"/>
-                    <b:inputText value="#{createCustomerModel.city}"/>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Postnumber:"/>
-                    <b:inputText value="#{createCustomerModel.postNumber}"/>
-                </b:row>
-                <b:row>
-                    <h4>Payment Information</h4>
-                </b:row>
-                <b:row>
-                    <h:outputText value="iban:"/>
-                    <b:inputText value="#{createCustomerModel.iban}"/>
-                </b:row>
-                <b:row>
-                    <h:outputText value="bic:"/>
-                    <b:inputText value="#{createCustomerModel.bic}"/>
-                </b:row>
-                <b:row>
-                    <b:commandButton 
-                        value="Create"
-                        icon="plus-sign" 
-                        look="success"
-                        action="#{createCustomerModel.createCustomer()}"/>
-                </b:row>
-            </h:form>
-        </b:container>
+        <ui:composition template="./WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <b:container style="width: 800px; padding-top: 10px;">
+                    <h:form>
+                        <b:row>
+                            <h2> Create a new Customer </h2>
+                        </b:row>
+                        <b:row>
+                            <h4>Personal Information</h4>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Firstname:"/>
+                            <b:inputText value="#{createCustomerModel.firstName}"/>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Lastname:"/>
+                            <b:inputText value="#{createCustomerModel.lastName}"/>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Street:"/>
+                            <b:inputText value="#{createCustomerModel.street}"/>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="City:"/>
+                            <b:inputText value="#{createCustomerModel.city}"/>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Postnumber:"/>
+                            <b:inputText value="#{createCustomerModel.postNumber}"/>
+                        </b:row>
+                        <b:row>
+                            <h4>Payment Information</h4>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="iban:"/>
+                            <b:inputText value="#{createCustomerModel.iban}"/>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="bic:"/>
+                            <b:inputText value="#{createCustomerModel.bic}"/>
+                        </b:row>
+                        <b:row>
+                            <b:commandButton 
+                                value="Create"
+                                icon="plus-sign" 
+                                look="success"
+                                action="#{createCustomerModel.createCustomer()}"/>
+                        </b:row>
+                    </h:form>
+                </b:container>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 
