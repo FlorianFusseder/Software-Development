@@ -106,7 +106,7 @@ public class ShoppingSiteModel implements Serializable {
 			this.customer = this.shoppingService.buyCurrentCart(this.customer);
 			this.searchTerm = "";
 			this.init();
-			return "/ShoppingSite.xhtml";
+			return "/OrderInformation.xhtml";
 		}
 		return "";
 	}
