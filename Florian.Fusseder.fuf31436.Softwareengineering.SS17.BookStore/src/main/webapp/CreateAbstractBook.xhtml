@@ -15,13 +15,13 @@
                 </b:row>
                 <b:row>
                     <h:outputText value="Authors:"/>
+                    <br/>
                     <h:selectManyListbox value="#{createAbstractBookModel.choosenAuthors}" size="5"
                                          required="true">
                         <f:converter binding="#{createAbstractBookModel.converter}"/>
-                        <f:selectItems value="#{createAbstractBookModel.authorList}"/>
+                        <f:selectItems value="#{createAbstractBookModel.authorList}" var="author" itemLabel="#{author.lastName}, #{author.firstName}"/>
                     </h:selectManyListbox>
                 </b:row>
-
                 <b:row>
                     <h:outputText value="Title:"/>
                     <b:inputText value="#{createAbstractBookModel.name}" required="true"/>
@@ -60,12 +60,12 @@
                 </b:row>
 
                 <b:row>
-                <b:commandButton 
-                    value="Create"
-                    icon="plus-sign" 
-                    look="success"
-                    action="#{createAbstractBookModel.createBook()}"
-                    />
+                    <b:commandButton 
+                        value="Create"
+                        icon="plus-sign" 
+                        look="success"
+                        action="#{createAbstractBookModel.createBook()}"
+                        />
                 </b:row>
                 #{createAbstractBookModel.log}
             </h:form>

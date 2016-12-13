@@ -6,6 +6,7 @@
 package Models;
 
 import Entitys.AbstractBook;
+import Entitys.Author;
 import Entitys.CartItem;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
@@ -13,7 +14,6 @@ import Services.BookService;
 import Services.PersonService;
 import Services.ShoppingService;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +26,6 @@ import javax.inject.Named;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sun.net.www.content.audio.x_aiff;
 
 /**
  *
@@ -133,5 +132,9 @@ public class ShoppingSiteModel implements Serializable {
 		return this.customer.getShoppingCart().getShoppingList().stream()
 				.mapToInt(ci -> ci.getCount())
 				.sum();
+	}
+	
+	public String authorsAsString(List<Author> authorList){
+		return authorList.stream().map(a -> (a.getFirstName() + " " + a.getLastName())).collect(Collectors.joining(", "));
 	}
 }

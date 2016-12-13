@@ -17,10 +17,10 @@
                     <h2>Sign In</h2>
                 </b:row>
                 <b:row>
-                    <h:selectOneMenu value="#{shoppingSiteModel.customer}">
+                    <b:selectOneMenu value="#{shoppingSiteModel.customer}" >
                         <f:converter binding="#{shoppingSiteModel.converter}"/>
-                        <f:selectItems value="#{shoppingSiteModel.customerList}"/>
-                    </h:selectOneMenu>
+                        <f:selectItems value="#{shoppingSiteModel.customerList}" var="name" itemLabel="#{name.firstName} #{name.lastName}"/>
+                    </b:selectOneMenu>
                 </b:row>
                 <b:row>
                     <b:commandButton look="primary btn-block" 
