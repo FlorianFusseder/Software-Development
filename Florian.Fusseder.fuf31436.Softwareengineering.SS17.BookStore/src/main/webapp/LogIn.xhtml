@@ -9,7 +9,8 @@
     </h:head>
     <h:body>
         <h:form>
-            <b:commandButton value="Admin" look="primary" action="/Admin.xhtml"/>
+            <b:commandButton value="Seeder" look="danger" action="seed"/>
+            <b:commandButton value="Admin" look="primary" action="admin"/>
         </h:form>
         <b:container style="width: 350px; padding-top: 100px;">
             <h:form>
@@ -25,12 +26,12 @@
                 <b:row>
                     <b:commandButton look="primary btn-block" 
                                      value="Log In" icon="log-in" 
-                                     size="lg" action="/ShoppingSite"/>
+                                     size="lg" action="shop"/>
                 </b:row>
                 <b:row>
                     <b:commandButton look="primary btn-block"
                                      value="Sign Up" icon="glyphicon glyphicon-plus" 
-                                     size="lg" action="/CreateCustomer.xhtml"
+                                     size="lg" action="createCustomer"
                                      style="margin-top: 5px"/>
                 </b:row>
             </h:form>

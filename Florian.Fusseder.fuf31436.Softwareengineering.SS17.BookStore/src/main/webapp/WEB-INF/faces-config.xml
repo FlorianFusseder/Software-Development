@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <navigation-rule>
+        <description>
+            Navigation rules for my Pageflow
+        </description>        
+        
+        <from-view-id>
+            /*
+        </from-view-id>
+        
+        <navigation-case>
+            <from-outcome>admin</from-outcome>
+            <to-view-id>/Admin.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>createBook</from-outcome>
+            <to-view-id>/CreateAbstractBook.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>createAuthor</from-outcome>
+            <to-view-id>/CreateAuthor.xhtml</to-view-id>
+        </navigation-case>
+                
+        <navigation-case>
+            <from-outcome>createCustomer</from-outcome>
+            <to-view-id>/CreateCustomer.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/LogIn.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>order</from-outcome>
+            <to-view-id>/OrderInformation.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>pay</from-outcome>
+            <to-view-id>/Payment.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>seed</from-outcome>
+            <to-view-id>/Seeder.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>shop</from-outcome>
+            <to-view-id>/ShoppingSite.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>

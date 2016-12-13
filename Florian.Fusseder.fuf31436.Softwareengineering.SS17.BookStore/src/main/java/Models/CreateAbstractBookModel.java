@@ -65,10 +65,6 @@ public class CreateAbstractBookModel implements Serializable {
 	private Author[] choosenAuthors;
 
 	private String log;
-	
-	private Boolean isEbook;
-	
-	private Boolean isPaperbook;
 
 	@PostConstruct
 	public void init() {

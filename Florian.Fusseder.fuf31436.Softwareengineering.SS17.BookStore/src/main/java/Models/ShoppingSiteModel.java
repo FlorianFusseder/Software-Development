@@ -78,9 +78,12 @@ public class ShoppingSiteModel implements Serializable {
 	public void searchFor() {
 		this.bookList = this.bookService.searchBooks(this.searchTerm);
 	}
+	
+	public void resetSearch(){
+		this.searchTerm = "";
+	}
 
 	public List<ShoppingCart> getAllBoughtCarts() {
-
 		return this.customer.getPayedShoppingCarts().stream()
 				.sorted(new Comparator<ShoppingCart>() {
 					@Override
@@ -105,7 +108,7 @@ public class ShoppingSiteModel implements Serializable {
 			this.customer = this.shoppingService.buyCurrentCart(this.customer);
 			this.searchTerm = "";
 			this.init();
-			return "/OrderInformation.xhtml";
+			return "order";
 		}
 		return "";
 	}

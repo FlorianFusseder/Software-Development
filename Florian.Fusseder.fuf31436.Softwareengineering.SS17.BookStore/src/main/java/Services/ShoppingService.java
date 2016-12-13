@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.Iterator;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.jws.WebService;
 import javax.transaction.Transactional;
 
 /**

@@ -11,9 +11,9 @@
     <h:body>
         <h:form>
             <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" icon="shopping-cart" size="lg" 
-                             action="Payment.xhtml"/>
+                             action="pay" look="primary"/>
             <b:commandButton value="Log Out" icon="glyphicons-log-out" size="lg"
-                             look="danger" action="/LogIn.xhtml"/>
+                             look="danger" action="login"/>
         </h:form>
         <b:container style="width: 800px; padding-top: 10px;">
             <h:form>
@@ -26,6 +26,10 @@
                         <f:facet name="append">
                             <b:commandButton value="Search" icon="search" 
                                              look="primary" action="#{shoppingSiteModel.searchFor()}"/>
+                        </f:facet>
+                        <f:facet name="prepend">
+                            <b:commandButton value="" icon="glyphicon glyphicon-remove" look="danger"
+                                             action="#{shoppingSiteModel.resetSearch()}"/>
                         </f:facet>
                     </b:inputText>
                 </b:row>
@@ -57,7 +61,7 @@
 
                     <h:column>
                         <f:facet name="header"> Authors </f:facet>
-                        #{shoppingSiteModel.authorsAsString(book.author)}
+                            #{shoppingSiteModel.authorsAsString(book.author)}
                     </h:column>
 
                     <h:column>

@@ -29,7 +29,6 @@ import lombok.Setter;
 @Setter
 public class CreateCustomerModel implements Serializable {
 
-	//todo: bessere Ausgabe
 	@Inject
 	private PersonService personService;
 
@@ -52,7 +51,7 @@ public class CreateCustomerModel implements Serializable {
 				new Adress(this.street, this.city, Integer.valueOf(this.postNumber)),
 				new BankDetail(this.bic, this.iban));
 		
-		return "/LogIn.xhtml";
+		return "login";
 	}
 
 }
