@@ -10,27 +10,32 @@ and open the template in the editor.
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
+        <h:outputStylesheet library="css" name="style.css"/>
     </h:head>
     <h:body>
 
-        <div id="header">
-            <ui:insert name="top">
-                <div class="box"></div>
+        <div>
+            <ui:insert name="header">
+                <div class="headerStyle headerBackground"></div>
             </ui:insert>
         </div>
 
-        <div id="content">
+        <div>
             <ui:insert name="content">
                 Main Content
             </ui:insert>
         </div>
 
-        <div id="footer">
+        <div>
             <ui:insert name="footer">
-                <div class="box"></div>
+                <div class="footerStyle templateFontColor footerBackground">
+                    <h:outputText value="Florian Fusseder"/><br/>
+                    <h:outputText value="Matrnr: 2829120"/><br/>
+                    <h:outputText value="Softwareentwicklung"/><br/>
+                    <a href="https://github.com/FlorianFusseder/Software-Development"> "Git Repository" </a>
+                </div>
             </ui:insert>
         </div>
 
     </h:body>
-
 </html>
