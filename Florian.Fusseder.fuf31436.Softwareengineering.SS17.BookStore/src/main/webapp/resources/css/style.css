@@ -20,14 +20,12 @@
 }
 
 .footerStyle{
-    height: auto;
     text-align: center;
-}
-
-.contentBackground{
-    background: #614126;
+    position: absolute;
+    width: 100%;
+    padding: 20px;
 }
 
 .loginContentSize{
-     height: 410px;
+    height: 75vh;
 }
