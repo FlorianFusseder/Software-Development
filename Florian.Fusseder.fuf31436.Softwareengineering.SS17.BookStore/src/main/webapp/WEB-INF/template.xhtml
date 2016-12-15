@@ -12,15 +12,16 @@ and open the template in the editor.
     <h:head>
         <h:outputStylesheet library="css" name="style.css"/>
     </h:head>
-    <h:body>
-
+    <h:body style="background-image: url('resources/pictures/images.jpg')">
         <div>
             <ui:insert name="header">
-                <div class="headerStyle headerBackground"></div>
+                <div class="headerStyle headerBackground">
+                    <img src="resources/pictures/Untitled.png" alt="" style="height: 100%; width: auto; margin-left: 100px" />
+                </div>
             </ui:insert>
         </div>
 
-        <div>
+        <div style="width: 960px; margin-left: auto; margin-right: auto; background: whitesmoke; padding: 16px;">
             <ui:insert name="content">
                 Main Content
             </ui:insert>
@@ -32,10 +33,9 @@ and open the template in the editor.
                     <h:outputText value="Florian Fusseder"/><br/>
                     <h:outputText value="Matrnr: 2829120"/><br/>
                     <h:outputText value="Softwareentwicklung"/><br/>
-                    <a href="https://github.com/FlorianFusseder/Software-Development"> "Git Repository" </a>
+                    <a href="https://github.com/FlorianFusseder/Software-Development"> Git Repository </a>
                 </div>
             </ui:insert>
         </div>
-
     </h:body>
 </html>

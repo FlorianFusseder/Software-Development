@@ -8,6 +8,7 @@
         <title>Create a new customer</title>
     </h:head>
     <h:body>
+        
         <ui:composition template="./WEB-INF/template.xhtml">
             <ui:define name="content">
                 <b:container style="width: 800px; padding-top: 10px;">
@@ -28,26 +29,26 @@
                         </b:row>
                         <b:row>
                             <h:outputText value="Street:"/>
-                            <b:inputText value="#{createCustomerModel.street}"/>
+                            <b:inputText value="#{createCustomerModel.street}" required="true"/>
                         </b:row>
                         <b:row>
                             <h:outputText value="City:"/>
-                            <b:inputText value="#{createCustomerModel.city}"/>
+                            <b:inputText value="#{createCustomerModel.city}" required="true"/>
                         </b:row>
                         <b:row>
                             <h:outputText value="Postnumber:"/>
-                            <b:inputText value="#{createCustomerModel.postNumber}"/>
+                            <b:inputText value="#{createCustomerModel.postNumber}"  required="true"/>
                         </b:row>
                         <b:row>
                             <h4>Payment Information</h4>
                         </b:row>
                         <b:row>
                             <h:outputText value="iban:"/>
-                            <b:inputText value="#{createCustomerModel.iban}"/>
+                            <b:inputText value="#{createCustomerModel.iban}" required="true"/>
                         </b:row>
                         <b:row>
                             <h:outputText value="bic:"/>
-                            <b:inputText value="#{createCustomerModel.bic}"/>
+                            <b:inputText value="#{createCustomerModel.bic}" required="true"/>
                         </b:row>
                         <b:row>
                             <b:commandButton 

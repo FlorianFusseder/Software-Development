@@ -13,7 +13,8 @@
         <ui:composition template="./WEB-INF/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" icon="shopping-cart" size="lg" 
+                    <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" 
+                                     icon="shopping-cart" size="lg" 
                                      action="pay" look="primary"/>
                     <b:commandButton value="Log Out" icon="glyphicons-log-out" size="lg"
                                      look="danger" action="login"/>
