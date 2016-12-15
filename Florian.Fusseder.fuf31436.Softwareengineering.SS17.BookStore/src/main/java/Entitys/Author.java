@@ -11,6 +11,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,8 +30,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true, exclude = "books")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Author extends Person {
 	
+	@XmlTransient
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<AbstractBook> books = new ArrayList<>();
 

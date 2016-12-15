@@ -18,6 +18,10 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +42,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso(value = {PaperBook.class, ElectronicBook.class})
 abstract public class AbstractBook extends RandomIdEntity {
 
 	@NonNull
@@ -50,13 +57,13 @@ abstract public class AbstractBook extends RandomIdEntity {
 	@NonNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date release;
-	
+
 	@ManyToMany(mappedBy = "books", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Author> author = new ArrayList<>();
 
 	@NonNull
 	private BigDecimal price;
-	
+
 	public List<Author> getAuthor() {
 		return Collections.unmodifiableList(this.author);
 	}
@@ -64,6 +71,6 @@ abstract public class AbstractBook extends RandomIdEntity {
 	public void addAuthor(Author author) {
 		this.author.add(author);
 	}
-	
+
 	public abstract String getSpecificFieldAsString();
 }
