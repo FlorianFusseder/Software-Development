@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://Services/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://Services/">
 
+<xs:element name="abstractBook" type="tns:abstractBook"/>
+
 <xs:element name="findAll" type="tns:findAll"/>
 
 <xs:element name="findAllResponse" type="tns:findAllResponse"/>
@@ -24,11 +26,11 @@
 <xs:complexContent>
 <xs:extension base="tns:randomIdEntity">
 <xs:sequence>
-<xs:element name="author" type="tns:author" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="isbn" type="xs:string" minOccurs="0"/>
 <xs:element name="name" type="xs:string" minOccurs="0"/>
-<xs:element name="price" type="xs:decimal" minOccurs="0"/>
+<xs:element name="isbn" type="xs:string" minOccurs="0"/>
 <xs:element name="release" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="author" type="tns:author" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="price" type="xs:decimal" minOccurs="0"/>
 </xs:sequence>
 </xs:extension>
 </xs:complexContent>
@@ -82,6 +84,26 @@
 <xs:element name="postNumber" type="xs:int"/>
 <xs:element name="street" type="xs:string" minOccurs="0"/>
 </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="paperBook">
+<xs:complexContent>
+<xs:extension base="tns:abstractBook">
+<xs:sequence>
+<xs:element name="copies" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="electronicBook">
+<xs:complexContent>
+<xs:extension base="tns:abstractBook">
+<xs:sequence>
+<xs:element name="license" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
 </xs:complexType>
 
 <xs:complexType name="findAll">

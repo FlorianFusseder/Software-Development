@@ -81,16 +81,13 @@ public class ShoppingSiteModel implements Serializable {
 
 	public List<ShoppingCart> getAllBoughtCarts() {
 		return this.customer.getPayedShoppingCarts().stream()
-				.sorted(new Comparator<ShoppingCart>() {
-					@Override
-					public int compare(ShoppingCart t, ShoppingCart t1) {
-						if (t.getCheckoutDate().after(t1.getCheckoutDate())) {
-							return -1;
-						} else {
-							return 1;
-						}
+				.sorted((ShoppingCart t, ShoppingCart t1) -> {
+					if (t.getCheckoutDate().after(t1.getCheckoutDate())) {
+						return -1;
+					} else {
+						return 1;
 					}
-				})
+		})
 				.collect(Collectors.toList());
 
 	}

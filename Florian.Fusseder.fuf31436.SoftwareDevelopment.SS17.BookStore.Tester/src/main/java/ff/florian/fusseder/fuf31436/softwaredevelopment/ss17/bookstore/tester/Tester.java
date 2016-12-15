@@ -3,49 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ff.servicetester;
-
-import java.util.List;
+package ff.florian.fusseder.fuf31436.softwaredevelopment.ss17.bookstore.tester;
 
 /**
  *
  * @author Florian
  */
-public class ServiceTester {
-	
+public class Tester {
+
 	public static void main(String[] args) {
-		System.out.println("Hello World");
-		
-		
-		
-		try { // Call Web Service Operation
+
+		System.setProperty("com.sun.xml.ws.transport.http.client.HttpTransportPipe.dump", "true");
+		System.setProperty("com.sun.xml.internal.ws.transport.http.client.HttpTransportPipe.dump", "true");
+		System.setProperty("com.sun.xml.ws.transport.http.HttpAdapter.dump", "true");
+		System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dump", "true");
+
+		try { 
 			services.BookServiceService service = new services.BookServiceService();
 			services.BookService port = service.getBookServicePort();
-			// TODO process result here
 			java.util.List<services.AbstractBook> result = port.findAll();
-			System.out.println("Result = "+result);
+			System.out.println("Result = " + result);
 		} catch (Exception ex) {
-			// TODO handle custom exceptions here
-			System.out.println(ex.toString());
+			System.out.println(ex);
 		}
-		
-		
-		try { // Call Web Service Operation
+
+		try { 
 			services.BookServiceService service = new services.BookServiceService();
 			services.BookService port = service.getBookServicePort();
-			// TODO initialize WS operation arguments here
-			java.lang.String arg0 = "Harry";
-			// TODO process result here
+			java.lang.String arg0 = "harry";
 			java.util.List<services.AbstractBook> result = port.searchBooks(arg0);
-			System.out.println("Result = "+result);
+			System.out.println("Result = " + result);
 		} catch (Exception ex) {
-			// TODO handle custom exceptions here
-			System.out.println(ex.toString());
+			System.out.println(ex);
 		}
 
-
-		
-		
-		
 	}
+
 }
