@@ -5,7 +5,7 @@
  */
 package Models;
 
-import Entitys.Adress;
+import Entitys.Address;
 import Services.PersonService;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -51,7 +51,7 @@ public class CreateAuthorModel implements Serializable {
 
 	public void createAuthor() {
 		this.personService.createAuthor(this.firstName, this.lastName,
-				new Adress(this.street, this.city, Integer.valueOf(this.postNumber)));
+				new Address(this.street, this.city, Integer.valueOf(this.postNumber)));
 		
 		log += "New Author: " +  this.firstName
 				+ " " + this.lastName

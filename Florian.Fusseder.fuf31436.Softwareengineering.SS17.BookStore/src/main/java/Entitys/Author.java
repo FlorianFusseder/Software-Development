@@ -38,16 +38,16 @@ public class Author extends Person {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<AbstractBook> books = new ArrayList<>();
 
-	public Author(String firstName, String lastName, Adress adress) {
+	public Author(String firstName, String lastName, Address adress) {
 		super(firstName, lastName, adress);
 	}
 	
-	public Author(String firstName, String lastName, Adress adress, AbstractBook book) {
+	public Author(String firstName, String lastName, Address adress, AbstractBook book) {
 		super(firstName, lastName, adress);
 		this.books.add(book);
 	}
 
-	public Author(String firstName, String lastName, Adress adress, List<AbstractBook> books) {
+	public Author(String firstName, String lastName, Address adress, List<AbstractBook> books) {
 		super(firstName, lastName, adress);
 		books.addAll(books);
 	}

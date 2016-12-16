@@ -5,7 +5,7 @@
  */
 package Models;
 
-import Entitys.Adress;
+import Entitys.Address;
 import Entitys.BankDetail;
 import Services.PersonService;
 import java.io.Serializable;
@@ -48,7 +48,7 @@ public class CreateCustomerModel implements Serializable {
 
 	public String  createCustomer() {
 		this.personService.createCustomer(this.firstName, this.lastName,
-				new Adress(this.street, this.city, Integer.valueOf(this.postNumber)),
+				new Address(this.street, this.city, Integer.valueOf(this.postNumber)),
 				new BankDetail(this.bic, this.iban));
 		
 		return "login";

@@ -15,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Represents an Adress
+ * Represents an Address
  *
  * @author Florian
  */
@@ -25,7 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Adress implements Serializable {
+public class Address implements Serializable {
 
     @NonNull
     private String street;

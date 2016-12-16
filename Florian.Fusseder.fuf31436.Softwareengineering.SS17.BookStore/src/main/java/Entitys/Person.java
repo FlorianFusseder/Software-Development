@@ -31,6 +31,6 @@ public abstract class Person extends GeneratedIdEntity {
 
     private String firstName;
     private String lastName;
-    private Adress adress;
+    private Address adress;
 	
 }

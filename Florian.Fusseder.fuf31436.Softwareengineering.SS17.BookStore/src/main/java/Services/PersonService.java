@@ -5,7 +5,7 @@
  */
 package Services;
 
-import Entitys.Adress;
+import Entitys.Address;
 import Entitys.Author;
 import Entitys.BankDetail;
 import Entitys.Customer;
@@ -59,7 +59,7 @@ public class PersonService implements Serializable {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public Customer createCustomer(String firstName, String lastName, Adress adress, BankDetail bankDetail) {
+	public Customer createCustomer(String firstName, String lastName, Address adress, BankDetail bankDetail) {
 		if (bankDetail.getID() == null) {
 			bankRepo.persist(bankDetail);
 		}
@@ -76,7 +76,7 @@ public class PersonService implements Serializable {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public Author createAuthor(String firstName, String lastName, Adress address) {
+	public Author createAuthor(String firstName, String lastName, Address address) {
 		Author author = new Author(firstName, lastName, address);
 		personRepo.persist(author);
 		return author;

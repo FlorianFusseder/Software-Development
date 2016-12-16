@@ -41,11 +41,11 @@ public class Customer extends Person {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<ShoppingCart> payedShoppingCarts = new ArrayList();
 
-	public Customer(String firstName, String lastName, Adress adress) {
+	public Customer(String firstName, String lastName, Address adress) {
 		super(firstName, lastName, adress);
 	}
 
-	public Customer(String firstName, String lastName, Adress adress, ShoppingCart shoppingCart) {
+	public Customer(String firstName, String lastName, Address adress, ShoppingCart shoppingCart) {
 		super(firstName, lastName, adress);
 		this.shoppingCart = shoppingCart;
 	}

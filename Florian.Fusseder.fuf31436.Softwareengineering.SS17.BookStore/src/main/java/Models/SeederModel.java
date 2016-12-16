@@ -6,7 +6,7 @@
 package Models;
 
 import Entitys.AbstractBook;
-import Entitys.Adress;
+import Entitys.Address;
 import Entitys.Author;
 import Entitys.BankDetail;
 import Entitys.ElectronicBook;
@@ -54,8 +54,8 @@ public class SeederModel implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		Adress addr1 = new Adress("Regensburg", "Brunhuberstrasse", 93053);
-		Adress addr2 = new Adress("Gangekofen", "Langenkatzbach", 84140);
+		Address addr1 = new Address("Regensburg", "Brunhuberstrasse", 93053);
+		Address addr2 = new Address("Gangekofen", "Langenkatzbach", 84140);
 
 		BankDetail bank1 = new BankDetail("111111", "11111");
 		BankDetail bank2 = new BankDetail("222222", "22222");

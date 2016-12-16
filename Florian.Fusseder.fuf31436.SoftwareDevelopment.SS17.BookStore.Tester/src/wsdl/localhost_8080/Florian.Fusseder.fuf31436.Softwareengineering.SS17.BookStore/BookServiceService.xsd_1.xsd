@@ -2,6 +2,8 @@
 
 <xs:element name="abstractBook" type="tns:abstractBook"/>
 
+<xs:element name="author" type="tns:author"/>
+
 <xs:element name="findAll" type="tns:findAll"/>
 
 <xs:element name="findAllResponse" type="tns:findAllResponse"/>
@@ -51,9 +53,7 @@
 <xs:complexType name="author">
 <xs:complexContent>
 <xs:extension base="tns:person">
-<xs:sequence>
-<xs:element name="books" type="tns:abstractBook" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
+<xs:sequence/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
