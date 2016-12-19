@@ -6,6 +6,9 @@
 package Entitys;
 
 import Technicals.Id.GeneratedIdEntity;
+import java.util.Collections;
+import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -31,6 +34,15 @@ public abstract class Person extends GeneratedIdEntity {
 
     private String firstName;
     private String lastName;
-    private Address adress;
 	
+	@ElementCollection
+    private List<Address> address;
+
+	public void addAddress(Address adress){
+		this.address.add(adress);
+	}
+	
+	public List<Address> getAddress() {
+		return Collections.unmodifiableList(address);
+	}
 }

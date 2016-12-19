@@ -56,13 +56,13 @@
                         <h:outputText value="#{shoppingSiteModel.customer.lastName}"/>
 
                         <h:outputText value="Street:"/>
-                        <h:outputText value="#{shoppingSiteModel.customer.adress.street}"/>
-
+                        <h:outputText value="#{shoppingSiteModel.customer.address[0].street}"/>
+                        
                         <h:outputText value="City:"/>
-                        <h:outputText value="#{shoppingSiteModel.customer.adress.city}"/>
+                        <h:outputText value="#{shoppingSiteModel.customer.address[0].city}"/>
 
                         <h:outputText value="Postnumber:"/>
-                        <h:outputText value="#{shoppingSiteModel.customer.adress.postNumber}"/>
+                        <h:outputText value="#{shoppingSiteModel.customer.address[0].postNumber}"/>
 
                         <h:outputText value="iban:"/>
                         <h:outputText value="#{shoppingSiteModel.customer.bankDetail.iban}"/>

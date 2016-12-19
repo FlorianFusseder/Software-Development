@@ -41,6 +41,8 @@ public class ShoppingCart extends GeneratedIdEntity {
 	private Date checkoutDate;
 
 	private BigDecimal total = BigDecimal.ZERO;
+	
+	private Address DeliveryAddress;
 
 	@PreUpdate
 	@PrePersist

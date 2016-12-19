@@ -18,6 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.Arrays;
 import javax.enterprise.context.RequestScoped;
 
 /**
@@ -59,7 +60,7 @@ public class PersonService implements Serializable {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public Customer createCustomer(String firstName, String lastName, Address adress, BankDetail bankDetail) {
+	public Customer createCustomer(String firstName, String lastName, List<Address> address, BankDetail bankDetail) {
 		if (bankDetail.getID() == null) {
 			bankRepo.persist(bankDetail);
 		}
@@ -67,18 +68,36 @@ public class PersonService implements Serializable {
 		ShoppingCart shoppingCart = new ShoppingCart();
 		shoppingCartRepo.persist(shoppingCart);
 
-		Customer customer = new Customer(firstName, lastName, adress);
+		Customer customer = new Customer(firstName, lastName, address);
 		customer.setBankDetail(bankDetail);
 		customer.setShoppingCart(shoppingCart);
 
 		personRepo.persist(customer);
+		shoppingCart.setDeliveryAddress(address.get(0));
 		return customer;
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public Author createAuthor(String firstName, String lastName, Address address) {
+	public Customer createCustomer(String firstName, String lastName, Address address, BankDetail bankDetail) {
+		return createCustomer(firstName, lastName, Arrays.asList(address), bankDetail);
+	}
+
+	@Transactional(Transactional.TxType.REQUIRED)
+	public Author createAuthor(String firstName, String lastName, List<Address> address) {
 		Author author = new Author(firstName, lastName, address);
 		personRepo.persist(author);
 		return author;
+	}
+
+	@Transactional(Transactional.TxType.REQUIRED)
+	public Author createAuthor(String firstName, String lastName, Address address) {
+		return createAuthor(firstName, lastName, Arrays.asList(address));
+	}
+	
+	@Transactional(Transactional.TxType.REQUIRED)
+	public Person addAddress(Person person, Address address){
+		person = (Person) this.personRepo.merge(person);
+		person.addAddress(address);
+		return person;
 	}
 }
