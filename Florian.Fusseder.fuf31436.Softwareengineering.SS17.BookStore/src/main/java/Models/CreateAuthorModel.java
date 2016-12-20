@@ -5,8 +5,10 @@
  */
 package Models;
 
+import Annotations.PersonAnnotation;
 import Entitys.Address;
-import Services.PersonService;
+import Services.Impl.PersonService;
+import Services.Interfaces.IPersonService;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -30,7 +32,8 @@ import lombok.Setter;
 public class CreateAuthorModel implements Serializable {
 
 	@Inject
-	private PersonService personService;
+	@PersonAnnotation
+	private IPersonService personService;
 
 	private String firstName;
 

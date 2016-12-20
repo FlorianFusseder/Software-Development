@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Services;
+package Services.Impl;
 
 import Entitys.AbstractBook;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
 import Entitys.CartItem;
 import Entitys.PaperBook;
+import Services.Interfaces.IShoppingService;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import javax.enterprise.context.RequestScoped;
@@ -24,7 +24,7 @@ import javax.transaction.Transactional;
  * @author Florian
  */
 @RequestScoped
-public class ShoppingService implements Serializable {
+public class ShoppingService implements IShoppingService {
 
 	@Inject
 	private ShoppingCartRepo shoppingCartManager;
@@ -56,7 +56,7 @@ public class ShoppingService implements Serializable {
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, String Id) {
-		this.alterShoppingCart(customer, this.bookManager.findById(Id), 1);
+		this.alterShoppingCart(customer, this.bookManager.find(Id), 1);
 	}
 
 	/**

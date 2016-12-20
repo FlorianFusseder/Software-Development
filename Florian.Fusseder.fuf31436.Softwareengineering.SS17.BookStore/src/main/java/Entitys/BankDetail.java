@@ -24,7 +24,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BankDetail extends GeneratedIdEntity {
+public class BankDetail extends GeneratedIdEntity{
 
     private String bic;
 

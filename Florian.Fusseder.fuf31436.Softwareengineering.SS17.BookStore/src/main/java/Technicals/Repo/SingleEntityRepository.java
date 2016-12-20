@@ -8,6 +8,7 @@ package Technicals.Repo;
 import Technicals.Id.SingleIdEntity;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Any;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;

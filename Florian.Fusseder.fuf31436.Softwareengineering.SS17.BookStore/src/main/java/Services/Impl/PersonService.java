@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Services;
+package Services.Impl;
 
+import Annotations.PersonAnnotation;
 import Entitys.Address;
 import Entitys.Author;
 import Entitys.BankDetail;
 import Entitys.Customer;
 import Entitys.Person;
 import Entitys.ShoppingCart;
+import Services.Interfaces.IFindable;
+import Services.Interfaces.IPersonService;
 import Technicals.Repo.BankRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
 import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.io.Serializable;
 import java.util.Arrays;
 import javax.enterprise.context.RequestScoped;
 
@@ -26,7 +28,8 @@ import javax.enterprise.context.RequestScoped;
  * @author Florian
  */
 @RequestScoped
-public class PersonService implements Serializable {
+@PersonAnnotation
+public class PersonService implements IPersonService, IFindable {
 
 	@Inject
 	private PersonRepo personRepo;
@@ -39,14 +42,27 @@ public class PersonService implements Serializable {
 
 	public PersonService() {
 	}
+	
+	@Override
+	public Person find(Object ID) {
+		if (ID.getClass() == Person.class){
+			return this.find((Person) ID);
+		}
+		else if(ID.getClass() == Long.class){
+			return this.find(Long.valueOf((Long) ID));
+		}
+		else{
+			return null;
+		}
+	}
 
-	public Person find(Person person) {
+	private Person find(Person person) {
 		return (person.getClass() == Author.class)
 				? (Author) this.personRepo.findById(person.getID())
 				: (Customer) this.personRepo.findById(person.getID());
 	}
 
-	public Person find(Long Id) {
+	private Person find(Long Id) {
 		return this.personRepo.findById(Id);
 	}
 

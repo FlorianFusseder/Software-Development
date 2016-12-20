@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Services;
+package Services.Impl;
 
 import Entitys.CartItem;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
+import Services.Interfaces.ICartItemService;
 import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
@@ -20,7 +21,7 @@ import javax.transaction.Transactional;
  * @author Florian
  */
 @RequestScoped
-public class CartItemService {
+public class CartItemService implements ICartItemService{
 
 	@Inject
 	private PersonRepo personManager;

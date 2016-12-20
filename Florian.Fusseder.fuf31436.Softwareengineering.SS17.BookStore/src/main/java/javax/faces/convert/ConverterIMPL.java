@@ -5,8 +5,10 @@
  */
 package javax.faces.convert;
 
-import Entitys.Author;
-import Services.PersonService;
+import Annotations.PersonAnnotation;
+import Entitys.IEntity;
+import Services.Interfaces.IFindable;
+import Technicals.Id.SingleIdEntity;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -21,31 +23,34 @@ import lombok.NoArgsConstructor;
 @Named
 @RequestScoped
 @NoArgsConstructor
-public class AuthorConverter implements Converter{
+public class ConverterIMPL implements Converter {
 
 	@Inject
-	private PersonService personManager;
-	
+	@PersonAnnotation
+	private IFindable manager;
+
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		if(value == null)
+		if (value == null) {
 			return "";
-		
-		Author author = (Author) personManager.find(Long.valueOf(value));
-		
-		if(author == null)
+		}
+
+		SingleIdEntity entity = (SingleIdEntity) manager.find(Long.valueOf(value));
+
+		if (entity == null) {
 			return "";
-		return author;
+		}
+		return entity;
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if(value == null)
+		if (value == null) {
 			return null;
-		if(!value.getClass().equals(Author.class))
-			return null;
-		String s = ((Author) value).getID().toString();
+		}
+
+		String s = ((SingleIdEntity) value).getID().toString();
 		return s;
 	}
-	
+
 }

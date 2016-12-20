@@ -1,5 +1,6 @@
 package Technicals.Id;
 
+import Entitys.IEntity;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.MappedSuperclass;
@@ -9,7 +10,7 @@ import lombok.ToString;
 @MappedSuperclass
 @NoArgsConstructor
 @ToString
-abstract public class SingleIdEntity<T> implements Serializable {
+abstract public class SingleIdEntity<T> implements Serializable, IEntity {
 
 	public abstract T getID();
 

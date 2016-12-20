@@ -5,15 +5,17 @@
  */
 package Models;
 
+import Annotations.PersonAnnotation;
 import Entitys.AbstractBook;
 import Entitys.Address;
 import Entitys.Author;
 import Entitys.BankDetail;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
-import Services.BookService;
-import Services.PersonService;
-import Services.ShoppingService;
+import Services.Impl.BookService;
+import Services.Impl.PersonService;
+import Services.Impl.ShoppingService;
+import Services.Interfaces.IPersonService;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -41,7 +43,8 @@ import lombok.NoArgsConstructor;
 public class SeederModel implements Serializable {
 
 	@Inject
-	private PersonService personService;
+	@PersonAnnotation
+	private IPersonService personService;
 
 	@Inject
 	private BookService bookService;

@@ -5,21 +5,22 @@
  */
 package Models;
 
+import Annotations.PersonAnnotation;
 import Entitys.AbstractBook;
 import Entitys.Author;
 import Entitys.CartItem;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
-import Services.BookService;
-import Services.PersonService;
-import Services.ShoppingService;
+import Services.Impl.BookService;
+import Services.Impl.ShoppingService;
+import Services.Interfaces.IPersonService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.convert.CustomerConverter;
+import javax.faces.convert.ConverterIMPL;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
@@ -43,7 +44,8 @@ public class ShoppingSiteModel implements Serializable {
 	private ShoppingService shoppingService;
 
 	@Inject
-	private PersonService personService;
+	@PersonAnnotation
+	private IPersonService personService;
 
 	@Getter
 	@Setter
@@ -55,7 +57,7 @@ public class ShoppingSiteModel implements Serializable {
 	@Inject
 	@Getter
 	@Setter
-	private CustomerConverter converter;
+	private ConverterIMPL converter;
 
 	@Getter
 	@Setter
@@ -86,7 +88,7 @@ public class ShoppingSiteModel implements Serializable {
 					} else {
 						return 1;
 					}
-		})
+				})
 				.collect(Collectors.toList());
 
 	}
@@ -128,8 +130,14 @@ public class ShoppingSiteModel implements Serializable {
 				.mapToInt(ci -> ci.getCount())
 				.sum();
 	}
-	
-	public String authorsAsString(List<Author> authorList){
+
+	public String authorsAsString(List<Author> authorList) {
 		return authorList.stream().map(a -> (a.getFirstName() + " " + a.getLastName())).collect(Collectors.joining(", "));
+	}
+	
+	public String logout(){
+		this.searchTerm = "";
+		this.customer = null;
+		return "login";
 	}
 }

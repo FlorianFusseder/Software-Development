@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Services;
+package Services.Impl;
 
 import Entitys.AbstractBook;
 import Entitys.Author;
+import Services.Interfaces.IBookService;
+import Services.Interfaces.IFindable;
 import Technicals.Repo.AbstractBookRepo;
 import Technicals.Repo.PersonRepo;
 import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ import javax.jws.WebService;
  */
 @RequestScoped
 @WebService
-public class BookService implements Serializable {
+public class BookService implements IBookService, IFindable {
 
 	@Inject
 	private AbstractBookRepo bookManager;
@@ -69,12 +70,12 @@ public class BookService implements Serializable {
 	}
 
 	@WebMethod(exclude = true)
-	public AbstractBook findByObject(AbstractBook book) {
+	private AbstractBook find(AbstractBook book) {
 		return bookManager.findById(book.getID());
 	}
 
 	@WebMethod(exclude = true)
-	public AbstractBook findById(String Id) {
+	private AbstractBook find(String Id) {
 		return bookManager.findById(Id);
 	}
 	
@@ -90,5 +91,19 @@ public class BookService implements Serializable {
 				.collect(Collectors.joining(" OR ")));
 
 		return bookManager.createQuery(s).getResultList();
+	}
+
+	@Override
+	@WebMethod(exclude = true)
+	public AbstractBook find(Object Id) {
+		if(Id.getClass() == String.class){
+			return this.find((String) Id);
+		}
+		else if(Id.getClass() == AbstractBook.class){
+			return this.find((AbstractBook) Id);
+		}
+		else{
+			return null;
+		}
 	}
 }
