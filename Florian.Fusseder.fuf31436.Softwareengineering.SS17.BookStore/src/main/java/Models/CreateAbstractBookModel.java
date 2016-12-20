@@ -5,12 +5,12 @@
  */
 package Models;
 
-import Annotations.PersonAnnotation;
 import Entitys.AbstractBook;
 import Entitys.Author;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
 import Services.Impl.BookService;
+import Services.Interfaces.IBookService;
 import Services.Interfaces.IPersonService;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.convert.ConverterIMPL;
+import javax.faces.convert.AbstractConverter;
+import javax.faces.convert.PersonConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
@@ -41,14 +42,13 @@ import lombok.Setter;
 public class CreateAbstractBookModel implements Serializable {
 
 	@Inject
-	private BookService bookService;
+	private IBookService bookService;
 
 	@Inject
-	@PersonAnnotation
 	private IPersonService personService;
 
 	@Inject
-	private ConverterIMPL converter;
+	private PersonConverter converter;
 
 	private String name;
 

@@ -12,7 +12,6 @@ import Entitys.BankDetail;
 import Entitys.Customer;
 import Entitys.Person;
 import Entitys.ShoppingCart;
-import Services.Interfaces.IFindable;
 import Services.Interfaces.IPersonService;
 import Technicals.Repo.BankRepo;
 import Technicals.Repo.PersonRepo;
@@ -28,8 +27,7 @@ import javax.enterprise.context.RequestScoped;
  * @author Florian
  */
 @RequestScoped
-@PersonAnnotation
-public class PersonService implements IPersonService, IFindable {
+public class PersonService implements IPersonService {
 
 	@Inject
 	private PersonRepo personRepo;
@@ -42,27 +40,14 @@ public class PersonService implements IPersonService, IFindable {
 
 	public PersonService() {
 	}
-	
-	@Override
-	public Person find(Object ID) {
-		if (ID.getClass() == Person.class){
-			return this.find((Person) ID);
-		}
-		else if(ID.getClass() == Long.class){
-			return this.find(Long.valueOf((Long) ID));
-		}
-		else{
-			return null;
-		}
-	}
 
-	private Person find(Person person) {
+	public Person find(Person person) {
 		return (person.getClass() == Author.class)
 				? (Author) this.personRepo.findById(person.getID())
 				: (Customer) this.personRepo.findById(person.getID());
 	}
 
-	private Person find(Long Id) {
+	public Person find(Long Id) {
 		return this.personRepo.findById(Id);
 	}
 
@@ -109,11 +94,12 @@ public class PersonService implements IPersonService, IFindable {
 	public Author createAuthor(String firstName, String lastName, Address address) {
 		return createAuthor(firstName, lastName, Arrays.asList(address));
 	}
-	
+
 	@Transactional(Transactional.TxType.REQUIRED)
-	public Person addAddress(Person person, Address address){
+	public Person addAddress(Person person, Address address) {
 		person = (Person) this.personRepo.merge(person);
 		person.addAddress(address);
 		return person;
 	}
+
 }

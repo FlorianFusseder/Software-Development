@@ -56,6 +56,11 @@
             <from-outcome>shop</from-outcome>
             <to-view-id>/ShoppingSite.xhtml</to-view-id>
         </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>chooseDelivery</from-outcome>
+            <to-view-id>/ChooseDeliveryAddress.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 
 </faces-config>

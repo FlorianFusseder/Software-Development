@@ -5,29 +5,15 @@
  */
 package javax.faces.convert;
 
-import Annotations.PersonAnnotation;
-import Entitys.IEntity;
-import Services.Interfaces.IFindable;
 import Technicals.Id.SingleIdEntity;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
-import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Florian
  */
-@Named
-@RequestScoped
-@NoArgsConstructor
-public class ConverterIMPL implements Converter {
-
-	@Inject
-	@PersonAnnotation
-	private IFindable manager;
+public abstract class AbstractConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -35,7 +21,7 @@ public class ConverterIMPL implements Converter {
 			return "";
 		}
 
-		SingleIdEntity entity = (SingleIdEntity) manager.find(Long.valueOf(value));
+		SingleIdEntity entity = find(Long.valueOf(value));
 
 		if (entity == null) {
 			return "";
@@ -52,5 +38,7 @@ public class ConverterIMPL implements Converter {
 		String s = ((SingleIdEntity) value).getID().toString();
 		return s;
 	}
+	
+	public abstract SingleIdEntity find(Long l);
 
 }

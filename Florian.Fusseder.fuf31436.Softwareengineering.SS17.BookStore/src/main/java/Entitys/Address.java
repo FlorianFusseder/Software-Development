@@ -6,6 +6,7 @@
 package Entitys;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,12 +28,35 @@ import lombok.ToString;
 @ToString
 public class Address implements Serializable {
 
-    @NonNull
-    private String street;
+	@NonNull
+	private String street;
 
-    @NonNull
-    private String city;
+	@NonNull
+	private String city;
 
-    private int postNumber;
+	private Integer postNumber;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+
+		Address a = (Address) obj;
+		return !(!this.city.equals(a.city)
+				|| !this.street.equals(a.street)
+				|| (!Objects.equals(this.postNumber, a.postNumber)));
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.city, this.street, this.postNumber);
+	}
 
 }

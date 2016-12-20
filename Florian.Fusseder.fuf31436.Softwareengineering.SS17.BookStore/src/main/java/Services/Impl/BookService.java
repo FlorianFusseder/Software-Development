@@ -8,7 +8,6 @@ package Services.Impl;
 import Entitys.AbstractBook;
 import Entitys.Author;
 import Services.Interfaces.IBookService;
-import Services.Interfaces.IFindable;
 import Technicals.Repo.AbstractBookRepo;
 import Technicals.Repo.PersonRepo;
 import java.util.List;
@@ -27,7 +26,7 @@ import javax.jws.WebService;
  */
 @RequestScoped
 @WebService
-public class BookService implements IBookService, IFindable {
+public class BookService implements IBookService {
 
 	@Inject
 	private AbstractBookRepo bookManager;
@@ -70,12 +69,12 @@ public class BookService implements IBookService, IFindable {
 	}
 
 	@WebMethod(exclude = true)
-	private AbstractBook find(AbstractBook book) {
+	public AbstractBook find(AbstractBook book) {
 		return bookManager.findById(book.getID());
 	}
 
 	@WebMethod(exclude = true)
-	private AbstractBook find(String Id) {
+	public AbstractBook find(String Id) {
 		return bookManager.findById(Id);
 	}
 	
@@ -91,19 +90,5 @@ public class BookService implements IBookService, IFindable {
 				.collect(Collectors.joining(" OR ")));
 
 		return bookManager.createQuery(s).getResultList();
-	}
-
-	@Override
-	@WebMethod(exclude = true)
-	public AbstractBook find(Object Id) {
-		if(Id.getClass() == String.class){
-			return this.find((String) Id);
-		}
-		else if(Id.getClass() == AbstractBook.class){
-			return this.find((AbstractBook) Id);
-		}
-		else{
-			return null;
-		}
 	}
 }

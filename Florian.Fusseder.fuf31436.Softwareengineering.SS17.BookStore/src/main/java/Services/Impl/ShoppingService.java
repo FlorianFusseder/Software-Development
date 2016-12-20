@@ -10,6 +10,8 @@ import Entitys.Customer;
 import Entitys.ShoppingCart;
 import Entitys.CartItem;
 import Entitys.PaperBook;
+import Services.Interfaces.IBookService;
+import Services.Interfaces.ICartItemService;
 import Services.Interfaces.IShoppingService;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
@@ -30,13 +32,13 @@ public class ShoppingService implements IShoppingService {
 	private ShoppingCartRepo shoppingCartManager;
 
 	@Inject
-	private CartItemService cartItemManager;
+	private ICartItemService cartItemManager;
 
 	@Inject
 	private PersonRepo personManager;
 
 	@Inject
-	private BookService bookManager;
+	private IBookService bookManager;
 
 	public ShoppingService() {
 	}
@@ -56,7 +58,7 @@ public class ShoppingService implements IShoppingService {
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void addBookToCart(Customer customer, String Id) {
-		this.alterShoppingCart(customer, this.bookManager.find(Id), 1);
+		this.alterShoppingCart(customer,(AbstractBook) this.bookManager.find(Id), 1);
 	}
 
 	/**
@@ -98,6 +100,8 @@ public class ShoppingService implements IShoppingService {
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	public Customer buyCurrentCart(Customer customer) {
+		
+		//todo current cart muss noch aktualisert werden wegen lieferadresse! anosten geht sie hier beim merge verloren!
 		customer = (Customer) personManager.merge(customer);
 		ShoppingCart shoppingCart = shoppingCartManager.merge(customer.getShoppingCart());
 

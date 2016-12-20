@@ -19,6 +19,10 @@ import java.util.List;
  */
 public interface IPersonService extends Serializable {
 
+	public Person find(Person person);
+
+	public Person find(Long Id);
+
 	public List<Person> findAll();
 
 	public void persist(Person person);
@@ -30,7 +34,7 @@ public interface IPersonService extends Serializable {
 	public Author createAuthor(String firstName, String lastName, List<Address> address);
 
 	public Author createAuthor(String firstName, String lastName, Address address);
-	
+
 	public Person addAddress(Person person, Address address);
 
 }

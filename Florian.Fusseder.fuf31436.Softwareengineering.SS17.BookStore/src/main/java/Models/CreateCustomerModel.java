@@ -5,10 +5,8 @@
  */
 package Models;
 
-import Annotations.PersonAnnotation;
 import Entitys.Address;
 import Entitys.BankDetail;
-import Services.Impl.PersonService;
 import Services.Interfaces.IPersonService;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -32,7 +30,6 @@ import lombok.Setter;
 public class CreateCustomerModel implements Serializable {
 
 	@Inject
-	@PersonAnnotation
 	private IPersonService personService;
 
 	private String firstName;

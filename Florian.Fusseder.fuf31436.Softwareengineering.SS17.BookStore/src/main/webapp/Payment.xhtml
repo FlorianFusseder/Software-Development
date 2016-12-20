@@ -45,7 +45,7 @@
                             value="Buy Cart for #{shoppingSiteModel.shoppingCart.total}"
                             icon="plus-sign" 
                             look="success"
-                            action="#{shoppingSiteModel.buyShoppingCart()}"/>
+                            action="#{shoppingSiteModel.acceptShoppingCart()}"/>
                     </h:form>
                     <b:panelGrid columns="2" style="margin-top: 25px" >
 
@@ -73,7 +73,9 @@
                     </b:panelGrid>
 
                     <c:forEach items="#{shoppingSiteModel.allBoughtCarts}" var="paidCarts">
-                        <h3> Cart from: #{paidCarts.checkoutDate} for #{paidCarts.total}€ </h3>
+                        <h3> Cart from: #{paidCarts.checkoutDate} for #{paidCarts.total}€ <br/>
+                            was sent to #{paidCarts.deliveryAddress.street}, 
+                            #{paidCarts.deliveryAddress.postNumber}, #{paidCarts.deliveryAddress.street}  </h3>
                         <b:dataTable value="#{paidCarts.shoppingList}" var="book" customOptions="false">
                             <h:column>
                                 <f:facet name="header"> Amount </f:facet>

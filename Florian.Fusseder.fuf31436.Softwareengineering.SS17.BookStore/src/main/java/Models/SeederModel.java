@@ -5,7 +5,6 @@
  */
 package Models;
 
-import Annotations.PersonAnnotation;
 import Entitys.AbstractBook;
 import Entitys.Address;
 import Entitys.Author;
@@ -13,9 +12,10 @@ import Entitys.BankDetail;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
 import Services.Impl.BookService;
-import Services.Impl.PersonService;
 import Services.Impl.ShoppingService;
+import Services.Interfaces.IBookService;
 import Services.Interfaces.IPersonService;
+import Services.Interfaces.IShoppingService;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -43,22 +43,21 @@ import lombok.NoArgsConstructor;
 public class SeederModel implements Serializable {
 
 	@Inject
-	@PersonAnnotation
 	private IPersonService personService;
 
 	@Inject
-	private BookService bookService;
+	private IBookService bookService;
 
 	@Inject
-	private ShoppingService shoppingService;
-	
+	private IShoppingService shoppingService;
+
 	String output = "hello";
 
 	@PostConstruct
 	public void init() {
 
-		Address addr1 = new Address("Regensburg", "Brunhuberstrasse", 93053);
-		Address addr2 = new Address("Gangekofen", "Langenkatzbach", 84140);
+		Address addr1 = new Address("Brunhuberstrasse", "Regensburg", 93053);
+		Address addr2 = new Address("Langenkatzbach", "Gangekofen", 84140);
 
 		BankDetail bank1 = new BankDetail("111111", "11111");
 		BankDetail bank2 = new BankDetail("222222", "22222");

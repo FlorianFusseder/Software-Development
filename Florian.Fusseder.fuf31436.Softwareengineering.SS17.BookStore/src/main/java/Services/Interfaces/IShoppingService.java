@@ -5,12 +5,23 @@
  */
 package Services.Interfaces;
 
+import Entitys.AbstractBook;
+import Entitys.Customer;
+import Entitys.ShoppingCart;
 import java.io.Serializable;
 
 /**
  *
  * @author Florian
  */
-public interface IShoppingService extends Serializable{
-	
+public interface IShoppingService extends Serializable {
+
+	public void persist(ShoppingCart shoppingCart);
+
+	public void addBookToCart(Customer customer, String Id);
+
+	public Customer alterShoppingCart(Customer customer, AbstractBook abstractBook, int amount);
+
+	public Customer buyCurrentCart(Customer customer);
+
 }

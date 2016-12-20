@@ -5,22 +5,21 @@
  */
 package Models;
 
-import Annotations.PersonAnnotation;
 import Entitys.AbstractBook;
 import Entitys.Author;
 import Entitys.CartItem;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
-import Services.Impl.BookService;
-import Services.Impl.ShoppingService;
+import Services.Interfaces.IBookService;
 import Services.Interfaces.IPersonService;
+import Services.Interfaces.IShoppingService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.convert.ConverterIMPL;
+import javax.faces.convert.PersonConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
@@ -38,13 +37,12 @@ import lombok.Setter;
 public class ShoppingSiteModel implements Serializable {
 
 	@Inject
-	private BookService bookService;
+	private IBookService bookService;
 
 	@Inject
-	private ShoppingService shoppingService;
+	private IShoppingService shoppingService;
 
 	@Inject
-	@PersonAnnotation
 	private IPersonService personService;
 
 	@Getter
@@ -57,7 +55,7 @@ public class ShoppingSiteModel implements Serializable {
 	@Inject
 	@Getter
 	@Setter
-	private ConverterIMPL converter;
+	private PersonConverter converter;
 
 	@Getter
 	@Setter
@@ -96,13 +94,22 @@ public class ShoppingSiteModel implements Serializable {
 	public ShoppingCart getShoppingCart() {
 		return this.customer.getShoppingCart();
 	}
+	
+	public String acceptShoppingCart(){
+		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
+			this.searchTerm = "";
+			this.init();
+			return "chooseDelivery";
+		}
+		return "";
+	}
 
 	public String buyShoppingCart() {
 		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
 			this.customer = this.shoppingService.buyCurrentCart(this.customer);
 			this.searchTerm = "";
 			this.init();
-			return "order";
+			return "shop";
 		}
 		return "";
 	}

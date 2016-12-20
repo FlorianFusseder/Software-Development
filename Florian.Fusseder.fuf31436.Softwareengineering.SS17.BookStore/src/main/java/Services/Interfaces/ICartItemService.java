@@ -5,6 +5,8 @@
  */
 package Services.Interfaces;
 
+import Entitys.CartItem;
+import Entitys.Customer;
 import java.io.Serializable;
 
 /**
@@ -12,5 +14,11 @@ import java.io.Serializable;
  * @author Florian
  */
 public interface ICartItemService extends Serializable{
+	
+	public void remove(Customer customer, CartItem cartItem);
+
+	public void persist(CartItem cartItem);
+
+	public CartItem merge(CartItem cartItem);
 	
 }
