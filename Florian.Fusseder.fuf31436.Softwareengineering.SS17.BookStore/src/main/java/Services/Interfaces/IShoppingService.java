@@ -6,6 +6,7 @@
 package Services.Interfaces;
 
 import Entitys.AbstractBook;
+import Entitys.Address;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
 import java.io.Serializable;
@@ -23,5 +24,7 @@ public interface IShoppingService extends Serializable {
 	public Customer alterShoppingCart(Customer customer, AbstractBook abstractBook, int amount);
 
 	public Customer buyCurrentCart(Customer customer);
+	
+	public Customer setDeliveryAddress(Customer customer, Address address);
 
 }

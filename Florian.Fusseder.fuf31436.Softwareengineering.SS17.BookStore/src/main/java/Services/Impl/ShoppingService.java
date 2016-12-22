@@ -6,6 +6,7 @@
 package Services.Impl;
 
 import Entitys.AbstractBook;
+import Entitys.Address;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
 import Entitys.CartItem;
@@ -63,6 +64,16 @@ public class ShoppingService implements IShoppingService {
 		this.alterShoppingCart(customer,(AbstractBook) this.bookManager.find(Id), 1);
 	}
 
+	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
+	public Customer setDeliveryAddress(Customer customer, Address address) {
+		customer = (Customer) personManager.merge(customer);
+		ShoppingCart shoppingCart = shoppingCartManager.merge(customer.getShoppingCart());
+		
+		shoppingCart.setDeliveryAddress(address);
+		return customer;
+	}
+	
 	/**
 	 * Wraps a AbstractBook into a CartItem and adds it to the ShoppingCart. If
 	 * already existent the counter of the CartItem will be increased by
@@ -71,6 +82,7 @@ public class ShoppingService implements IShoppingService {
 	 * @param customer
 	 * @param abstractBook
 	 * @param amount
+	 * @return 
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override

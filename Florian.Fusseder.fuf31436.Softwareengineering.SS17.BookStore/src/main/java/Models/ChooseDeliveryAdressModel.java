@@ -6,6 +6,8 @@
 package Models;
 
 import Entitys.Address;
+import Services.Interfaces.IPersonService;
+import Services.Interfaces.IShoppingService;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -28,6 +30,12 @@ public class ChooseDeliveryAdressModel {
 
 	@Inject
 	private ShoppingSiteModel siteModel;
+	
+	@Inject
+	private IPersonService personService;
+	
+	@Inject
+	private IShoppingService shoppingService;
 
 	@Setter
 	@Getter
@@ -67,7 +75,7 @@ public class ChooseDeliveryAdressModel {
 			a = choosenAddress;
 		}
 
-		siteModel.getShoppingCart().setDeliveryAddress(a);
+		this.siteModel.setCustomer(this.shoppingService.setDeliveryAddress(siteModel.getCustomer(), a)); 
 		if (!siteModel.getCustomer().getAddress().contains(a)) {
 			siteModel.getCustomer().addAddress(a);
 		}
