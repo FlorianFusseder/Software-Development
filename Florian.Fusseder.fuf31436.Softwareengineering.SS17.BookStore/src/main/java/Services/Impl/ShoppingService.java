@@ -44,6 +44,7 @@ public class ShoppingService implements IShoppingService {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public void persist(ShoppingCart shoppingCart) {
 		this.shoppingCartManager.persist(shoppingCart);
 	}
@@ -57,6 +58,7 @@ public class ShoppingService implements IShoppingService {
 	 * @param Id
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public void addBookToCart(Customer customer, String Id) {
 		this.alterShoppingCart(customer,(AbstractBook) this.bookManager.find(Id), 1);
 	}
@@ -71,6 +73,7 @@ public class ShoppingService implements IShoppingService {
 	 * @param amount
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public Customer alterShoppingCart(Customer customer, AbstractBook abstractBook, int amount) {
 
 		customer = (Customer) this.personManager.merge(customer);
@@ -99,6 +102,7 @@ public class ShoppingService implements IShoppingService {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public Customer buyCurrentCart(Customer customer) {
 		
 		//todo current cart muss noch aktualisert werden wegen lieferadresse! anosten geht sie hier beim merge verloren!

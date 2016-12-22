@@ -33,6 +33,7 @@ public class CartItemService implements ICartItemService{
 	private ShoppingCartRepo shoppingCartService;
 
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public void remove(Customer customer, CartItem cartItem) {
 		customer = (Customer) personManager.merge(customer);
 		ShoppingCart shoppingCart = this.shoppingCartService.merge(customer.getShoppingCart());
@@ -42,11 +43,13 @@ public class CartItemService implements ICartItemService{
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public void persist(CartItem cartItem) {
 		this.cartItemManager.persist(cartItem);
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public CartItem merge(CartItem cartItem) {
 		return this.cartItemManager.merge(cartItem);
 	}

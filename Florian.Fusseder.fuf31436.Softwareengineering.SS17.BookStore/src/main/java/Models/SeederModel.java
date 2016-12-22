@@ -11,8 +11,6 @@ import Entitys.Author;
 import Entitys.BankDetail;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
-import Services.Impl.BookService;
-import Services.Impl.ShoppingService;
 import Services.Interfaces.IBookService;
 import Services.Interfaces.IPersonService;
 import Services.Interfaces.IShoppingService;

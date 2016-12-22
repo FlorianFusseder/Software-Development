@@ -39,12 +39,14 @@ public class BookService implements IBookService {
 
 	@WebMethod(exclude = true)
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public AbstractBook merge(AbstractBook abstractBook) {
 		return bookManager.merge(abstractBook);
 	}
 
 	@WebMethod(exclude = true)
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public Author persistNewBook(AbstractBook b, Author author) {
 		List<Author> newList = new ArrayList<>();
 		newList.add(author);
@@ -54,6 +56,7 @@ public class BookService implements IBookService {
 
 	@WebMethod(exclude = true)
 	@Transactional(Transactional.TxType.REQUIRED)
+	@Override
 	public List<Author> persistNewBook(AbstractBook b, List<Author> author) {
 		List<Author> newList = new ArrayList<>();
 
@@ -69,19 +72,23 @@ public class BookService implements IBookService {
 	}
 
 	@WebMethod(exclude = true)
+	@Override
 	public AbstractBook find(AbstractBook book) {
 		return bookManager.findById(book.getID());
 	}
 
 	@WebMethod(exclude = true)
+	@Override
 	public AbstractBook find(String Id) {
 		return bookManager.findById(Id);
 	}
-	
+
+	@Override
 	public List<AbstractBook> findAll() {
 		return bookManager.findAll();
 	}
 
+	@Override
 	public List<AbstractBook> searchBooks(String term) {
 
 		String s = "SELECT B FROM AbstractBook AS B WHERE ";
