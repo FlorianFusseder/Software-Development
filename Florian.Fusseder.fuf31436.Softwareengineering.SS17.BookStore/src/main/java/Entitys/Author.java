@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -35,7 +36,7 @@ import lombok.ToString;
 public class Author extends Person {
 	
 	@XmlTransient
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) //todo eager weischt?
 	private List<AbstractBook> books = new ArrayList<>();
 
 	public Author(String firstName, String lastName, List<Address> address) {
