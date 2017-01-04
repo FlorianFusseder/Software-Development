@@ -6,11 +6,8 @@
 package Models;
 
 import Entitys.Address;
-import Services.Interfaces.IPersonService;
 import Services.Interfaces.IShoppingService;
 import java.util.Collection;
-import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -26,7 +23,6 @@ import lombok.Setter;
 @Named
 @RequestScoped
 @NoArgsConstructor
-@ManagedBean
 public class ChooseDeliveryAdressModel {
 
 	@Inject

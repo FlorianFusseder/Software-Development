@@ -113,10 +113,12 @@ public class ShoppingService implements IShoppingService {
 
 		if (amount > 0) {
 			CartItem cartItem = new CartItem(abstractBook, amount);
-			cartItemManager.persist(cartItem);
-			shoppingCart.addToShoppingList(cartItem);
+			//cartItemManager.persist(cartItem);
+			//System.out.println(cartItem);
+			//shoppingCart.addToShoppingList(cartItem);
 		}
 		return customer;
+
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)

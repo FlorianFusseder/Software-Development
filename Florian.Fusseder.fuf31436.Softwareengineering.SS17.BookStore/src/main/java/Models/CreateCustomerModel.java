@@ -9,7 +9,6 @@ import Entitys.Address;
 import Entitys.BankDetail;
 import Services.Interfaces.IPersonService;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,7 +23,6 @@ import lombok.Setter;
 @Named
 @RequestScoped
 @NoArgsConstructor
-@ManagedBean
 @Getter
 @Setter
 public class CreateCustomerModel implements Serializable {

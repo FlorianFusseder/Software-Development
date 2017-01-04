@@ -5,8 +5,6 @@
  */
 package Services.Interfaces;
 
-import java.io.Serializable;
-
 /**
  *
  * @author Florian Fußeder

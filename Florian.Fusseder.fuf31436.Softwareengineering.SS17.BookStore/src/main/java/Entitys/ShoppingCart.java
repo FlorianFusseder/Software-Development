@@ -6,13 +6,11 @@
 package Entitys;
 
 import Technicals.Id.GeneratedIdEntity;
-import com.sun.java.swing.plaf.windows.WindowsTreeUI;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;

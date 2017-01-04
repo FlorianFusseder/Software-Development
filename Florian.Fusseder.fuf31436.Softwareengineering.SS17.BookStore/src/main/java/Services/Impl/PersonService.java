@@ -19,8 +19,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
 import javax.enterprise.context.RequestScoped;
 
 /**
@@ -67,7 +65,7 @@ public class PersonService implements IPersonService {
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
-	public Customer createCustomer(String firstName, String lastName, Collection<Address> address, BankDetail bankDetail) {
+	public Customer createCustomer(String firstName, String lastName, List<Address> address, BankDetail bankDetail) {
 		if (bankDetail.getID() == null) {
 			bankRepo.persist(bankDetail);
 		}
@@ -92,7 +90,7 @@ public class PersonService implements IPersonService {
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
-	public Author createAuthor(String firstName, String lastName, Collection<Address> address) {
+	public Author createAuthor(String firstName, String lastName, List<Address> address) {
 		Author author = new Author(firstName, lastName, address);
 		personRepo.persist(author);
 		return author;
@@ -101,7 +99,7 @@ public class PersonService implements IPersonService {
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public Author createAuthor(String firstName, String lastName, Address address) {
-		return createAuthor(firstName, lastName, new HashSet<>(Arrays.asList(address)));
+		return createAuthor(firstName, lastName, Arrays.asList(address));
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)

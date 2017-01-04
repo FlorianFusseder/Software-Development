@@ -19,7 +19,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -34,7 +33,6 @@ import lombok.NoArgsConstructor;
  */
 @RequestScoped
 @Named
-@ManagedBean
 @Getter
 @Setter
 @NoArgsConstructor

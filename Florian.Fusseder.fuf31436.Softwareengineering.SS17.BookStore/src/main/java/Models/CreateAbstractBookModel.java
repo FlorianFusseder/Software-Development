@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.convert.PersonConverter;
@@ -34,7 +33,6 @@ import lombok.Setter;
 @Named
 @RequestScoped
 @NoArgsConstructor
-@ManagedBean
 @Getter
 @Setter
 public class CreateAbstractBookModel implements Serializable {

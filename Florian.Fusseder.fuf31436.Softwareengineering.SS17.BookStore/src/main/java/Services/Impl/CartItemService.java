@@ -7,11 +7,9 @@ package Services.Impl;
 
 import Entitys.CartItem;
 import Entitys.Customer;
-import Entitys.ShoppingCart;
 import Services.Interfaces.ICartItemService;
 import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
-import Technicals.Repo.ShoppingCartRepo;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -28,9 +26,6 @@ public class CartItemService implements ICartItemService{
 
 	@Inject
 	private CartItemRepo cartItemManager;
-
-	@Inject
-	private ShoppingCartRepo shoppingCartService;
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override

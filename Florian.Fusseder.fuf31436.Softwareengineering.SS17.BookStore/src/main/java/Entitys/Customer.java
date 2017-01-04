@@ -7,16 +7,13 @@ package Entitys;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -36,17 +33,16 @@ public class Customer extends Person {
 	private BankDetail bankDetail;
 
 	@OneToOne
-	@NonNull
 	private ShoppingCart shoppingCart = new ShoppingCart();
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany
 	private List<ShoppingCart> payedShoppingCarts = new ArrayList();
 
-	public Customer(String firstName, String lastName, Collection<Address> adress) {
+	public Customer(String firstName, String lastName, List<Address> adress) {
 		super(firstName, lastName, adress);
 	}
 
-	public Customer(String firstName, String lastName, Collection<Address> address, ShoppingCart shoppingCart) {
+	public Customer(String firstName, String lastName, List<Address> address, ShoppingCart shoppingCart) {
 		super(firstName, lastName, address);
 		this.shoppingCart = shoppingCart;
 	}

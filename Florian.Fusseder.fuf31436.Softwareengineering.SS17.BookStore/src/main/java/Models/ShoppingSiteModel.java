@@ -16,7 +16,6 @@ import Services.Interfaces.IShoppingService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.convert.PersonConverter;
@@ -33,7 +32,6 @@ import lombok.Setter;
 @Named
 @SessionScoped
 @NoArgsConstructor
-@ManagedBean
 public class ShoppingSiteModel implements Serializable {
 
 	@Inject

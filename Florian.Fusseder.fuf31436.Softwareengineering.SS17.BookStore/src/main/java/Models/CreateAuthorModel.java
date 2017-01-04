@@ -8,7 +8,6 @@ package Models;
 import Entitys.Address;
 import Services.Interfaces.IPersonService;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -24,7 +23,6 @@ import lombok.Setter;
 @Named
 @RequestScoped
 @NoArgsConstructor
-@ManagedBean
 @Getter
 @Setter
 public class CreateAuthorModel implements Serializable {
