@@ -36,9 +36,8 @@ public class CartItemService implements ICartItemService{
 	@Override
 	public void remove(Customer customer, CartItem cartItem) {
 		customer = (Customer) personManager.merge(customer);
-		ShoppingCart shoppingCart = this.shoppingCartService.merge(customer.getShoppingCart());
 
-		shoppingCart.removeFromShoppingList(cartItem);
+		customer.getShoppingCart().removeFromShoppingList(cartItem);
 		this.cartItemManager.remove(cartItem);
 	}
 

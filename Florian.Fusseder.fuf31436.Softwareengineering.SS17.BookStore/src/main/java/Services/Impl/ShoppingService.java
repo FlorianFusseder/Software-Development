@@ -21,6 +21,10 @@ import java.util.Iterator;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import Config.*;
+import Annotations.PaymentAnnotation;
+import Services.Interfaces.ITransactionService;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -40,6 +44,10 @@ public class ShoppingService implements IShoppingService {
 
 	@Inject
 	private IBookService bookManager;
+
+	@Inject
+	@PaymentAnnotation
+	private ITransactionService paymentManager;
 
 	public ShoppingService() {
 	}
@@ -61,19 +69,17 @@ public class ShoppingService implements IShoppingService {
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public void addBookToCart(Customer customer, String Id) {
-		this.alterShoppingCart(customer,(AbstractBook) this.bookManager.find(Id), 1);
+		this.alterShoppingCart(customer, (AbstractBook) this.bookManager.find(Id), 1);
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public Customer setDeliveryAddress(Customer customer, Address address) {
 		customer = (Customer) personManager.merge(customer);
-		ShoppingCart shoppingCart = shoppingCartManager.merge(customer.getShoppingCart());
-		
-		shoppingCart.setDeliveryAddress(address);
+		customer.getShoppingCart().setDeliveryAddress(address);
 		return customer;
 	}
-	
+
 	/**
 	 * Wraps a AbstractBook into a CartItem and adds it to the ShoppingCart. If
 	 * already existent the counter of the CartItem will be increased by
@@ -82,21 +88,21 @@ public class ShoppingService implements IShoppingService {
 	 * @param customer
 	 * @param abstractBook
 	 * @param amount
-	 * @return 
+	 * @return
 	 */
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public Customer alterShoppingCart(Customer customer, AbstractBook abstractBook, int amount) {
 
 		customer = (Customer) this.personManager.merge(customer);
-		ShoppingCart shoppingCart = this.shoppingCartManager.merge(customer.getShoppingCart());
+		ShoppingCart shoppingCart = customer.getShoppingCart();
 		Iterator<CartItem> items = shoppingCart.getShoppingList().iterator();
 
 		while (items.hasNext()) {
 			CartItem cartItem = items.next();
 
 			if (cartItem.getAbstractBook().equals(abstractBook)) {
-				CartItem ci = cartItemManager.merge(cartItem);
+				CartItem ci = cartItem;
 				ci.alterCount(amount);
 				if (ci.getCount() < 1) {
 					this.cartItemManager.remove(customer, ci);
@@ -116,10 +122,9 @@ public class ShoppingService implements IShoppingService {
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public Customer buyCurrentCart(Customer customer) {
-		
-		//todo current cart muss noch aktualisert werden wegen lieferadresse! anosten geht sie hier beim merge verloren!
+
 		customer = (Customer) personManager.merge(customer);
-		ShoppingCart shoppingCart = shoppingCartManager.merge(customer.getShoppingCart());
+		ShoppingCart shoppingCart = customer.getShoppingCart();
 
 		for (CartItem cartItem : shoppingCart.getShoppingList()) {
 
@@ -127,12 +132,18 @@ public class ShoppingService implements IShoppingService {
 			int copiesSold = cartItem.getCount();
 
 			if (abstractbook.getClass() == PaperBook.class) {
-				PaperBook pb = (PaperBook) bookManager.merge(abstractbook);
+				PaperBook pb = (PaperBook) abstractbook;
 				pb.alterCopies(-copiesSold);
 			}
 		}
 
 		shoppingCart.setCheckoutDate(new Date());
+		this.paymentManager.transfer(shoppingCart.getTotal().longValue(),
+				customer.getBankDetail().getIban(), Config.getMyIban(),
+				"Paying " + shoppingCart.getShoppingList().stream()
+						.map(b -> b.getCount() + "x " + b.getAbstractBook().getName())
+						.collect(Collectors.joining(", "))
+				+ " from \"The One BookStore\"");
 		customer.addPayedShoppingCart(shoppingCart);
 		ShoppingCart newCart = new ShoppingCart();
 		shoppingCartManager.persist(newCart);
