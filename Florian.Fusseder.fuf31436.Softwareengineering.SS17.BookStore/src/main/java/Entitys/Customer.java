@@ -7,6 +7,7 @@ package Entitys;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -41,11 +42,11 @@ public class Customer extends Person {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<ShoppingCart> payedShoppingCarts = new ArrayList();
 
-	public Customer(String firstName, String lastName, List<Address> adress) {
+	public Customer(String firstName, String lastName, Collection<Address> adress) {
 		super(firstName, lastName, adress);
 	}
 
-	public Customer(String firstName, String lastName, List<Address> address, ShoppingCart shoppingCart) {
+	public Customer(String firstName, String lastName, Collection<Address> address, ShoppingCart shoppingCart) {
 		super(firstName, lastName, address);
 		this.shoppingCart = shoppingCart;
 	}

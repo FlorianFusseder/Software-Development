@@ -11,6 +11,7 @@ import Entitys.BankDetail;
 import Entitys.Customer;
 import Entitys.Person;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -27,11 +28,11 @@ public interface IPersonService extends Serializable {
 
 	public void persist(Person person);
 
-	public Customer createCustomer(String firstName, String lastName, List<Address> address, BankDetail bankDetail);
+	public Customer createCustomer(String firstName, String lastName, Collection<Address> address, BankDetail bankDetail);
 
 	public Customer createCustomer(String firstName, String lastName, Address address, BankDetail bankDetail);
 
-	public Author createAuthor(String firstName, String lastName, List<Address> address);
+	public Author createAuthor(String firstName, String lastName, Collection<Address> address);
 
 	public Author createAuthor(String firstName, String lastName, Address address);
 

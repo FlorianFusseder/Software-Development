@@ -8,10 +8,11 @@ package Models;
 import Entitys.Address;
 import Services.Interfaces.IPersonService;
 import Services.Interfaces.IShoppingService;
+import java.util.Collection;
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
@@ -32,9 +33,6 @@ public class ChooseDeliveryAdressModel {
 	private ShoppingSiteModel siteModel;
 	
 	@Inject
-	private IPersonService personService;
-	
-	@Inject
 	private IShoppingService shoppingService;
 
 	@Setter
@@ -51,7 +49,7 @@ public class ChooseDeliveryAdressModel {
 
 	@Setter
 	@Getter
-	private List<Address> addresses;
+	private Collection<Address> addresses;
 
 	@Getter
 	@Setter

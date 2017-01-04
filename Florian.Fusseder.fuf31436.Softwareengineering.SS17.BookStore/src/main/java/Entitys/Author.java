@@ -6,6 +6,7 @@
 package Entitys;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -39,16 +40,16 @@ public class Author extends Person {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) //todo eager weischt?
 	private List<AbstractBook> books = new ArrayList<>();
 
-	public Author(String firstName, String lastName, List<Address> address) {
+	public Author(String firstName, String lastName, Collection<Address> address) {
 		super(firstName, lastName, address);
 	}
 	
-	public Author(String firstName, String lastName, List<Address> address, AbstractBook book) {
+	public Author(String firstName, String lastName, Collection<Address> address, AbstractBook book) {
 		super(firstName, lastName, address);
 		this.books.add(book);
 	}
 
-	public Author(String firstName, String lastName, List<Address> address, List<AbstractBook> books) {
+	public Author(String firstName, String lastName, Collection<Address> address, List<AbstractBook> books) {
 		super(firstName, lastName, address);
 		books.addAll(books);
 	}
