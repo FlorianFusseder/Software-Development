@@ -56,7 +56,7 @@ abstract public class AbstractBook extends RandomIdEntity {
 
 	@NonNull
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date release;
+	private Date bookReleaseDate;
 
 	@ManyToMany(mappedBy = "books", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Author> author = new ArrayList<>();
