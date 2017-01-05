@@ -26,6 +26,8 @@ public interface IPersonService extends Serializable {
 	public List<Person> findAll();
 
 	public void persist(Person person);
+	
+	public Person merge (Person person);
 
 	public Customer createCustomer(String firstName, String lastName, List<Address> address, BankDetail bankDetail);
 

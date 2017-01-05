@@ -110,4 +110,10 @@ public class PersonService implements IPersonService {
 		return person;
 	}
 
+	@Override
+	public Person merge(Person person) {
+		return this.personRepo.merge(person);
+	}
+
+
 }

@@ -14,7 +14,6 @@ import Entitys.PaperBook;
 import Services.Interfaces.IBookService;
 import Services.Interfaces.ICartItemService;
 import Services.Interfaces.IShoppingService;
-import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
 import java.util.Date;
 import java.util.Iterator;
@@ -23,6 +22,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import Config.*;
 import Annotations.PaymentAnnotation;
+import Services.Interfaces.IPersonService;
 import Services.Interfaces.ITransactionService;
 import java.util.stream.Collectors;
 
@@ -40,7 +40,7 @@ public class ShoppingService implements IShoppingService {
 	private ICartItemService cartItemManager;
 
 	@Inject
-	private PersonRepo personManager;
+	private IPersonService personManager;
 
 	@Inject
 	private IBookService bookManager;
@@ -90,11 +90,13 @@ public class ShoppingService implements IShoppingService {
 	 * @param amount
 	 * @return
 	 */
-	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
+	//@Transactional(Transactional.TxType.NOT_SUPPORTED)
+	@Transactional
 	public Customer alterShoppingCart(Customer customer, AbstractBook abstractBook, int amount) {
 
 		customer = (Customer) this.personManager.merge(customer);
+		abstractBook = this.bookManager.merge(abstractBook);
 		ShoppingCart shoppingCart = customer.getShoppingCart();
 		Iterator<CartItem> items = shoppingCart.getShoppingList().iterator();
 
@@ -112,8 +114,9 @@ public class ShoppingService implements IShoppingService {
 		}
 
 		if (amount > 0) {
+
 			CartItem cartItem = new CartItem(abstractBook, amount);
-			//cartItemManager.persist(cartItem);
+			this.cartItemManager.persist(cartItem);
 			//System.out.println(cartItem);
 			//shoppingCart.addToShoppingList(cartItem);
 		}
