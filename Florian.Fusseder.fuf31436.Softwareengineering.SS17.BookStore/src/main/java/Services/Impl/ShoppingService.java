@@ -117,8 +117,8 @@ public class ShoppingService implements IShoppingService {
 
 			CartItem cartItem = new CartItem(abstractBook, amount);
 			this.cartItemManager.persist(cartItem);
-			//System.out.println(cartItem);
-			//shoppingCart.addToShoppingList(cartItem);
+			System.out.println(cartItem);
+			shoppingCart.addToShoppingList(cartItem);
 		}
 		return customer;
 

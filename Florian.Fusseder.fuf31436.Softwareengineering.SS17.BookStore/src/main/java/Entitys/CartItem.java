@@ -7,6 +7,7 @@ package Entitys;
 
 import Technicals.Id.GeneratedIdEntity;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class CartItem extends GeneratedIdEntity {
 
+	@ManyToOne
 	private AbstractBook abstractBook;
 
 	private int count;
