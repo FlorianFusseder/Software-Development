@@ -24,6 +24,9 @@ import Config.*;
 import Annotations.PaymentAnnotation;
 import Services.Interfaces.IPersonService;
 import Services.Interfaces.ITransactionService;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.stream.Collectors;
 
 /**
@@ -143,7 +146,7 @@ public class ShoppingService implements IShoppingService {
 		}
 
 		shoppingCart.setCheckoutDate(new Date());
-		this.paymentManager.transfer(shoppingCart.getTotal().longValue(),
+		this.paymentManager.transfer(shoppingCart.getTotal().multiply(BigDecimal.valueOf(100)).longValue(),
 				customer.getBankDetail().getIban(), Config.getMyIban(),
 				"Paying " + shoppingCart.getShoppingList().stream()
 						.map(b -> b.getCount() + "x " + b.getAbstractBook().getName())
