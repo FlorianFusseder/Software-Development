@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Services.Impl;
+package Services.Payment;
 
 import javax.enterprise.context.RequestScoped;
 import Services.Interfaces.ITransactionService;
@@ -13,9 +13,9 @@ import Services.Interfaces.ITransactionService;
  * @author Florian Fußeder
  */
 @RequestScoped
-public class TestPaymentService2 implements ITransactionService {
+public class TestPaymentService implements ITransactionService {
 
-	public TestPaymentService2() {
+	public TestPaymentService() {
 	}
 
 	@Override
@@ -23,5 +23,4 @@ public class TestPaymentService2 implements ITransactionService {
 		System.out.println(amountInCent + " ct, from " + fromIBAN + ", to " + toIBAN + "\n" + description);
 		return true;
 	}
-
 }

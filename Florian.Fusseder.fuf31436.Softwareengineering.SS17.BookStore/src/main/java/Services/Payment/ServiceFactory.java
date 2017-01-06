@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Services.Interfaces;
+package Services.Payment;
 
-import Services.Impl.TestPaymentService1;
-import Services.Impl.TestPaymentService2;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import Annotations.PaymentAnnotation;
 import Config.Config;
+import Services.Interfaces.ITransactionService;
 
 /**
  *
@@ -32,11 +31,11 @@ public class ServiceFactory implements Serializable {
 		switch (Config.getOption()) {
 			case Productiv:
 				if (point.equals("ShoppingService")) {
-					return new TestPaymentService2(); //todo jürgens bank einfügen
+					return new PaymentReichelBank();
 				}
 			case Test:
 				if (point.equals("ShoppingService")) {
-					return new TestPaymentService1();
+					return new TestPaymentService();
 				}
 			default:
 				throw new AssertionError();
