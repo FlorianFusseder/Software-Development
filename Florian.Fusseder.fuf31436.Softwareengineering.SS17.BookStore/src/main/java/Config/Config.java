@@ -16,8 +16,8 @@ public class Config {
 		Productiv
 	}
 	
-	private static RunOption option = RunOption.Test;
-	private static String myIban = "1234567489";
+	private static RunOption option = RunOption.Productiv;
+	private static String myIban = "DE10772300000000000004";
 
 	public static RunOption getOption() {
 		return option;

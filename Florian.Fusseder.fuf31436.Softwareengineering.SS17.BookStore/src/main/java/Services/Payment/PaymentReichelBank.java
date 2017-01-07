@@ -15,31 +15,32 @@ import Services.Interfaces.ITransactionService;
 @RequestScoped
 public class PaymentReichelBank implements ITransactionService {
 
-	private de.jreichl.service.web.TransactionWSService service;
-	private de.jreichl.service.web.TransactionWS port;
+
 
 	public PaymentReichelBank() {
-		try {
-			//todo: bleibt der port gleich -> so lassen oder ändert er sich -> in den transfer!	
-			this.service = new de.jreichl.service.web.TransactionWSService();
-			this.port = service.getTransactionWSPort();
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
-		}
 
 	}
 
 	@Override
 	public boolean transfer(long amountInCent, String fromIBAN, String toIBAN, String description) {
-
-		try {
-			boolean result = this.port.transfer(amountInCent, fromIBAN, toIBAN, description);
-			System.out.println("Result = " + result);
+		
+		try { // Call Web Service Operation
+			de.jreichl.service.web.TransactionWSService service = new de.jreichl.service.web.TransactionWSService();
+			de.jreichl.service.web.TransactionWS port = service.getTransactionWSPort();
+			boolean result = port.transfer(amountInCent, fromIBAN, toIBAN, description);
+			System.out.println("Result = "+result);
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			
+			System.out.println("\n\n");
+			System.out.println("________________________________________________________________");
 			ex.printStackTrace();
+			
+			System.out.println("des war nix -> " + ex.getMessage());
+			
+			System.out.println("________________________________________________________________");
 		}
+
+
 		return false;
 	}
 

@@ -2,4 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/bank-master/TransactionWSService?wsdl" uri="wsdl/localhost_8080/bank-master/TransactionWSService.wsdl"/>
     <system systemId="http://localhost:8080/bank-master/TransactionWSService?xsd=1" uri="wsdl/localhost_8080/bank-master/TransactionWSService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8081/bank-master/TransactionWSService?wsdl" uri="wsdl/localhost_8081/bank-master/TransactionWSService.wsdl"/>
+    <system systemId="http://localhost:8081/bank-master/TransactionWSService?xsd=1" uri="wsdl/localhost_8081/bank-master/TransactionWSService.xsd_1.xsd"/>
 </catalog>
