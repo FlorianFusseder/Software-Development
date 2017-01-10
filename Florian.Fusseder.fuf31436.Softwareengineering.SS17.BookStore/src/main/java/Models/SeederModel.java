@@ -55,8 +55,8 @@ public class SeederModel implements Serializable {
 		Address addr1 = new Address("Brunhuberstrasse", "Regensburg", 93053);
 		Address addr2 = new Address("Langenkatzbach", "Gangekofen", 84140);
 
-		BankDetail bank1 = new BankDetail("111111", "11111");
-		BankDetail bank2 = new BankDetail("222222", "22222");
+		BankDetail bank1 = new BankDetail("BYLADEM1DQE", "DE55772300000000000067"); //00000000067
+		BankDetail bank2 = new BankDetail("BYLADEM1DQE", "DE71772300000000000070");	//00000000070
 
 		AbstractBook pb1 = new PaperBook("Harry Potter und der Stein der Weisen",
 				"fff-fff-fff1", new Date(), BigDecimal.valueOf(49.99), 15);
@@ -74,7 +74,7 @@ public class SeederModel implements Serializable {
 				new Date(), BigDecimal.valueOf(65.00), "12-34-45-3233");
 
 		personService.createCustomer("Florian", "Fusseder", addr1, bank1);
-		personService.createCustomer("DJ", "Obst", addr2, bank2);
+		personService.createCustomer("Sonja", "Rietig", addr2, bank2);
 		Author a = personService.createAuthor("Joanne K.", "Rowling", addr1);
 		Author b = personService.createAuthor("George R. R.", "Martin", addr2);
 

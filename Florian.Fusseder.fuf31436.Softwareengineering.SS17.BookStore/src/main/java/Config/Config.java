@@ -17,7 +17,7 @@ public class Config {
 	}
 	
 	private static RunOption option = RunOption.Productiv;
-	private static String myIban = "DE10772300000000000004";
+	private static String myIban = "DE39772300000000000064 "; //00000000064
 
 	public static RunOption getOption() {
 		return option;
