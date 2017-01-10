@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head id="j_idt2">
+        <title>Bank Reichl</title>
+        <meta charset="UTF-8" />
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
+        <link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.css" />
+        <link rel="stylesheet" media="screen" href="css/main.css" /></head><body>
+        <section class="ui container">
+            <br />
+            <h3>Bitte wählen Sie die gewünschte Anwendung aus:</h3>
+            <br />
+<form id="j_idt6" name="j_idt6" method="post" action="/BankReichl/faces/views/index.xhtml;jsessionid=V2Od0g1iw_JumHcVO8IOs9qnpn3-awo0O4F7ysze.im-lamport" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt6" value="j_idt6" />
+               
+                <a href="faces/views/external/home.xhtml" class="massive ui fluid button">
+                    Kundenanwendung (extern)
+                </a>          
+                <br />
+                <a href="faces/views/internal/customer.xhtml" class="massive ui fluid button">
+                    Managementanwendung für Angestellte (intern)
+                </a><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="2932092049933504246:7577526888822668258" autocomplete="off" />
+</form>
+        </section></body>
+</html>
