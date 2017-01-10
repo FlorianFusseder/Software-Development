@@ -38,8 +38,8 @@ public abstract class Person extends GeneratedIdEntity {
 	@ElementCollection
 	private List<Address> address;
 
-	public void addAddress(Address adress) {
-		this.address.add(adress);
+	public void addAddress(Address address) {
+		this.address.add(address);
 	}
 
 	public List<Address> getAddress() {
