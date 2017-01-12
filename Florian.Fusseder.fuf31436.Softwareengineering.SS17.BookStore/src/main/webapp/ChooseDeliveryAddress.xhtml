@@ -9,45 +9,49 @@
         <title>Choose Delivery Address</title>
     </h:head>
     <h:body>
-        <b:container style="width: 800px; padding-top: 10px;">
-            <h:form>
-                <b:row>
-                    <h2> Choose Delivery Address </h2>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Choose a Address:"/>
-                    <br/>
-                    <b:selectOneMenu value="#{chooseDeliveryAdressModel.choosenAddress}" >
-                        <f:selectItems value="#{chooseDeliveryAdressModel.addresses}" 
-                                       var="address" 
-                                       itemLabel="#{address.street}, #{address.postNumber}, #{address.city}"/>
-                    </b:selectOneMenu>
-                </b:row>
-                
-                <b:row>
-                    <h3> OR </h3>
-                </b:row>
-                
-                <b:row>
-                    <h:outputText value="Street:"/>
-                    <b:inputText value="#{chooseDeliveryAdressModel.newStreet}"/>
-                </b:row>
-                <b:row>
-                    <h:outputText value="City:"/>
-                    <b:inputText value="#{chooseDeliveryAdressModel.newCity}"/>
-                </b:row>
-                <b:row>
-                    <h:outputText value="Postnumber:"/>
-                    <b:inputText value="#{chooseDeliveryAdressModel.newPostNumber}"/>
-                </b:row>
+        <ui:composition template="./WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <b:container style="width: 800px; padding-top: 10px;">
+                    <h:form>
+                        <b:row>
+                            <h2> Choose Delivery Address </h2>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Choose a Address:"/>
+                            <br/>
+                            <b:selectOneMenu value="#{chooseDeliveryAdressModel.choosenAddress}" >
+                                <f:selectItems value="#{chooseDeliveryAdressModel.addresses}" 
+                                               var="address" 
+                                               itemLabel="#{address.street}, #{address.postNumber}, #{address.city}"/>
+                            </b:selectOneMenu>
+                        </b:row>
 
-                <b:row>
-                    <b:commandButton look="success" 
-                                     value="Buy" 
-                                     action="#{chooseDeliveryAdressModel.setDeliveryAddress()}"/>
-                </b:row>
-            </h:form>
-        </b:container>
+                        <b:row>
+                            <h3> OR </h3>
+                        </b:row>
+
+                        <b:row>
+                            <h:outputText value="Street:"/>
+                            <b:inputText value="#{chooseDeliveryAdressModel.newStreet}"/>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="City:"/>
+                            <b:inputText value="#{chooseDeliveryAdressModel.newCity}"/>
+                        </b:row>
+                        <b:row>
+                            <h:outputText value="Postnumber:"/>
+                            <b:inputText value="#{chooseDeliveryAdressModel.newPostNumber}"/>
+                        </b:row>
+
+                        <b:row>
+                            <b:commandButton look="success" 
+                                             value="Buy" 
+                                             action="#{chooseDeliveryAdressModel.setDeliveryAddress()}"/>
+                        </b:row>
+                    </h:form>
+                </b:container>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

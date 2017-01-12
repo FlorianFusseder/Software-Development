@@ -114,7 +114,6 @@ public class ShoppingService implements IShoppingService {
 		if (amount > 0) {
 			CartItem cartItem = new CartItem(abstractBook, amount);
 			this.cartItemRepo.persist(cartItem);
-			System.out.println(cartItem);
 			shoppingCart.addToShoppingList(cartItem);
 		}
 		return customer;
