@@ -5,18 +5,15 @@
  */
 package Services.Payment;
 
-import javax.enterprise.context.RequestScoped;
 import Services.Interfaces.ITransactionService;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Florian Fußeder
  */
-@RequestScoped
+@NoArgsConstructor
 public class TestPaymentService implements ITransactionService {
-
-	public TestPaymentService() {
-	}
 
 	@Override
 	public boolean transfer(long amountInCent, String fromIBAN, String toIBAN, String description) {

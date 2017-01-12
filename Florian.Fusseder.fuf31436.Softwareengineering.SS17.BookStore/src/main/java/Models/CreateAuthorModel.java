@@ -5,7 +5,9 @@
  */
 package Models;
 
+import Annotations.AuthorAnnotation;
 import Entitys.Address;
+import Entitys.Author;
 import Services.Interfaces.IPersonService;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -28,7 +30,8 @@ import lombok.Setter;
 public class CreateAuthorModel implements Serializable {
 
 	@Inject
-	private IPersonService personService;
+	@AuthorAnnotation
+	private IPersonService<Author> authorService;
 
 	private String firstName;
 
@@ -39,24 +42,26 @@ public class CreateAuthorModel implements Serializable {
 	private String city;
 
 	private String postNumber;
-	
+
 	private String log;
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		log = "";
 	}
 
 	public void createAuthor() {
-		this.personService.createAuthor(this.firstName, this.lastName,
-				new Address(this.street, this.city, Integer.valueOf(this.postNumber)));
-		
-		log += "New Author: " +  this.firstName
+
+		Address address = new Address(this.street, this.city, Integer.valueOf(this.postNumber));
+		Author author = new Author(this.firstName, this.lastName, address);
+		this.authorService.create(author);
+
+		log += "New Author: " + this.firstName
 				+ " " + this.lastName
 				+ " " + this.street
 				+ " " + this.city
 				+ " " + this.postNumber + "\n";
-		
+
 		this.firstName = "";
 		this.lastName = "";
 		this.street = "";

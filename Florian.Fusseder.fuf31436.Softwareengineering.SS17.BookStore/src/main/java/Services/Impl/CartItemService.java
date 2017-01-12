@@ -13,12 +13,14 @@ import Technicals.Repo.PersonRepo;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Florian
  */
 @RequestScoped
+@NoArgsConstructor
 public class CartItemService implements ICartItemService{
 
 	@Inject
@@ -35,17 +37,5 @@ public class CartItemService implements ICartItemService{
 		customer.getShoppingCart().removeFromShoppingList(cartItem);
 		this.cartItemManager.remove(cartItem);
 	}
-
-	@Transactional(Transactional.TxType.REQUIRED)
-	@Override
-	public void persist(CartItem cartItem) {
-		this.cartItemManager.persist(cartItem);
-	}
-
-	@Transactional(Transactional.TxType.REQUIRED)
-	@Override
-	public CartItem merge(CartItem cartItem) {
-		return this.cartItemManager.merge(cartItem);
-	}
-
+	
 }

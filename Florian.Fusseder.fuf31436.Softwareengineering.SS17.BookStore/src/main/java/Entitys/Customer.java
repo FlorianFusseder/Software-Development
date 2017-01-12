@@ -7,6 +7,7 @@ package Entitys;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.Entity;
@@ -38,13 +39,10 @@ public class Customer extends Person {
 	@OneToMany
 	private List<ShoppingCart> payedShoppingCarts = new ArrayList();
 
-	public Customer(String firstName, String lastName, List<Address> adress) {
-		super(firstName, lastName, adress);
-	}
-
-	public Customer(String firstName, String lastName, List<Address> address, ShoppingCart shoppingCart) {
-		super(firstName, lastName, address);
-		this.shoppingCart = shoppingCart;
+	public Customer(String firstName, String lastName, Address address, BankDetail bankDetail) {
+		super(firstName, lastName, Arrays.asList(address));
+		this.shoppingCart = new ShoppingCart(address);
+		this.bankDetail = bankDetail;
 	}
 
 	public List<ShoppingCart> getShoppingCarts() {
@@ -58,6 +56,6 @@ public class Customer extends Person {
 	public BigDecimal getTotalPayment() {
 		return this.payedShoppingCarts.stream()
 				.map(e -> e.getTotal())
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+				.reduce(BigDecimal.ZERO, BigDecimal::add); 
 	}
 }

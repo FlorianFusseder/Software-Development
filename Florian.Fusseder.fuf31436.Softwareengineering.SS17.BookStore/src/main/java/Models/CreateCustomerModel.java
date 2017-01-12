@@ -5,8 +5,10 @@
  */
 package Models;
 
+import Annotations.CustomerAnnotation;
 import Entitys.Address;
 import Entitys.BankDetail;
+import Entitys.Customer;
 import Services.Interfaces.IPersonService;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
@@ -28,7 +30,8 @@ import lombok.Setter;
 public class CreateCustomerModel implements Serializable {
 
 	@Inject
-	private IPersonService personService;
+	@CustomerAnnotation
+	private IPersonService<Customer> customerService;
 
 	private String firstName;
 
@@ -39,16 +42,18 @@ public class CreateCustomerModel implements Serializable {
 	private String city;
 
 	private String postNumber;
-	
+
 	private String iban;
-	
+
 	private String bic;
 
-	public String  createCustomer() {
-		this.personService.createCustomer(this.firstName, this.lastName,
-				new Address(this.street, this.city, Integer.valueOf(this.postNumber)),
-				new BankDetail(this.bic, this.iban));
-		
+	public String createCustomer() {
+
+		Address address = new Address(this.street, this.city, Integer.valueOf(this.postNumber));
+		BankDetail bankDetail = new BankDetail(this.bic, this.iban);
+		Customer customer = new Customer(this.firstName, this.lastName, address, bankDetail);
+		this.customerService.create(customer);
+
 		return "login";
 	}
 

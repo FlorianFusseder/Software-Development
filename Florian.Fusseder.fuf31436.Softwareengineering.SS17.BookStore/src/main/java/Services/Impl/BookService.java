@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -26,6 +27,7 @@ import javax.jws.WebService;
  */
 @RequestScoped
 @WebService
+@NoArgsConstructor
 public class BookService implements IBookService {
 
 	@Inject
@@ -33,16 +35,6 @@ public class BookService implements IBookService {
 
 	@Inject
 	private PersonRepo personManager;
-
-	public BookService() {
-	}
-
-	@WebMethod(exclude = true)
-	@Transactional(Transactional.TxType.REQUIRED)
-	@Override
-	public AbstractBook merge(AbstractBook abstractBook) {
-		return bookManager.merge(abstractBook);
-	}
 
 	@WebMethod(exclude = true)
 	@Transactional(Transactional.TxType.REQUIRED)
@@ -75,12 +67,6 @@ public class BookService implements IBookService {
 	@Override
 	public AbstractBook find(AbstractBook book) {
 		return bookManager.findById(book.getID());
-	}
-
-	@WebMethod(exclude = true)
-	@Override
-	public AbstractBook find(String Id) {
-		return bookManager.findById(Id);
 	}
 
 	@Override

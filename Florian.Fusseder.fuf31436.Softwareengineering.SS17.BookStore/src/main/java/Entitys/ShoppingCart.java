@@ -44,6 +44,10 @@ public class ShoppingCart extends GeneratedIdEntity {
 	
 	private Address DeliveryAddress;
 
+	public ShoppingCart(Address DeliveryAddress) {
+		this.DeliveryAddress = DeliveryAddress;
+	}
+
 	@PreUpdate
 	@PrePersist
 	private void Load() {

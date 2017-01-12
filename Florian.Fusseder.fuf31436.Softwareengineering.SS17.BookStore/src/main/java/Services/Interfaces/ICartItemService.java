@@ -16,9 +16,5 @@ import java.io.Serializable;
 public interface ICartItemService extends Serializable{
 	
 	public void remove(Customer customer, CartItem cartItem);
-
-	public void persist(CartItem cartItem);
-
-	public CartItem merge(CartItem cartItem);
 	
 }

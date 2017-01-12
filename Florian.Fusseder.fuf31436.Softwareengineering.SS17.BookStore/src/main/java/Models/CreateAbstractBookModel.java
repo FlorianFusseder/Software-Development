@@ -5,6 +5,7 @@
  */
 package Models;
 
+import Annotations.AuthorAnnotation;
 import Entitys.AbstractBook;
 import Entitys.Author;
 import Entitys.ElectronicBook;
@@ -16,7 +17,6 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.convert.PersonConverter;
@@ -41,7 +41,8 @@ public class CreateAbstractBookModel implements Serializable {
 	private IBookService bookService;
 
 	@Inject
-	private IPersonService personService;
+	@AuthorAnnotation
+	private IPersonService<Author> authorService;
 
 	@Inject
 	private PersonConverter converter;
@@ -68,28 +69,20 @@ public class CreateAbstractBookModel implements Serializable {
 	public void init() {
 		this.log = "";
 		this.copies = null;
-		this.authorList = personService.findAll()
-				.stream()
-				.filter(p -> p.getClass() == Author.class)
-				.map(p -> (Author) p)
-				.collect(Collectors.toList());
+		this.authorList = authorService.findAll();
+
 	}
-	
-	public Boolean getIsEbook(){
+
+	public Boolean getIsEbook() {
 		return (!(this.copies == null));
 	}
-	
-	public Boolean getIsPaperbook(){
+
+	public Boolean getIsPaperbook() {
 		return !this.license.isEmpty();
 	}
 
 	public List<Author> getAuthorList() {
-		this.authorList = personService.findAll()
-				.stream()
-				.filter(p -> p.getClass() == Author.class)
-				.map(p -> (Author) p)
-				.collect(Collectors.toList());
-		
+		this.authorList = authorService.findAll();
 		return this.authorList;
 	}
 

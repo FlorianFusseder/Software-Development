@@ -16,15 +16,12 @@ import java.util.List;
  */
 public interface IBookService extends Serializable {
 
-	public AbstractBook merge(AbstractBook abstractBook);
 
 	public Author persistNewBook(AbstractBook b, Author author);
 
 	public List<Author> persistNewBook(AbstractBook b, List<Author> author);
 
 	public AbstractBook find(AbstractBook book);
-
-	public AbstractBook find(String Id);
 
 	public List<AbstractBook> findAll();
 

@@ -122,16 +122,16 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8081/bank-master/TransactionWSService.wsdl</wsdlFile>
+                                <wsdlFile>im-lamport_8080/BankReichl/TransactionWS.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName></packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
-                            <wsdlLocation>http://localhost:8081/bank-master/TransactionWSService?wsdl</wsdlLocation>
-                            <staleFile>${project.build.directory}/jaxws/stale/TransactionWSService.stale</staleFile>
+                            <wsdlLocation>http://im-lamport:8080/BankReichl/TransactionWS?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/TransactionWS.stale</staleFile>
                         </configuration>
-                        <id>wsimport-generate-TransactionWSService</id>
+                        <id>wsimport-generate-TransactionWS</id>
                         <phase>generate-sources</phase>
                     </execution>
                 </executions>

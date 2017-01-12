@@ -11,7 +11,6 @@ import Entitys.Customer;
 import Entitys.ShoppingCart;
 import Entitys.CartItem;
 import Entitys.PaperBook;
-import Services.Interfaces.IBookService;
 import Services.Interfaces.ICartItemService;
 import Services.Interfaces.IShoppingService;
 import Technicals.Repo.ShoppingCartRepo;
@@ -21,17 +20,21 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import Config.*;
-import Annotations.PaymentAnnotation;
-import Services.Interfaces.IPersonService;
 import Services.Interfaces.ITransactionService;
+import Technicals.Repo.AbstractBookRepo;
+import Technicals.Repo.CartItemRepo;
+import Technicals.Repo.PersonRepo;
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
+import lombok.NoArgsConstructor;
 
 /**
+ * 
  *
  * @author Florian
  */
 @RequestScoped
+@NoArgsConstructor
 public class ShoppingService implements IShoppingService {
 
 	@Inject
@@ -39,25 +42,19 @@ public class ShoppingService implements IShoppingService {
 
 	@Inject
 	private ICartItemService cartItemManager;
+	
+	@Inject
+	private CartItemRepo cartItemRepo;
 
 	@Inject
-	private IPersonService personManager;
+	private PersonRepo personManager;
 
 	@Inject
-	private IBookService bookManager;
+	private AbstractBookRepo bookManager;
 
 	@Inject
-	@PaymentAnnotation
 	private ITransactionService paymentManager;
 
-	public ShoppingService() {
-	}
-
-	@Transactional(Transactional.TxType.REQUIRED)
-	@Override
-	public void persist(ShoppingCart shoppingCart) {
-		this.shoppingCartManager.persist(shoppingCart);
-	}
 
 	/**
 	 * Wraps AbstractBook from the Id into a CartItem and adds it to the
@@ -70,7 +67,7 @@ public class ShoppingService implements IShoppingService {
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public void addBookToCart(Customer customer, String Id) {
-		this.alterShoppingCart(customer, (AbstractBook) this.bookManager.find(Id), 1);
+		this.alterShoppingCart(customer, (AbstractBook) this.bookManager.findById(Id), 1);
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
@@ -115,9 +112,8 @@ public class ShoppingService implements IShoppingService {
 		}
 
 		if (amount > 0) {
-
 			CartItem cartItem = new CartItem(abstractBook, amount);
-			this.cartItemManager.persist(cartItem);
+			this.cartItemRepo.persist(cartItem);
 			System.out.println(cartItem);
 			shoppingCart.addToShoppingList(cartItem);
 		}
@@ -132,12 +128,15 @@ public class ShoppingService implements IShoppingService {
 		customer = (Customer) personManager.merge(customer);
 		ShoppingCart shoppingCart = customer.getShoppingCart();
 
-		this.paymentManager.transfer(shoppingCart.getTotal().multiply(BigDecimal.valueOf(100)).longValue(),
+		Boolean success = this.paymentManager.transfer(shoppingCart.getTotal().multiply(BigDecimal.valueOf(100)).longValue(),
 				customer.getBankDetail().getIban(), Config.getMyIban(),
 				"Paying " + shoppingCart.getShoppingList().stream()
 						.map(b -> b.getCount() + "x " + b.getAbstractBook().getName())
 						.collect(Collectors.joining(", "))
 				+ " from \"The One BookStore\"");
+		
+		if(!success)
+			return customer;
 
 		for (CartItem cartItem : shoppingCart.getShoppingList()) {
 

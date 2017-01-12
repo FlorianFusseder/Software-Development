@@ -5,10 +5,13 @@
  */
 package Models;
 
+import Annotations.AuthorAnnotation;
+import Annotations.CustomerAnnotation;
 import Entitys.AbstractBook;
 import Entitys.Address;
 import Entitys.Author;
 import Entitys.BankDetail;
+import Entitys.Customer;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
 import Services.Interfaces.IBookService;
@@ -39,7 +42,12 @@ import lombok.NoArgsConstructor;
 public class SeederModel implements Serializable {
 
 	@Inject
-	private IPersonService personService;
+	@CustomerAnnotation
+	private IPersonService<Customer> customerService;
+	
+	@Inject
+	@AuthorAnnotation
+	private IPersonService<Author> authorService;
 
 	@Inject
 	private IBookService bookService;
@@ -55,8 +63,8 @@ public class SeederModel implements Serializable {
 		Address addr1 = new Address("Brunhuberstrasse", "Regensburg", 93053);
 		Address addr2 = new Address("Langenkatzbach", "Gangekofen", 84140);
 
-		BankDetail bank1 = new BankDetail("BYLADEM1DQE", "DE55772300000000000067"); //00000000067
-		BankDetail bank2 = new BankDetail("BYLADEM1DQE", "DE71772300000000000070");	//00000000070
+		BankDetail bank1 = new BankDetail("BYLADEM1DQE", "DE55772300000000000067");
+		BankDetail bank2 = new BankDetail("BYLADEM1DQE", "DE71772300000000000070");
 
 		AbstractBook pb1 = new PaperBook("Harry Potter und der Stein der Weisen",
 				"fff-fff-fff1", new Date(), BigDecimal.valueOf(49.99), 15);
@@ -73,24 +81,29 @@ public class SeederModel implements Serializable {
 		AbstractBook eb2 = new ElectronicBook("A Song of Ice and Fire A Clash of Kings", "ee-eee-334",
 				new Date(), BigDecimal.valueOf(65.00), "12-34-45-3233");
 
-		personService.createCustomer("Florian", "Fusseder", addr1, bank1);
-		personService.createCustomer("Sonja", "Rietig", addr2, bank2);
-		Author a = personService.createAuthor("Joanne K.", "Rowling", addr1);
-		Author b = personService.createAuthor("George R. R.", "Martin", addr2);
+		Customer c1 = new Customer("Florian", "Fusseder", addr1, bank1);
+		Customer c2 = new Customer("Sonja", "Rietig", addr2, bank2);
+		customerService.create(c1);
+		customerService.create(c2);
+		
+		Author a1 = new Author("Joanne K.", "Rowling", addr1);
+		Author a2 = new Author("George R. R.", "Martin", addr2);
+		authorService.create(a1);
+		authorService.create(a2);
 
-		a = bookService.persistNewBook(pb1, a);
-		a = bookService.persistNewBook(pb2, a);
+		a1 = bookService.persistNewBook(pb1, a1);
+		a1 = bookService.persistNewBook(pb2, a1);
 
-		b = bookService.persistNewBook(eb1, b);
-		b = bookService.persistNewBook(eb2, b);
+		a2 = bookService.persistNewBook(eb1, a2);
+		a2 = bookService.persistNewBook(eb2, a2);
 
 		List<Author> alist = new ArrayList<Author>();
-		alist.add(a);
-		alist.add(b);
+		alist.add(a1);
+		alist.add(a2);
 
 		alist = bookService.persistNewBook(fb, alist);
-		a = alist.get(0);
-		b = alist.get(1);
+		a1 = alist.get(0);
+		a2 = alist.get(1);
 
 	}
 

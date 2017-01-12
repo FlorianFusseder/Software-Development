@@ -5,8 +5,8 @@
  */
 package javax.faces.convert;
 
-import Services.Interfaces.IPersonService;
 import Technicals.Id.SingleIdEntity;
+import Technicals.Repo.PersonRepo;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,10 +22,10 @@ import lombok.NoArgsConstructor;
 public class PersonConverter extends AbstractConverter{
 	
 	@Inject
-	private IPersonService personService;
+	private PersonRepo personService;
 
 	@Override
 	public SingleIdEntity find(Long l) {
-		return this.personService.find(l);
+		return this.personService.findById(l);
 	}
 }

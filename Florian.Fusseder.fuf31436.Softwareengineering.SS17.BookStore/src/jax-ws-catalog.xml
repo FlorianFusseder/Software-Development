@@ -4,4 +4,5 @@
     <system systemId="http://localhost:8080/bank-master/TransactionWSService?xsd=1" uri="wsdl/localhost_8080/bank-master/TransactionWSService.xsd_1.xsd"/>
     <system systemId="http://localhost:8081/bank-master/TransactionWSService?wsdl" uri="wsdl/localhost_8081/bank-master/TransactionWSService.wsdl"/>
     <system systemId="http://localhost:8081/bank-master/TransactionWSService?xsd=1" uri="wsdl/localhost_8081/bank-master/TransactionWSService.xsd_1.xsd"/>
+    <system systemId="http://im-lamport:8080/BankReichl/TransactionWS?wsdl" uri="wsdl/im-lamport_8080/BankReichl/TransactionWS.wsdl"/>
 </catalog>

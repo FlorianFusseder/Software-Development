@@ -5,6 +5,7 @@
  */
 package Models;
 
+import Annotations.CustomerAnnotation;
 import Entitys.AbstractBook;
 import Entitys.Author;
 import Entitys.CartItem;
@@ -41,7 +42,8 @@ public class ShoppingSiteModel implements Serializable {
 	private IShoppingService shoppingService;
 
 	@Inject
-	private IPersonService personService;
+	@CustomerAnnotation
+	private IPersonService<Customer> customerService;
 
 	@Getter
 	@Setter
@@ -92,8 +94,8 @@ public class ShoppingSiteModel implements Serializable {
 	public ShoppingCart getShoppingCart() {
 		return this.customer.getShoppingCart();
 	}
-	
-	public String acceptShoppingCart(){
+
+	public String acceptShoppingCart() {
 		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
 			this.searchTerm = "";
 			this.init();
@@ -113,12 +115,7 @@ public class ShoppingSiteModel implements Serializable {
 	}
 
 	public List<Customer> getCustomerList() {
-		List<Customer> customerList = personService.findAll()
-				.stream()
-				.filter(p -> p.getClass() == Customer.class)
-				.map(p -> (Customer) p)
-				.collect(Collectors.toList());
-
+		List<Customer> customerList = this.customerService.findAll();
 		return customerList;
 	}
 
@@ -139,8 +136,8 @@ public class ShoppingSiteModel implements Serializable {
 	public String authorsAsString(List<Author> authorList) {
 		return authorList.stream().map(a -> (a.getFirstName() + " " + a.getLastName())).collect(Collectors.joining(", "));
 	}
-	
-	public String logout(){
+
+	public String logout() {
 		this.searchTerm = "";
 		this.customer = null;
 		return "login";

@@ -5,43 +5,35 @@
  */
 package Services.Payment;
 
-import javax.enterprise.context.RequestScoped;
 import Services.Interfaces.ITransactionService;
 import javax.transaction.Transactional;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Florian Fußeder
  */
-@RequestScoped
+@NoArgsConstructor
 public class PaymentReichelBank implements ITransactionService {
-
-	public PaymentReichelBank() {
-
-	}
 
 	@Override
 	@Transactional
 	public boolean transfer(long amountInCent, String fromIBAN, String toIBAN, String description) {
 
+		boolean result;
+		
 		try { // Call Web Service Operation
 			de.jreichl.service.web.TransactionWSService service = new de.jreichl.service.web.TransactionWSService();
-			de.jreichl.service.web.TransactionWS port = service.getTransactionWSPort();
-			boolean result = port.transfer(amountInCent, fromIBAN, toIBAN, description);
-			System.out.println("Result = " + result);
+			de.jreichl.service.web.ITransactionWS port = service.getTransactionWSPort();
+			// TODO initialize WS operation arguments here
 
+			result = port.transfer(amountInCent, fromIBAN, toIBAN, description);
 		} catch (Exception ex) {
-
-			System.out.println("\n\n");
-			System.out.println("________________________________________________________________");
-			ex.printStackTrace();
-
-			System.out.println("des war nix -> " + ex.getMessage());
-
-			System.out.println("________________________________________________________________");
+			System.out.println(ex.getMessage());
+			result = false;
 		}
-
-		return false;
+		return result;
 	}
-
 }
+
+

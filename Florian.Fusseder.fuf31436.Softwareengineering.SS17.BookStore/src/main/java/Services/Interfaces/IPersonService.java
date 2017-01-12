@@ -6,9 +6,6 @@
 package Services.Interfaces;
 
 import Entitys.Address;
-import Entitys.Author;
-import Entitys.BankDetail;
-import Entitys.Customer;
 import Entitys.Person;
 import java.io.Serializable;
 import java.util.List;
@@ -17,26 +14,12 @@ import java.util.List;
  *
  * @author Florian
  */
-public interface IPersonService extends Serializable {
+public interface IPersonService<T extends Person> extends Serializable {
 
-	public Person find(Person person);
+	public List<T> findAll();
 
-	public Person find(Long Id);
-
-	public List<Person> findAll();
-
-	public void persist(Person person);
+	public T addAddress(T person, Address address);
 	
-	public Person merge (Person person);
-
-	public Customer createCustomer(String firstName, String lastName, List<Address> address, BankDetail bankDetail);
-
-	public Customer createCustomer(String firstName, String lastName, Address address, BankDetail bankDetail);
-
-	public Author createAuthor(String firstName, String lastName, List<Address> address);
-
-	public Author createAuthor(String firstName, String lastName, Address address);
-
-	public Person addAddress(Person person, Address address);
+	public T create(T person);
 
 }

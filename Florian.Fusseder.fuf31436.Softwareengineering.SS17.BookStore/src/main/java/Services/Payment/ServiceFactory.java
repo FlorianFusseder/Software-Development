@@ -9,22 +9,19 @@ import java.io.Serializable;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
-import Annotations.PaymentAnnotation;
 import Config.Config;
 import Services.Interfaces.ITransactionService;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Florian Fußeder
  */
 @Dependent
+@NoArgsConstructor
 public class ServiceFactory implements Serializable {
 
-	public ServiceFactory() {
-	}
-
 	@Produces
-	@PaymentAnnotation
 	public ITransactionService createPaymentService(InjectionPoint p) {
 		String point = p.getMember().getDeclaringClass().getSimpleName();
 
