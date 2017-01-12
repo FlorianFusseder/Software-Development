@@ -7,6 +7,7 @@ package Services.Payment;
 
 import javax.enterprise.context.RequestScoped;
 import Services.Interfaces.ITransactionService;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -20,6 +21,7 @@ public class PaymentReichelBank implements ITransactionService {
 	}
 
 	@Override
+	@Transactional
 	public boolean transfer(long amountInCent, String fromIBAN, String toIBAN, String description) {
 
 		try { // Call Web Service Operation

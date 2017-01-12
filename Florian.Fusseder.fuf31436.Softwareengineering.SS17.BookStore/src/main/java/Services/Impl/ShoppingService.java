@@ -132,6 +132,13 @@ public class ShoppingService implements IShoppingService {
 		customer = (Customer) personManager.merge(customer);
 		ShoppingCart shoppingCart = customer.getShoppingCart();
 
+		this.paymentManager.transfer(shoppingCart.getTotal().multiply(BigDecimal.valueOf(100)).longValue(),
+				customer.getBankDetail().getIban(), Config.getMyIban(),
+				"Paying " + shoppingCart.getShoppingList().stream()
+						.map(b -> b.getCount() + "x " + b.getAbstractBook().getName())
+						.collect(Collectors.joining(", "))
+				+ " from \"The One BookStore\"");
+
 		for (CartItem cartItem : shoppingCart.getShoppingList()) {
 
 			AbstractBook abstractbook = cartItem.getAbstractBook();
@@ -144,12 +151,6 @@ public class ShoppingService implements IShoppingService {
 		}
 
 		shoppingCart.setCheckoutDate(new Date());
-		this.paymentManager.transfer(shoppingCart.getTotal().multiply(BigDecimal.valueOf(100)).longValue(),
-				customer.getBankDetail().getIban(), Config.getMyIban(),
-				"Paying " + shoppingCart.getShoppingList().stream()
-						.map(b -> b.getCount() + "x " + b.getAbstractBook().getName())
-						.collect(Collectors.joining(", "))
-				+ " from \"The One BookStore\"");
 		customer.addPayedShoppingCart(shoppingCart);
 		ShoppingCart newCart = new ShoppingCart();
 		shoppingCartManager.persist(newCart);
