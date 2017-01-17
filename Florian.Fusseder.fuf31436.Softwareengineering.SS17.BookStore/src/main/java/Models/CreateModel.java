@@ -107,8 +107,6 @@ public class CreateModel implements Serializable {
 		}
 		this.bookService.persistNewBook(book, Arrays.asList(choosenAuthors));
 
-		this.log += "New Book " + this.name + " " + this.price + " created\n";
-
 		this.name = "";
 		this.isbn = "";
 		this.release = null;
@@ -122,14 +120,14 @@ public class CreateModel implements Serializable {
 		logger.info("createAuthor CreateAuthorModel");
 		Address address = new Address(this.street, this.city, Integer.valueOf(this.postNumber));
 		Author author = new Author(this.firstName, this.lastName, address);
-		this.authorService.create(author);
+		author = this.authorService.create(author);
 
+		this.authorList.add(author);
+		
 		this.firstName = "";
 		this.lastName = "";
 		this.street = "";
 		this.city = "";
 		this.postNumber = "";
-
-		this.authorList = authorService.findAll();
 	}
 }
