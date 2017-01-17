@@ -36,6 +36,10 @@ public class CreateAuthorModel implements Serializable {
 	
 	@Inject
 	private Logger logger;
+	
+	
+	@Inject
+	private CreateAbstractBookModel bookModel;
 
 	private String firstName;
 
@@ -72,6 +76,8 @@ public class CreateAuthorModel implements Serializable {
 		this.street = "";
 		this.city = "";
 		this.postNumber = "";
+		
+		this.bookModel.setAuthorList(this.authorService.findAll());
 	}
 
 }

@@ -87,8 +87,6 @@ public class CreateAbstractBookModel implements Serializable {
 	}
 
 	public List<Author> getAuthorList() {
-		logger.info("getAuthorList CreateAbstractBookModel");
-		this.authorList = authorService.findAll();
 		return this.authorList;
 	}
 
@@ -112,5 +110,4 @@ public class CreateAbstractBookModel implements Serializable {
 		this.license = "";
 		this.choosenAuthors = null;
 	}
-
 }
