@@ -29,7 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateCustomerModel implements Serializable {
-	
+
 	@Inject
 	private Logger logger;
 

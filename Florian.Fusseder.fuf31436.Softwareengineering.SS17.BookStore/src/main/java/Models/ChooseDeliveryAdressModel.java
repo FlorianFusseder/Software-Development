@@ -25,13 +25,13 @@ import lombok.Setter;
 @RequestScoped
 @NoArgsConstructor
 public class ChooseDeliveryAdressModel {
-	
+
 	@Inject
 	private Logger logger;
 
 	@Inject
 	private CustomerModel siteModel;
-	
+
 	@Inject
 	private IShoppingService shoppingService;
 
@@ -67,7 +67,7 @@ public class ChooseDeliveryAdressModel {
 	public String setDeliveryAddress() {
 
 		logger.info("setDeliveryAddress ChooseDeliveryAddressModel");
-		
+
 		Address a = null;
 		if (!this.newCity.isEmpty() && !this.newStreet.isEmpty() && this.newPostNumber != null) {
 			a = new Address(this.newStreet, this.newCity, this.newPostNumber);
@@ -75,7 +75,7 @@ public class ChooseDeliveryAdressModel {
 			a = choosenAddress;
 		}
 
-		this.siteModel.setCustomer(this.shoppingService.setDeliveryAddress(siteModel.getCustomer(), a)); 
+		this.siteModel.setCustomer(this.shoppingService.setDeliveryAddress(siteModel.getCustomer(), a));
 		if (!siteModel.getCustomer().getAddress().contains(a)) {
 			siteModel.getCustomer().addAddress(a);
 		}

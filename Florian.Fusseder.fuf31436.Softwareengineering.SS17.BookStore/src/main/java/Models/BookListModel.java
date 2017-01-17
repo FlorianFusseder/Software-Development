@@ -48,7 +48,7 @@ public class BookListModel {
 	}
 
 	public void searchFor() {
-		logger.info("searchFor ShoppingSiteModel");
+		logger.info("searchFor BookListModel");
 		if (!this.searchTerm.isEmpty()) {
 			this.bookList = this.bookService.searchBooks(this.searchTerm);
 		} else {

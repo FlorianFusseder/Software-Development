@@ -11,14 +11,12 @@ import Entitys.Author;
 import Entitys.CartItem;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
-import Services.Interfaces.IBookService;
 import Services.Interfaces.IPersonService;
 import Services.Interfaces.IShoppingService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.convert.PersonConverter;
 import javax.inject.Inject;
@@ -56,7 +54,6 @@ public class CustomerModel implements Serializable {
 	private PersonConverter converter;
 
 	public List<ShoppingCart> getAllBoughtCarts() {
-
 		return this.customer.getPayedShoppingCarts().stream()
 				.sorted((ShoppingCart t, ShoppingCart t1) -> {
 					if (t.getCheckoutDate().after(t1.getCheckoutDate())) {

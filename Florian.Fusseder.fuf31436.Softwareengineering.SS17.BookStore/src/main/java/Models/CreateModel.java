@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.convert.PersonConverter;
 import javax.inject.Inject;
@@ -130,7 +129,7 @@ public class CreateModel implements Serializable {
 		this.street = "";
 		this.city = "";
 		this.postNumber = "";
-		
+
 		this.authorList = authorService.findAll();
 	}
 }

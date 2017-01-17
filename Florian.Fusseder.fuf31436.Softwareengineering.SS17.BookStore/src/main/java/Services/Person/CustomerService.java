@@ -7,7 +7,6 @@ package Services.Person;
 
 import Annotations.CustomerAnnotation;
 import Entitys.Customer;
-import Entitys.ShoppingCart;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
