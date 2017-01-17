@@ -30,7 +30,7 @@ public class ChooseDeliveryAdressModel {
 	private Logger logger;
 
 	@Inject
-	private ShoppingSiteModel siteModel;
+	private CustomerModel siteModel;
 	
 	@Inject
 	private IShoppingService shoppingService;

@@ -14,8 +14,8 @@
                 <b:container style="width: 800px; padding-top: 10px;">
                     <h:form>
                         <h2> Confirm your Order</h2>
-                        <h3> Buy for #{shoppingSiteModel.shoppingCart.total}€ </h3>
-                        <b:dataTable value="#{shoppingSiteModel.shoppingCart.shoppingList}" 
+                        <h3> Buy for #{customerModel.shoppingCart.total}€ </h3>
+                        <b:dataTable value="#{customerModel.shoppingCart.shoppingList}" 
                                      var="book" customOptions="false">
                             <h:column>
                                 <f:facet name="header"> Amount </f:facet>
@@ -33,13 +33,13 @@
 
 
                         <h3> Will be sent to:  <br/>
-                            #{shoppingSiteModel.shoppingCart.deliveryAddress.street}, 
-                            #{shoppingSiteModel.shoppingCart.deliveryAddress.postNumber},
-                            #{shoppingSiteModel.shoppingCart.deliveryAddress.city}
+                            #{customerModel.shoppingCart.deliveryAddress.street}, 
+                            #{customerModel.shoppingCart.deliveryAddress.postNumber},
+                            #{customerModel.shoppingCart.deliveryAddress.city}
                         </h3>
                         
                         <b:commandButton value="Buy This Order" 
-                                         look="success" action="#{shoppingSiteModel.buyShoppingCart()}"/>
+                                         look="success" action="#{customerModel.buyShoppingCart()}"/>
                     </h:form>
                 </b:container>
             </ui:define>

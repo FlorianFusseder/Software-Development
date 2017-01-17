@@ -34,13 +34,10 @@ import lombok.Setter;
 @Named
 @SessionScoped
 @NoArgsConstructor
-public class ShoppingSiteModel implements Serializable {
+public class CustomerModel implements Serializable {
 
 	@Inject
 	private Logger logger;
-
-	@Inject
-	private IBookService bookService;
 
 	@Inject
 	private IShoppingService shoppingService;
@@ -53,37 +50,13 @@ public class ShoppingSiteModel implements Serializable {
 	@Setter
 	private Customer customer;
 
-	@Setter
-	@Getter
-	private List<AbstractBook> bookList;
-
 	@Inject
 	@Getter
 	@Setter
 	private PersonConverter converter;
 
-	@Getter
-	@Setter
-	private String searchTerm;
-
-	@PostConstruct
-	public void init() {
-		logger.info("init ShoppingSiteModel");
-		searchTerm = "";
-		this.bookList = this.bookService.findAll();
-	}
-
-	public void searchFor() {
-		logger.info("searchFor ShoppingSiteModel");
-		if (!this.searchTerm.isEmpty()) {
-			this.bookList = this.bookService.searchBooks(this.searchTerm);
-		} else{
-			this.bookList = this.bookService.findAll();
-		}
-	}
-
 	public List<ShoppingCart> getAllBoughtCarts() {
-		
+
 		return this.customer.getPayedShoppingCarts().stream()
 				.sorted((ShoppingCart t, ShoppingCart t1) -> {
 					if (t.getCheckoutDate().after(t1.getCheckoutDate())) {
@@ -103,8 +76,6 @@ public class ShoppingSiteModel implements Serializable {
 	public String acceptShoppingCart() {
 		logger.info("accpetShoppingCart ShoppingSiteModel");
 		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
-			this.searchTerm = "";
-			this.init();
 			return "chooseDelivery";
 		}
 		return "";
@@ -114,8 +85,6 @@ public class ShoppingSiteModel implements Serializable {
 		logger.info("buyShoppingCart ShoppingSiteModel");
 		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
 			this.customer = this.shoppingService.buyCurrentCart(this.customer);
-			this.searchTerm = "";
-			this.init();
 			return "shop";
 		}
 		return "";
@@ -130,7 +99,6 @@ public class ShoppingSiteModel implements Serializable {
 	public void addBookToCart(AbstractBook book) {
 		logger.info("addBookToCart ShoppingSiteModel");
 		this.customer = this.shoppingService.alterShoppingCart(this.customer, book, 1);
-		this.bookList = this.bookService.findAll();
 	}
 
 	public void removeBook(CartItem cartItem) {
@@ -151,7 +119,6 @@ public class ShoppingSiteModel implements Serializable {
 
 	public String logout() {
 		logger.info("Logout ShoppingSiteModel");
-		this.searchTerm = "";
 		this.customer = null;
 		return "login";
 	}

@@ -15,32 +15,31 @@
                 </b:row>
                 <b:row>
                     <h:outputText value="Firstname:"/>
-                    <b:inputText value="#{createAuthorModel.firstName}" required="true"/>
+                    <b:inputText value="#{createModel.firstName}" required="true"/>
                 </b:row>
                 <b:row>
                     <h:outputText value="Lastname:"/>
-                    <b:inputText value="#{createAuthorModel.lastName}" required="true"/>
+                    <b:inputText value="#{createModel.lastName}" required="true"/>
                 </b:row>
                 <b:row>
                     <h:outputText value="Street:"/>
-                    <b:inputText value="#{createAuthorModel.street}" required="true"/>
+                    <b:inputText value="#{createModel.street}" required="true"/>
                 </b:row>
                 <b:row>
                     <h:outputText value="City:"/>
-                    <b:inputText value="#{createAuthorModel.city}" required="true"/>
+                    <b:inputText value="#{createModel.city}" required="true"/>
                 </b:row>
                 <b:row>
                     <h:outputText value="Postnumber:"/>
-                    <b:inputText value="#{createAuthorModel.postNumber}" required="true" type="number"/>
+                    <b:inputText value="#{createModel.postNumber}" required="true" type="number"/>
                 </b:row>
                 <b:row>
                     <b:commandButton 
                         value="Create"
                         icon="plus-sign" 
                         look="success"
-                        action="#{createAuthorModel.createAuthor()}"/>
+                        action="#{createModel.createAuthor()}"/>
                 </b:row>
-                #{createAuthorModel.log}
             </h:form>
         </b:container>
     </h:body>

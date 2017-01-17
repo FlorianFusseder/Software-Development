@@ -17,29 +17,29 @@
                 <b:row>
                     <h:outputText value="Authors:"/>
                     <br/>
-                    <h:selectManyListbox value="#{createAbstractBookModel.choosenAuthors}" size="5"
+                    <h:selectManyListbox value="#{createModel.choosenAuthors}" size="5"
                                          required="true">
-                        <f:converter binding="#{createAbstractBookModel.converter}"/>
-                        <f:selectItems value="#{createAbstractBookModel.authorList}" var="author" itemLabel="#{author.lastName}, #{author.firstName}"/>
+                        <f:converter binding="#{createModel.converter}"/>
+                        <f:selectItems value="#{createModel.authorList}" var="author" itemLabel="#{author.lastName}, #{author.firstName}"/>
                     </h:selectManyListbox>
                 </b:row>
                 <b:row>
                     <h:outputText value="Title:"/>
-                    <b:inputText value="#{createAbstractBookModel.name}" required="true"/>
+                    <b:inputText value="#{createModel.name}" required="true"/>
                 </b:row>
                 <b:row>
                     <h:outputText value="Isbn:"/>
-                    <b:inputText value="#{createAbstractBookModel.isbn}" required="true"/>
+                    <b:inputText value="#{createModel.isbn}" required="true"/>
                 </b:row>
 
                 <b:row>
                     <h:outputText value="ReleaseDate:"/>
-                    <b:datepicker value="#{createAbstractBookModel.release}" mode="inline"/>
+                    <b:datepicker value="#{createModel.release}" mode="inline"/>
                 </b:row>
 
                 <b:row style="margin-top: 10px">
                     <h:outputText value="Price: "/>
-                    <b:inputText value="#{createAbstractBookModel.price}" required="true" 
+                    <b:inputText value="#{createModel.price}" required="true" 
                                  converterMessage="Price has to be in digits and xxx.xx format">
                         <f:facet name="postpend">
                             <h:outputText value="€" />
@@ -49,14 +49,14 @@
 
                 <b:row>
                     <h:outputText  value="Copies:"/>
-                    <b:inputText id="license" value="#{createAbstractBookModel.copies}" type="number">
+                    <b:inputText id="license" value="#{createModel.copies}" type="number">
                         <f:ajax render="copies"/>
                     </b:inputText>
                 </b:row>
 
                 <b:row>
                     <h:outputText value="License"/>
-                    <b:inputText id="copies" value="#{createAbstractBookModel.license}">
+                    <b:inputText id="copies" value="#{createModel.license}">
                         <f:ajax render="license"/>
                     </b:inputText>
                 </b:row>
@@ -66,10 +66,9 @@
                         value="Create"
                         icon="plus-sign" 
                         look="success"
-                        action="#{createAbstractBookModel.createBook()}"
+                        action="#{createModel.createBook()}"
                         />
                 </b:row>
-                #{createAbstractBookModel.log}
             </h:form>
         </b:container>
     </h:body>

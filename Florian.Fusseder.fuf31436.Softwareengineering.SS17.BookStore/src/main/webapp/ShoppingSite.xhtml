@@ -12,23 +12,23 @@
         <ui:composition template="./WEB-INF/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <b:commandButton value="ShoppingCart : #{shoppingSiteModel.booksInCart()}" 
+                    <b:commandButton value="ShoppingCart : #{customerModel.booksInCart()}" 
                                      icon="shopping-cart" size="lg" 
                                      action="pay" look="primary"/>
                     <b:commandButton value="Log Out" icon="glyphicons-log-out" size="lg"
-                                     look="danger" action="#{shoppingSiteModel.logout()}"/>
+                                     look="danger" action="#{customerModel.logout()}"/>
                 </h:form>
                 <b:container style="width: 800px; padding-top: 10px;">
                     <h:form>
                         <b:row>
                             <h2>Books</h2>
-                            <b:inputText value="#{shoppingSiteModel.searchTerm}" 
+                            <b:inputText value="#{bookListModel.searchTerm}" 
                                          placeholder="Search for Books..." 
                                          tiny-screen="one-third" 
                                          small-screen="two-thirds" >
                                 <f:facet name="append">
                                     <b:commandButton value="Search" icon="search" 
-                                                     look="primary" action="#{shoppingSiteModel.searchFor()}"/>
+                                                     look="primary" action="#{bookListModel.searchFor()}"/>
                                 </f:facet>
                             </b:inputText>
                         </b:row>
@@ -38,7 +38,7 @@
                     <h2>Books Available</h2>
                     <h:form>
 
-                        <b:dataTable value="#{shoppingSiteModel.bookList}" var="book"
+                        <b:dataTable value="#{bookListModel.bookList}" var="book"
                                      styleClass="order-table" searching="false">
 
                             <h:column>
@@ -60,7 +60,7 @@
 
                             <h:column>
                                 <f:facet name="header"> Authors </f:facet>
-                                    #{shoppingSiteModel.authorsAsString(book.author)}
+                                    #{customerModel.authorsAsString(book.author)}
                             </h:column>
 
                             <h:column>
@@ -79,7 +79,7 @@
                                                  icon="cart-plus" 
                                                  look="success" 
                                                  size="xs" 
-                                                 action="#{shoppingSiteModel.addBookToCart(book)}"/>
+                                                 action="#{customerModel.addBookToCart(book)}"/>
                             </h:column>
                         </b:dataTable>
                     </h:form>

@@ -7,6 +7,7 @@ package Models;
 
 import Annotations.AuthorAnnotation;
 import Entitys.AbstractBook;
+import Entitys.Address;
 import Entitys.Author;
 import Entitys.ElectronicBook;
 import Entitys.PaperBook;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.convert.PersonConverter;
 import javax.inject.Inject;
@@ -36,11 +38,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateAbstractBookModel implements Serializable {
+public class CreateModel implements Serializable {
 
 	@Inject
 	private Logger logger;
-	
+
 	@Inject
 	private IBookService bookService;
 
@@ -51,6 +53,7 @@ public class CreateAbstractBookModel implements Serializable {
 	@Inject
 	private PersonConverter converter;
 
+	//Book Attributes
 	private String name;
 
 	private String isbn;
@@ -69,13 +72,22 @@ public class CreateAbstractBookModel implements Serializable {
 
 	private String log;
 
+	//Author Attributes
+	private String firstName;
+
+	private String lastName;
+
+	private String street;
+
+	private String city;
+
+	private String postNumber;
+
 	@PostConstruct
 	public void init() {
-		logger.info("init CreateAbstractBookModel");
-		this.log = "";
+		logger.info("init CreateModel");
 		this.copies = null;
 		this.authorList = authorService.findAll();
-
 	}
 
 	public Boolean getIsEbook() {
@@ -84,10 +96,6 @@ public class CreateAbstractBookModel implements Serializable {
 
 	public Boolean getIsPaperbook() {
 		return !this.license.isEmpty();
-	}
-
-	public List<Author> getAuthorList() {
-		return this.authorList;
 	}
 
 	public void createBook() {
@@ -109,5 +117,20 @@ public class CreateAbstractBookModel implements Serializable {
 		this.copies = null;
 		this.license = "";
 		this.choosenAuthors = null;
+	}
+
+	public void createAuthor() {
+		logger.info("createAuthor CreateAuthorModel");
+		Address address = new Address(this.street, this.city, Integer.valueOf(this.postNumber));
+		Author author = new Author(this.firstName, this.lastName, address);
+		this.authorService.create(author);
+
+		this.firstName = "";
+		this.lastName = "";
+		this.street = "";
+		this.city = "";
+		this.postNumber = "";
+		
+		this.authorList = authorService.findAll();
 	}
 }
