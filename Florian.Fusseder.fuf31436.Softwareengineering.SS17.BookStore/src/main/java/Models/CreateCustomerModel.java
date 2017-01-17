@@ -11,6 +11,7 @@ import Entitys.BankDetail;
 import Entitys.Customer;
 import Services.Interfaces.IPersonService;
 import java.io.Serializable;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,6 +29,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateCustomerModel implements Serializable {
+	
+	@Inject
+	private Logger logger;
 
 	@Inject
 	@CustomerAnnotation
@@ -49,6 +53,7 @@ public class CreateCustomerModel implements Serializable {
 
 	public String createCustomer() {
 
+		logger.info("createCustomer CreateCustomerModel");
 		Address address = new Address(this.street, this.city, Integer.valueOf(this.postNumber));
 		BankDetail bankDetail = new BankDetail(this.bic, this.iban);
 		Customer customer = new Customer(this.firstName, this.lastName, address, bankDetail);

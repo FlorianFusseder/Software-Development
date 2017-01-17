@@ -8,6 +8,7 @@ package Models;
 import Entitys.Address;
 import Services.Interfaces.IShoppingService;
 import java.util.Collection;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -24,6 +25,9 @@ import lombok.Setter;
 @RequestScoped
 @NoArgsConstructor
 public class ChooseDeliveryAdressModel {
+	
+	@Inject
+	private Logger logger;
 
 	@Inject
 	private ShoppingSiteModel siteModel;
@@ -53,6 +57,7 @@ public class ChooseDeliveryAdressModel {
 
 	@PostConstruct
 	private void init() {
+		logger.info("init ChooseDeliveryAddressModel");
 		this.newCity = "";
 		this.newStreet = "";
 		this.newPostNumber = null;
@@ -61,8 +66,9 @@ public class ChooseDeliveryAdressModel {
 
 	public String setDeliveryAddress() {
 
+		logger.info("setDeliveryAddress ChooseDeliveryAddressModel");
+		
 		Address a = null;
-
 		if (!this.newCity.isEmpty() && !this.newStreet.isEmpty() && this.newPostNumber != null) {
 			a = new Address(this.newStreet, this.newCity, this.newPostNumber);
 		} else {

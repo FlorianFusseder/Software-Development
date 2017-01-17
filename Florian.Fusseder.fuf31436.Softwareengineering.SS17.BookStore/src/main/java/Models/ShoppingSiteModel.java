@@ -16,6 +16,7 @@ import Services.Interfaces.IPersonService;
 import Services.Interfaces.IShoppingService;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -36,6 +37,9 @@ import lombok.Setter;
 public class ShoppingSiteModel implements Serializable {
 
 	@Inject
+	private Logger logger;
+
+	@Inject
 	private IBookService bookService;
 
 	@Inject
@@ -50,6 +54,7 @@ public class ShoppingSiteModel implements Serializable {
 	private Customer customer;
 
 	@Setter
+	@Getter
 	private List<AbstractBook> bookList;
 
 	@Inject
@@ -63,22 +68,22 @@ public class ShoppingSiteModel implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		logger.info("init ShoppingSiteModel");
 		searchTerm = "";
 		this.bookList = this.bookService.findAll();
 	}
 
-	public List<AbstractBook> getBookList() {
-		if (searchTerm.isEmpty()) {
+	public void searchFor() {
+		logger.info("searchFor ShoppingSiteModel");
+		if (!this.searchTerm.isEmpty()) {
+			this.bookList = this.bookService.searchBooks(this.searchTerm);
+		} else{
 			this.bookList = this.bookService.findAll();
 		}
-		return bookList;
-	}
-
-	public void searchFor() {
-		this.bookList = this.bookService.searchBooks(this.searchTerm);
 	}
 
 	public List<ShoppingCart> getAllBoughtCarts() {
+		
 		return this.customer.getPayedShoppingCarts().stream()
 				.sorted((ShoppingCart t, ShoppingCart t1) -> {
 					if (t.getCheckoutDate().after(t1.getCheckoutDate())) {
@@ -96,6 +101,7 @@ public class ShoppingSiteModel implements Serializable {
 	}
 
 	public String acceptShoppingCart() {
+		logger.info("accpetShoppingCart ShoppingSiteModel");
 		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
 			this.searchTerm = "";
 			this.init();
@@ -105,6 +111,7 @@ public class ShoppingSiteModel implements Serializable {
 	}
 
 	public String buyShoppingCart() {
+		logger.info("buyShoppingCart ShoppingSiteModel");
 		if (!this.customer.getShoppingCart().getShoppingList().isEmpty()) {
 			this.customer = this.shoppingService.buyCurrentCart(this.customer);
 			this.searchTerm = "";
@@ -115,19 +122,24 @@ public class ShoppingSiteModel implements Serializable {
 	}
 
 	public List<Customer> getCustomerList() {
+		logger.info("getCustomerList ShoppingSiteModel");
 		List<Customer> customerList = this.customerService.findAll();
 		return customerList;
 	}
 
 	public void addBookToCart(AbstractBook book) {
+		logger.info("addBookToCart ShoppingSiteModel");
 		this.customer = this.shoppingService.alterShoppingCart(this.customer, book, 1);
+		this.bookList = this.bookService.findAll();
 	}
 
 	public void removeBook(CartItem cartItem) {
+		logger.info("removeBook ShoppingSiteModel");
 		this.customer = shoppingService.alterShoppingCart(this.customer, cartItem.getAbstractBook(), -1);
 	}
 
 	public int booksInCart() {
+		logger.info("BooksInCart ShoppingSiteModel");
 		return this.customer.getShoppingCart().getShoppingList().stream()
 				.mapToInt(ci -> ci.getCount())
 				.sum();
@@ -138,6 +150,7 @@ public class ShoppingSiteModel implements Serializable {
 	}
 
 	public String logout() {
+		logger.info("Logout ShoppingSiteModel");
 		this.searchTerm = "";
 		this.customer = null;
 		return "login";

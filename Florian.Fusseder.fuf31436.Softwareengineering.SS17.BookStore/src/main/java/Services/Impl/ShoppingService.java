@@ -25,11 +25,12 @@ import Technicals.Repo.AbstractBookRepo;
 import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
 import java.math.BigDecimal;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
 
 /**
- * 
+ *
  *
  * @author Florian
  */
@@ -38,11 +39,14 @@ import lombok.NoArgsConstructor;
 public class ShoppingService implements IShoppingService {
 
 	@Inject
+	private Logger logger;
+
+	@Inject
 	private ShoppingCartRepo shoppingCartManager;
 
 	@Inject
 	private ICartItemService cartItemManager;
-	
+
 	@Inject
 	private CartItemRepo cartItemRepo;
 
@@ -55,7 +59,6 @@ public class ShoppingService implements IShoppingService {
 	@Inject
 	private ITransactionService paymentManager;
 
-
 	/**
 	 * Wraps AbstractBook from the Id into a CartItem and adds it to the
 	 * ShoppingCart. If already existent the counter of the CartItem will be
@@ -67,12 +70,14 @@ public class ShoppingService implements IShoppingService {
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public void addBookToCart(Customer customer, String Id) {
+		logger.info("Add Book To Cart: Id " + Id);
 		this.alterShoppingCart(customer, (AbstractBook) this.bookManager.findById(Id), 1);
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public Customer setDeliveryAddress(Customer customer, Address address) {
+		logger.info("Set delivery address to cart");
 		customer = (Customer) personManager.merge(customer);
 		customer.getShoppingCart().setDeliveryAddress(address);
 		return customer;
@@ -89,7 +94,6 @@ public class ShoppingService implements IShoppingService {
 	 * @return
 	 */
 	@Override
-	//@Transactional(Transactional.TxType.NOT_SUPPORTED)
 	@Transactional
 	public Customer alterShoppingCart(Customer customer, AbstractBook abstractBook, int amount) {
 
@@ -123,6 +127,8 @@ public class ShoppingService implements IShoppingService {
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public Customer buyCurrentCart(Customer customer) {
+		
+		logger.info("Buy current cart");
 
 		customer = (Customer) personManager.merge(customer);
 		ShoppingCart shoppingCart = customer.getShoppingCart();
@@ -133,9 +139,10 @@ public class ShoppingService implements IShoppingService {
 						.map(b -> b.getCount() + "x " + b.getAbstractBook().getName())
 						.collect(Collectors.joining(", "))
 				+ " from \"The One BookStore\"");
-		
-		if(!success)
+
+		if (!success) {
 			return customer;
+		}
 
 		for (CartItem cartItem : shoppingCart.getShoppingList()) {
 

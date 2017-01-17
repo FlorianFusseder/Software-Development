@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.jws.WebMethod;
@@ -29,6 +30,9 @@ import lombok.NoArgsConstructor;
 @WebService
 @NoArgsConstructor
 public class BookService implements IBookService {
+	
+	@Inject
+	private Logger logger;
 
 	@Inject
 	private AbstractBookRepo bookManager;
@@ -40,6 +44,7 @@ public class BookService implements IBookService {
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public Author persistNewBook(AbstractBook b, Author author) {
+		logger.info("persistNewBook BookService");
 		List<Author> newList = new ArrayList<>();
 		newList.add(author);
 		persistNewBook(b, newList);
@@ -66,16 +71,20 @@ public class BookService implements IBookService {
 	@WebMethod(exclude = true)
 	@Override
 	public AbstractBook find(AbstractBook book) {
+		logger.info("Search for book " + book.getName());
 		return bookManager.findById(book.getID());
 	}
 
 	@Override
 	public List<AbstractBook> findAll() {
+		logger.info("Search for all Books");
 		return bookManager.findAll();
 	}
 
 	@Override
 	public List<AbstractBook> searchBooks(String term) {
+		
+		logger.info("Search for books with following terms: " + term);
 
 		String s = "SELECT B FROM AbstractBook AS B WHERE ";
 		s = s.concat(Arrays.asList(term.split(" ")).stream()

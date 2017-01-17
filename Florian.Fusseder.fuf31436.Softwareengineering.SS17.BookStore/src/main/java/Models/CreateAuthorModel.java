@@ -10,6 +10,7 @@ import Entitys.Address;
 import Entitys.Author;
 import Services.Interfaces.IPersonService;
 import java.io.Serializable;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -32,6 +33,9 @@ public class CreateAuthorModel implements Serializable {
 	@Inject
 	@AuthorAnnotation
 	private IPersonService<Author> authorService;
+	
+	@Inject
+	private Logger logger;
 
 	private String firstName;
 
@@ -47,11 +51,12 @@ public class CreateAuthorModel implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		logger.info("init CreateAuthorModel");
 		log = "";
 	}
 
 	public void createAuthor() {
-
+		logger.info("createAuthor CreateAuthorModel");
 		Address address = new Address(this.street, this.city, Integer.valueOf(this.postNumber));
 		Author author = new Author(this.firstName, this.lastName, address);
 		this.authorService.create(author);

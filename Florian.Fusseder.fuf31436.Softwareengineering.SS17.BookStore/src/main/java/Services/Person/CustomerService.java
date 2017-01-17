@@ -9,8 +9,10 @@ import Annotations.CustomerAnnotation;
 import Entitys.Customer;
 import Entitys.ShoppingCart;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -23,8 +25,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerService extends PersonService<Customer> {
 
+	@Inject
+	private Logger logger;
+
 	@Override
 	public List<Customer> findAll() {
+
+		logger.info("Find all customers");
 		return this.getPersonRepo().findAll().stream()
 				.filter(p -> p.getClass() == Customer.class)
 				.map(p -> (Customer) p)
@@ -34,6 +41,7 @@ public class CustomerService extends PersonService<Customer> {
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public Customer create(Customer person) {
+		logger.info("Create a customer");
 
 		this.getBankRepo().persist(person.getBankDetail());
 

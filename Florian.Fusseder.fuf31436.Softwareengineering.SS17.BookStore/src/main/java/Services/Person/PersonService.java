@@ -11,6 +11,7 @@ import Services.Interfaces.IPersonService;
 import Technicals.Repo.BankRepo;
 import Technicals.Repo.PersonRepo;
 import Technicals.Repo.ShoppingCartRepo;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import lombok.AccessLevel;
@@ -25,6 +26,9 @@ import lombok.NoArgsConstructor;
 public abstract class PersonService<T extends Person> implements IPersonService<T> {
 
 	@Inject
+	private Logger logger;
+
+	@Inject
 	@Getter(AccessLevel.PROTECTED)
 	private PersonRepo personRepo;
 
@@ -35,11 +39,12 @@ public abstract class PersonService<T extends Person> implements IPersonService<
 	@Inject
 	@Getter(AccessLevel.PROTECTED)
 	private ShoppingCartRepo shoppingCartRepo;
-	
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public T addAddress(T person, Address address) {
+
+		logger.info("Add a address to a person");
 		person = (T) this.personRepo.merge(person);
 		person.addAddress(address);
 		return person;

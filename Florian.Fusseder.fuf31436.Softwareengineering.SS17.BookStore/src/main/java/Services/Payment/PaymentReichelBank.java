@@ -6,6 +6,8 @@
 package Services.Payment;
 
 import Services.Interfaces.ITransactionService;
+import java.util.logging.Logger;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -16,12 +18,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaymentReichelBank implements ITransactionService {
 
+	@Inject
+	private Logger logger;
+
 	@Override
 	@Transactional
 	public boolean transfer(long amountInCent, String fromIBAN, String toIBAN, String description) {
 
 		boolean result;
-		
+
 		try { // Call Web Service Operation
 			de.jreichl.service.web.TransactionWSService service = new de.jreichl.service.web.TransactionWSService();
 			de.jreichl.service.web.ITransactionWS port = service.getTransactionWSPort();
@@ -29,11 +34,10 @@ public class PaymentReichelBank implements ITransactionService {
 
 			result = port.transfer(amountInCent, fromIBAN, toIBAN, description);
 		} catch (Exception ex) {
+
 			System.out.println(ex.getMessage());
 			result = false;
 		}
 		return result;
 	}
 }
-
-

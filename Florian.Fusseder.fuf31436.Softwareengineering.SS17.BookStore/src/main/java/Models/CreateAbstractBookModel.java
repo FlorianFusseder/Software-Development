@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.convert.PersonConverter;
@@ -37,6 +38,9 @@ import lombok.Setter;
 @Setter
 public class CreateAbstractBookModel implements Serializable {
 
+	@Inject
+	private Logger logger;
+	
 	@Inject
 	private IBookService bookService;
 
@@ -67,6 +71,7 @@ public class CreateAbstractBookModel implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		logger.info("init CreateAbstractBookModel");
 		this.log = "";
 		this.copies = null;
 		this.authorList = authorService.findAll();
@@ -82,11 +87,13 @@ public class CreateAbstractBookModel implements Serializable {
 	}
 
 	public List<Author> getAuthorList() {
+		logger.info("getAuthorList CreateAbstractBookModel");
 		this.authorList = authorService.findAll();
 		return this.authorList;
 	}
 
 	public void createBook() {
+		logger.info("createBook CreateAbstractBookModel");
 		AbstractBook book;
 		if (this.copies != null) {
 			book = new PaperBook(this.name, this.isbn, this.release, this.price, this.copies);

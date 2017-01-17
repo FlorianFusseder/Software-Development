@@ -10,6 +10,7 @@ import Entitys.Customer;
 import Services.Interfaces.ICartItemService;
 import Technicals.Repo.CartItemRepo;
 import Technicals.Repo.PersonRepo;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -21,7 +22,10 @@ import lombok.NoArgsConstructor;
  */
 @RequestScoped
 @NoArgsConstructor
-public class CartItemService implements ICartItemService{
+public class CartItemService implements ICartItemService {
+
+	@Inject
+	private Logger logger;
 
 	@Inject
 	private PersonRepo personManager;
@@ -32,10 +36,12 @@ public class CartItemService implements ICartItemService{
 	@Transactional(Transactional.TxType.REQUIRED)
 	@Override
 	public void remove(Customer customer, CartItem cartItem) {
+		
+		logger.info("Remove Cartitem " + cartItem.getID());
 		customer = (Customer) personManager.merge(customer);
 
 		customer.getShoppingCart().removeFromShoppingList(cartItem);
 		this.cartItemManager.remove(cartItem);
 	}
-	
+
 }
