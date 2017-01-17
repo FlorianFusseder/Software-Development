@@ -63,7 +63,7 @@ public class ChooseDeliveryAdressModel {
 
 		Address a = null;
 
-		if (!this.newCity.isEmpty()) {
+		if (!this.newCity.isEmpty() && !this.newStreet.isEmpty() && this.newPostNumber != null) {
 			a = new Address(this.newStreet, this.newCity, this.newPostNumber);
 		} else {
 			a = choosenAddress;

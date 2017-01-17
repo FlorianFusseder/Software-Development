@@ -39,7 +39,8 @@
 
                 <b:row style="margin-top: 10px">
                     <h:outputText value="Price: "/>
-                    <b:inputText value="#{createAbstractBookModel.price}" required="true">
+                    <b:inputText value="#{createAbstractBookModel.price}" required="true" 
+                                 converterMessage="Price has to be in digits and xxx.xx format">
                         <f:facet name="postpend">
                             <h:outputText value="€" />
                         </f:facet>
@@ -48,7 +49,7 @@
 
                 <b:row>
                     <h:outputText  value="Copies:"/>
-                    <b:inputText id="license" value="#{createAbstractBookModel.copies}">
+                    <b:inputText id="license" value="#{createAbstractBookModel.copies}" type="number">
                         <f:ajax render="copies"/>
                     </b:inputText>
                 </b:row>
