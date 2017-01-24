@@ -18,9 +18,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaymentReichelBank implements ITransactionService {
 
-	@Inject
-	private Logger logger;
-
 	@Override
 	@Transactional
 	public boolean transfer(long amountInCent, String fromIBAN, String toIBAN, String description) {
@@ -35,7 +32,7 @@ public class PaymentReichelBank implements ITransactionService {
 			result = port.transfer(amountInCent, fromIBAN, toIBAN, description);
 		} catch (Exception ex) {
 
-			System.out.println(ex.getMessage());
+			ex.printStackTrace();
 			result = false;
 		}
 		return result;

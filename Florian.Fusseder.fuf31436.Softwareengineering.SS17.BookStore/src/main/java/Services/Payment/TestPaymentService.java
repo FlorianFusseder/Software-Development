@@ -6,6 +6,8 @@
 package Services.Payment;
 
 import Services.Interfaces.ITransactionService;
+import java.util.logging.Logger;
+import javax.inject.Inject;
 import lombok.NoArgsConstructor;
 
 /**
@@ -14,10 +16,9 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor
 public class TestPaymentService implements ITransactionService {
-
+	
 	@Override
 	public boolean transfer(long amountInCent, String fromIBAN, String toIBAN, String description) {
-		System.out.println(amountInCent + " ct, from " + fromIBAN + ", to " + toIBAN + "\n" + description);
 		return true;
 	}
 }
