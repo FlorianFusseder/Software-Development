@@ -7,7 +7,10 @@ package Entitys;
 
 import Technicals.Id.RandomIdEntity;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +73,11 @@ abstract public class AbstractBook extends RandomIdEntity {
 
 	public void addAuthor(Author author) {
 		this.author.add(author);
+	}	
+	
+	public String getBookReleaseDateAsString(){
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		return df.format(bookReleaseDate);
 	}
 
 	public abstract String getSpecificFieldAsString();

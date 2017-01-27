@@ -135,10 +135,7 @@ public class ShoppingService implements IShoppingService {
 
 		Boolean success = this.paymentManager.transfer(shoppingCart.getTotal().multiply(BigDecimal.valueOf(100)).longValue(),
 				customer.getBankDetail().getIban(), Config.getMyIban(),
-				"Paying " + shoppingCart.getShoppingList().stream()
-						.map(b -> b.getCount() + "x " + b.getAbstractBook().getName())
-						.collect(Collectors.joining(", "))
-				+ " from \"The One BookStore\"");
+				"Payment to \"The One BookStore\"");
 
 		if (!success) {
 			return customer;
